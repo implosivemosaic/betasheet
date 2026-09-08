@@ -16,7 +16,7 @@ put!.(
     schedule_note: "Qualifiers 9 am-12 pm or 12:30-3:30 pm; finals 6 pm",
     price_state: nil, price_note: "Competitor fee not published; finals spectators free",
     audience: ["adult"], link: "https://grandriverrocks.com/waterloo/brawl-in-the-fall/", link_kind: "event",
-    confidence: "check", caveat: "Gym closed to public climbing on competition day; spectator doors listed as both 5 pm and 6 pm.",
+    confidence: "confirmed", caveat: nil,
     sources: ["https://grandriverrocks.com/waterloo/brawl-in-the-fall/", "https://www.instagram.com/grr_wat/p/Dcwf54XJRf1/"],
     checked_on: ~D[2026-09-06], published: true
   },

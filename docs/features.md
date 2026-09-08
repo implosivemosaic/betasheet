@@ -12,7 +12,7 @@
 ## Event page (`/e/<id>-<slug>`)
 
 - Permanent URL keyed by research event id; stale slugs redirect; unpublished rows 404.
-- Title, venue and city with map link; one block for when, price, who; summary; caveat when sources disagree.
+- Title, venue and city with map link; one block for when, price, who; summary; a caveat only when our own date, time or place is uncertain.
 - One prominent link labelled by what it is: "Register with organizer", "View official event", or "Gym website". "Copy link" copies the URL (native share sheet on phones).
 - Open Graph and Twitter meta tags for link previews. Past listings show a notice.
 - Sources and the checked date in the footer.

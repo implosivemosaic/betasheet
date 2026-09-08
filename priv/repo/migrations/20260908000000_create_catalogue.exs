@@ -97,7 +97,10 @@ defmodule ClimbOntario.Repo.Migrations.CreateCatalogue do
           expr: "confidence IS NULL OR confidence IN ('confirmed','tentative','check')"
         }
 
-      add :caveat, :string, comment: "one visitor-facing warning, if any"
+      add :caveat, :string,
+        comment:
+          "only when omitting it would make OUR date, time or place misleading (e.g. venue TBA, date unconfirmed); surrounding logistics stay on the organizer's page"
+
       add :sources, {:array, :string}, null: false, default: []
       add :checked_on, :date, null: false, comment: "when the sources were last read"
 

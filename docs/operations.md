@@ -31,6 +31,7 @@ confirmed occurrence dates for recurring listings and courses. Column meanings a
 are commented in `priv/repo/migrations/20260908000000_create_catalogue.exs`.
 
 - A row inserts unpublished; set `published: true` (or call `Import.publish/1`) once kind, label, summary, schedule_kind, confidence, link and link_kind are filled. The changeset and a CHECK constraint both refuse an incomplete published row.
+- `caveat` is for uncertainty in our displayed date, time or place only; gym closures, door times and other logistics stay on the organizer's page.
 - Invalid enum values, missing dates for a dated shape, or an offsite name without coordinates are rejected; nothing is guessed.
 - Unpublished rows are invisible to search and return 404 on their page.
 
