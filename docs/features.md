@@ -7,12 +7,13 @@
 - Radius 40 km by default; one-tap widen to 100 km; empty state offers 150 km.
 - Filters, all in the URL: kind (competitions, socials & meetups, classes & clinics, camps), when (anytime, this weekend, next 7 days, this month), who (collapsed: kids & youth, adults, families, adaptive).
 - Results: "Coming up" sorted by date (kinds interleaved when no filter or place is set), then "Ongoing & recurring". Date filters match confirmed occurrence dates only. Programs with no posted schedule are hidden by default with a one-tap reveal.
-- Cards show kind badge, title, venue and distance, when line plus schedule note, summary, ages, price (only when published and clear), Tentative tag, Today/Tomorrow/This weekend hints.
+- Cards show kind badge, title, venue and distance, when line plus schedule note, summary, ages, Tentative tag, Today/Tomorrow/This weekend hints.
 
 ## Event page (`/e/<id>-<slug>`)
 
 - Permanent URL keyed by research event id; stale slugs redirect; unpublished rows 404.
-- Title, venue and city with map link; one block for when, price, who; summary; a caveat only when our own date, time or place is uncertain.
+- One surface: title, short summary, then When (pattern and span), Where (name, address, map) and Who; a caveat only when our own date, time or place is uncertain; a full-width "View original event" button; "Last updated" at the foot. Price, rules and booking conditions are the organizer's to show.
+- "Share" sits in the page header so it clearly shares our page, not the organizer's. "All listings" returns to the search you came from.
 - One prominent link labelled by what it is: "Register with organizer", "View official event", or "Gym website". "Copy link" copies the URL (native share sheet on phones).
 - Open Graph and Twitter meta tags for link previews. Past listings show a notice.
 - Sources and the checked date in the footer.

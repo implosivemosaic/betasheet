@@ -8,7 +8,6 @@ defmodule ClimbOntario.Catalogue.Listing do
 
   @kinds ~w(competition social class camp)
   @schedule_kinds ~w(one_off multi_day course recurring unscheduled)
-  @price_states ~w(admission_free included_with_entry members_free paid)
   @link_kinds ~w(registration event gym)
   @confidences ~w(confirmed tentative check)
   @audiences ~w(youth adult family adaptive women queer)
@@ -26,8 +25,6 @@ defmodule ClimbOntario.Catalogue.Listing do
     field :start_time, :time
     field :end_time, :time
     field :schedule_note, :string
-    field :price_state, :string
-    field :price_note, :string
     field :audience, {:array, :string}, default: []
     field :ages, :string
     field :link, :string
@@ -48,13 +45,12 @@ defmodule ClimbOntario.Catalogue.Listing do
 
   def kinds, do: @kinds
   def schedule_kinds, do: @schedule_kinds
-  def price_states, do: @price_states
   def link_kinds, do: @link_kinds
   def confidences, do: @confidences
   def audiences, do: @audiences
 
   @fields ~w(id venue_id title kind label summary schedule_kind start_date end_date start_time end_time
-             schedule_note price_state price_note audience ages link link_kind offsite_name offsite_address
+             schedule_note audience ages link link_kind offsite_name offsite_address
              offsite_lat offsite_lng confidence caveat sources checked_on published)a
 
   def changeset(listing, attrs) do
@@ -63,7 +59,6 @@ defmodule ClimbOntario.Catalogue.Listing do
     |> validate_required([:id, :venue_id, :title, :checked_on])
     |> validate_inclusion(:kind, @kinds)
     |> validate_inclusion(:schedule_kind, @schedule_kinds)
-    |> validate_inclusion(:price_state, @price_states)
     |> validate_inclusion(:link_kind, @link_kinds)
     |> validate_inclusion(:confidence, @confidences)
     |> validate_subset(:audience, @audiences)

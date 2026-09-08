@@ -50,7 +50,6 @@ defmodule ClimbOntarioWeb.ListingComponents do
             <span :for={a <- @listing.audience -- ["youth", "adult"]} class="tag">{Format.audience_label(
               a
             )}</span>
-            <span :if={p = Format.price(@listing)} class="tag tag-price">{p}</span>
             <span :if={@listing.confidence == "tentative"} class="tag tag-muted">Tentative</span>
           </div>
         </div>
@@ -100,32 +99,19 @@ defmodule ClimbOntarioWeb.ListingComponents do
   supplies only the destination and whether it is an event page or just the gym's homepage.
   """
   attr :listing, :map, required: true
-  attr :url, :string, required: true, doc: "this page's canonical URL, for Copy link"
 
   def organizer_cta(assigns) do
     ~H"""
-    <div class="mt-4">
-      <div class="flex flex-wrap items-center gap-2">
-        <a
-          href={@listing.link}
-          target="_blank"
-          rel="noopener"
-          class="cta btn btn-primary btn-lg rounded-field"
-        >
-          {Format.link_label(@listing.link_kind)} <span class="arrow">↗</span>
-        </a>
-        <button
-          type="button"
-          id="copy-link"
-          phx-hook="CopyLink"
-          data-url={@url}
-          data-title={@listing.title}
-          class="btn btn-ghost rounded-field"
-        >
-          <.icon name="hero-link" class="size-5" /> <span data-label>Copy link</span>
-        </button>
-      </div>
-      <p class="mt-1.5 text-xs text-base-content/60">
+    <div class="mt-6">
+      <a
+        href={@listing.link}
+        target="_blank"
+        rel="noopener"
+        class="cta btn btn-primary btn-lg rounded-field w-full sm:w-auto"
+      >
+        {Format.link_label(@listing.link_kind)} <span class="arrow">↗</span>
+      </a>
+      <p class="mt-2 text-xs text-base-content/60">
         <%= if @listing.link_kind == "gym" do %>
           We didn't find a page for this event; the organizer's site is the place to ask.
         <% else %>
@@ -133,6 +119,24 @@ defmodule ClimbOntarioWeb.ListingComponents do
         <% end %>
       </p>
     </div>
+    """
+  end
+
+  @doc "Shares this page (ours, not the organizer's). Native share sheet on phones, clipboard elsewhere."
+  attr :url, :string, required: true
+  attr :title, :string, required: true
+
+  def share_button(assigns) do
+    ~H"""
+    <button
+      type="button"
+      data-share
+      data-url={@url}
+      data-title={@title}
+      class="btn btn-ghost btn-sm rounded-field"
+    >
+      <.icon name="hero-share" class="size-4" /> <span data-label>Share</span>
+    </button>
     """
   end
 end

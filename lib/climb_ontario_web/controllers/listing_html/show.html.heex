@@ -1,71 +1,77 @@
 <Layouts.app flash={@flash}>
   <article class="relative overflow-x-clip pt-3 sm:pt-8">
     <span class={["blob blob-lg", "blob-#{@listing.kind}"]} aria-hidden="true"></span>
-    <a href="/" class="relative text-sm link link-hover text-base-content/70">← All listings</a>
+
+    <div class="relative flex items-center justify-between">
+      <a href="/" data-back class="text-sm link link-hover text-base-content/70">← All listings</a>
+      <.share_button url={@meta.url} title={@listing.title} />
+    </div>
 
     <div :if={past?(@listing, @today)} class="mt-4 rounded-box bg-base-200 p-3 text-sm">
       This has already happened. <a href="/" class="link">See what's coming up.</a>
     </div>
 
-    <div class="mt-4 flex flex-wrap items-center gap-2">
+    <div class="relative mt-4 flex flex-wrap items-center gap-2">
       <.kind_badge listing={@listing} />
       <span :if={@listing.confidence == "tentative"} class="tag tag-muted">Tentative</span>
     </div>
     <h1 class="relative mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight text-balance leading-[1.05]">
       {@listing.title}
     </h1>
-    <p class="mt-1 text-base-content/70">
-      {where(@listing)}
-      <span :if={maps = maps_url(@listing)}>
-        · <a href={maps} target="_blank" rel="noopener" class="link link-hover">Map ↗</a>
-      </span>
-    </p>
-    <p :if={@listing.offsite_name} class="mt-1 text-sm text-base-content/70">
-      Not at the gym: {@listing.offsite_address || "see the organizer for the address"}
-    </p>
+    <p class="relative mt-3 text-base leading-relaxed">{@listing.summary}</p>
 
-    <dl class="mt-5 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm rounded-box border border-base-300 bg-base-100 p-4">
-      <dt class="text-base-content/60">When</dt>
+    <dl class="mt-6 grid grid-cols-[auto_1fr] gap-x-5 gap-y-4">
+      <dt class="pt-0.5 text-xs font-semibold uppercase tracking-wide text-base-content/50">
+        When
+      </dt>
       <dd>
-        <span class="font-medium">{Format.when_line(@listing, @today)}</span>
-        <span :if={@listing.schedule_note} class="block text-base-content/80">{@listing.schedule_note}</span>
         <span
-          :if={dates = confirmed_dates(@listing, @today)}
-          class="block text-xs text-base-content/60"
-        >{dates}</span>
+          :for={
+            {line, i} <-
+              @listing |> when_lines(@today) |> Enum.reject(&is_nil/1) |> Enum.with_index()
+          }
+          class={["block", if(i == 0, do: "font-medium", else: "text-base-content/70")]}
+        >
+          {line}
+        </span>
       </dd>
-      <dt :if={Format.price(@listing)} class="text-base-content/60">Price</dt>
-      <dd :if={Format.price(@listing)}>{Format.price(@listing)}</dd>
-      <dt :if={@listing.ages || @listing.audience != []} class="text-base-content/60">Who</dt>
-      <dd :if={@listing.ages || @listing.audience != []}>
+      <dt class="pt-0.5 text-xs font-semibold uppercase tracking-wide text-base-content/50">
+        Where
+      </dt>
+      <dd>
+        <span class="block font-medium">{place_name(@listing)}</span>
+        <span :if={by = organized_by(@listing)} class="block text-base-content/70">
+          Organized by {by}
+        </span>
+        <span class="block text-base-content/70">
+          {address(@listing)}
+          <span :if={maps = maps_url(@listing)}>
+            · <a href={maps} target="_blank" rel="noopener" class="link link-hover">Map ↗</a>
+          </span>
+        </span>
+      </dd>
+      <dt
+        :if={@listing.ages || @listing.audience != []}
+        class="pt-0.5 text-xs font-semibold uppercase tracking-wide text-base-content/50"
+      >
+        Who
+      </dt>
+      <dd :if={@listing.ages || @listing.audience != []} class="font-medium">
         {[@listing.ages | Enum.map(@listing.audience, &Format.audience_label/1)]
         |> Enum.reject(&is_nil/1)
         |> Enum.join(" · ")}
       </dd>
     </dl>
 
-    <.organizer_cta listing={@listing} url={@meta.url} />
-
-    <p class="mt-5 text-base leading-relaxed">{@listing.summary}</p>
-
-    <div :if={@listing.caveat} class="mt-4 flex gap-2 rounded-box bg-warning/15 p-3 text-sm">
+    <div :if={@listing.caveat} class="mt-5 flex gap-2 rounded-box bg-warning/15 p-3 text-sm">
       <.icon name="hero-exclamation-triangle" class="size-5 shrink-0 text-warning" />
       <span>{@listing.caveat}</span>
     </div>
 
-    <div class="mt-8 text-xs text-base-content/60 space-y-1">
-      <p>
-        Checked {Format.checked(@listing.checked_on)} against the organizer's published information. Things change; the organizer's page is the source of truth.
-      </p>
-      <p :if={@listing.sources != []}>
-        Sources:
-        <span :for={{u, i} <- Enum.with_index(@listing.sources)}><span :if={i > 0}>, </span><a
-          href={u}
-          target="_blank"
-          rel="noopener"
-          class="link"
-        >{host(u)}</a></span>
-      </p>
-    </div>
+    <.organizer_cta listing={@listing} />
+
+    <p class="mt-10 text-xs text-base-content/50">
+      Last updated: {Format.updated(@listing.checked_on)}
+    </p>
   </article>
 </Layouts.app>

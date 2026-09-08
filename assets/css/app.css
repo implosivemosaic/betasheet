@@ -133,7 +133,6 @@
   .chip-active .hold { background: var(--ink); opacity: .55; }
 
   .tag { @apply inline-flex items-center rounded-selector bg-base-200 px-2 py-0.5 text-xs text-base-content/80; }
-  .tag-price { @apply bg-accent/50 text-accent-content font-medium; }
   .tag-muted { @apply bg-base-300 text-base-content/70; }
 
   /* kind badge: solid hold colour, ink text */

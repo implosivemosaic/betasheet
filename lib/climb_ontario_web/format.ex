@@ -54,9 +54,36 @@ defmodule ClimbOntarioWeb.Format do
 
   def when_line(%{schedule_kind: "course", start_date: s, end_date: e}, today) do
     if today && Date.compare(s, today) == :lt,
-      do: "In progress · ends #{date(e)}",
-      else: "Starts #{date(s)} · runs to #{date(e)}"
+      do: "Until #{date(e)}",
+      else: "#{date(s)} – #{short_date(e)}"
   end
+
+  @doc "Month and day only, for the end of a range."
+  def short_date(%Date{} = d), do: "#{Enum.at(@months, d.month - 1)} #{d.day}"
+
+  @doc "8–10 am, 7 pm – 9:30 pm, 9 am, or nil."
+  def time_range(nil, _), do: nil
+  def time_range(s, nil), do: time(s)
+
+  def time_range(s, e) do
+    [a, b] = [time(s), time(e)]
+    [_, suffix_a] = String.split(a, " ")
+    [_, suffix_b] = String.split(b, " ")
+
+    if suffix_a == suffix_b,
+      do: "#{String.replace_suffix(a, " " <> suffix_a, "")}–#{b}",
+      else: "#{a} – #{b}"
+  end
+
+  @doc "Next confirmed date of a recurring listing, or nil."
+  def next_date(%{occurrences: occ}, today) when is_list(occ) do
+    occ
+    |> Enum.map(& &1.date)
+    |> Enum.filter(&(Date.compare(&1, today) != :lt))
+    |> Enum.min(Date, fn -> nil end)
+  end
+
+  def next_date(_, _), do: nil
 
   @doc "Relative day hint: Today, Tomorrow, This weekend, or nil."
   def soon(%{schedule_kind: k, start_date: %Date{} = d}, today) when k in ~w(one_off multi_day) do
@@ -76,11 +103,6 @@ defmodule ClimbOntarioWeb.Format do
       do: name,
       else: "#{name} · #{city}"
   end
-
-  @doc "Price line: the published note; 'Free' only when admission is free and no note says more."
-  def price(%{price_note: note}) when is_binary(note) and note != "", do: note
-  def price(%{price_state: "admission_free"}), do: "Free"
-  def price(_), do: nil
 
   def link_label("gym"), do: "Visit organizer's website"
   def link_label(_), do: "View original event"
@@ -107,5 +129,5 @@ defmodule ClimbOntarioWeb.Format do
   def when_label("week"), do: "7 days"
   def when_label("month"), do: "Month"
 
-  def checked(%Date{} = d), do: date_with_year(d)
+  def updated(%Date{} = d), do: "#{Enum.at(@months, d.month - 1)} #{d.day}, #{d.year}"
 end

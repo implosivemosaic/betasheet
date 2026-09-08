@@ -27,11 +27,11 @@ defmodule ClimbOntario.Catalogue.ImportTest do
                title: "T",
                checked_on: ~D[2026-09-06],
                kind: "party",
-               price_state: "free",
+               confidence: "maybe",
                link_kind: "web"
              })
 
-    assert Enum.sort(Keyword.keys(cs.errors)) == [:kind, :link_kind, :price_state]
+    assert Enum.sort(Keyword.keys(cs.errors)) == [:confidence, :kind, :link_kind]
 
     assert {:error, cs} =
              Import.put_listing(%{

@@ -39,7 +39,8 @@ defmodule ClimbOntario.Repo.Migrations.CreateCatalogue do
       add :label, :string, comment: "short badge text, e.g. OCF sanctioned, Meetup, Kids program"
 
       add :summary, :text,
-        comment: "1-2 plain sentences: what it is and who it's for; no dates, no gym name"
+        comment:
+          "1-2 plain sentences: what it is and who it's for. No dates, no gym name, no prices, rules or booking conditions; those stay on the organizer's page"
 
       add :schedule_kind, :string,
         comment: "one_off | multi_day | course | recurring | unscheduled",
@@ -57,18 +58,6 @@ defmodule ClimbOntario.Repo.Migrations.CreateCatalogue do
       add :start_time, :time
       add :end_time, :time
       add :schedule_note, :string, comment: "human pattern, e.g. Last Friday of the month, 7-9 pm"
-
-      add :price_state, :string,
-        comment:
-          "admission_free | included_with_entry | members_free | paid; null = not published or unclear",
-        check: %{
-          name: "price_state_allowed",
-          expr:
-            "price_state IS NULL OR price_state IN ('admission_free','included_with_entry','members_free','paid')"
-        }
-
-      add :price_note, :string,
-        comment: "published price with its condition, e.g. $150 + HST for six classes"
 
       add :audience, {:array, :string},
         null: false,

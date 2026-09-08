@@ -40,25 +40,6 @@ const Hooks = {
       })
       this.el.addEventListener("animationend", () => this.el.classList.remove("pop"))
     }
-  },
-  // Copy the permanent link; prefer the native share sheet on phones.
-  CopyLink: {
-    mounted() {
-      const label = this.el.querySelector("[data-label]")
-      const {url, title} = this.el.dataset
-      this.el.addEventListener("click", async () => {
-        if (navigator.share && /Mobi|Android|iPhone/i.test(navigator.userAgent)) {
-          try { await navigator.share({title, url}); return } catch (_) { /* fall through to copy */ }
-        }
-        try {
-          await navigator.clipboard.writeText(url)
-          label.textContent = "Copied!"
-          this.el.classList.add("pop", "btn-primary")
-          setTimeout(() => { label.textContent = "Copy link"; this.el.classList.remove("btn-primary") }, 1600)
-        } catch (_) { window.prompt("Copy this link", url) }
-      })
-      this.el.addEventListener("animationend", () => this.el.classList.remove("pop"))
-    }
   }
 }
 
@@ -82,6 +63,33 @@ liveSocket.connect()
 // >> liveSocket.enableLatencySim(1000)  // enabled for duration of browser session
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
+
+// Share this page (ours, not the organizer's): native share sheet on phones, clipboard elsewhere.
+document.addEventListener("click", async e => {
+  const btn = e.target.closest("[data-share]")
+  if (!btn) return
+  const {url, title} = btn.dataset
+  const label = btn.querySelector("[data-label]")
+  if (navigator.share && /Mobi|Android|iPhone/i.test(navigator.userAgent)) {
+    try { await navigator.share({title, url}); return } catch (_) { /* fall through to copy */ }
+  }
+  try {
+    await navigator.clipboard.writeText(url)
+    label.textContent = "Link copied"
+    btn.classList.add("pop")
+    setTimeout(() => { label.textContent = "Share" }, 1600)
+    btn.addEventListener("animationend", () => btn.classList.remove("pop"), {once: true})
+  } catch (_) { window.prompt("Copy this link", url) }
+})
+
+// "All listings" returns to the search you came from when there is one.
+document.addEventListener("click", e => {
+  const back = e.target.closest("[data-back]")
+  if (back && document.referrer.startsWith(location.origin + "/") && history.length > 1) {
+    e.preventDefault()
+    history.back()
+  }
+})
 
 // The lines below enable quality of life phoenix_live_reload
 // development features:

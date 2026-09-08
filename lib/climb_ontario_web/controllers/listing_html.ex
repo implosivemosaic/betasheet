@@ -5,10 +5,18 @@ defmodule ClimbOntarioWeb.ListingHTML do
 
   embed_templates "listing_html/*"
 
-  def where(%{offsite_name: name} = l) when is_binary(name),
-    do: "#{name} · organized by #{l.venue.name}"
+  @doc "Name of the place, and the gym that organizes it when they differ."
+  def place_name(%{offsite_name: name}) when is_binary(name), do: name
+  def place_name(%{venue: v}), do: v.name
 
-  def where(l), do: Format.venue_line(l.venue)
+  def organized_by(%{offsite_name: name, venue: v}) when is_binary(name), do: v.name
+  def organized_by(_), do: nil
+
+  def address(%{offsite_name: name} = l) when is_binary(name),
+    do: l.offsite_address || "Address on the organizer's page"
+
+  def address(%{venue: v}),
+    do: Enum.reject([v.street_address, v.city], &is_nil/1) |> Enum.join(", ")
 
   def maps_url(%{offsite_name: name, offsite_lat: lat, offsite_lng: lng}) when is_binary(name) do
     if lat && lng, do: "https://www.google.com/maps/search/?api=1&query=#{lat},#{lng}", else: nil
@@ -30,32 +38,32 @@ defmodule ClimbOntarioWeb.ListingHTML do
   def past?(%{end_date: %Date{} = e}, today), do: Date.compare(e, today) == :lt
   def past?(_, _), do: false
 
-  @doc "Upcoming confirmed dates for courses and meetups, as one short line."
-  def confirmed_dates(%{schedule_kind: k, occurrences: occ}, today)
-      when k in ~w(course recurring) do
-    upcoming =
-      occ
-      |> Enum.map(& &1.date)
-      |> Enum.filter(&(Date.compare(&1, today) != :lt))
-      |> Enum.sort(Date)
+  @doc "One or two short lines answering 'when?'. The first is the pattern, the second the span."
+  def when_lines(%{schedule_kind: "one_off"} = l, _today),
+    do: [join([Format.date_with_year(l.start_date), Format.time_range(l.start_time, l.end_time)])]
 
-    case upcoming do
-      [] ->
-        nil
+  def when_lines(%{schedule_kind: "multi_day"} = l, _today),
+    do: [
+      "#{Format.date(l.start_date)} – #{Format.date_with_year(l.end_date)}",
+      Format.time_range(l.start_time, l.end_time)
+    ]
 
-      dates ->
-        "Confirmed dates: " <>
-          Enum.map_join(Enum.take(dates, 8), ", ", &Format.date/1) <>
-          if(length(dates) > 8, do: " …", else: "")
-    end
+  def when_lines(%{schedule_kind: "course"} = l, _today),
+    do: [
+      join([l.schedule_note, Format.time_range(l.start_time, l.end_time)], ", "),
+      "#{Format.date(l.start_date)} – #{Format.date_with_year(l.end_date)}"
+    ]
+
+  def when_lines(%{schedule_kind: "recurring"} = l, today) do
+    next = Format.next_date(l, today)
+
+    [
+      l.schedule_note || join(["Ongoing", Format.time_range(l.start_time, l.end_time)]),
+      next && "Next #{Format.date_with_year(next)}"
+    ]
   end
 
-  def confirmed_dates(_, _), do: nil
+  def when_lines(_, _), do: ["Schedule not posted yet"]
 
-  def host(url) do
-    case URI.parse(url) do
-      %{host: h} when is_binary(h) -> String.replace_prefix(h, "www.", "")
-      _ -> url
-    end
-  end
+  defp join(parts, sep \\ " · "), do: parts |> Enum.reject(&(&1 in [nil, ""])) |> Enum.join(sep)
 end

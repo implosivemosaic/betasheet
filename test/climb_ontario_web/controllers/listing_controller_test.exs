@@ -18,11 +18,14 @@ defmodule ClimbOntarioWeb.ListingControllerTest do
     assert html =~ ~s(<meta property="og:title" content="#{l.title}")
     assert html =~ ~r{og:url" content="http://localhost(:\d+)?/e/#{Listing.slug(l)}"}
     assert html =~ "https://ocf.example/e"
-    assert html =~ "Sat Dec 12"
-    assert html =~ "Copy link"
+    assert html =~ "Sat Dec 12, 2026"
+    assert html =~ "212 Earl Stewart Dr, Aurora"
+    assert html =~ "Last updated: Sep 7, 2026"
     assert html =~ "View original event"
-    # the CTA sits above the description, not at the bottom
-    assert :binary.match(html, "View original event") < :binary.match(html, "leading-relaxed")
+    # share belongs to our page and sits in the header, away from the outbound CTA
+    assert :binary.match(html, "data-share") < :binary.match(html, "leading-relaxed")
+    assert :binary.match(html, "Where") < :binary.match(html, "View original event")
+    refute html =~ "Sources:"
 
     gym_only =
       listing!(venue!(%{slug: "other", source_gym_id: 999}), %{

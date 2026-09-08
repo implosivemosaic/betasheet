@@ -19,7 +19,7 @@ Tests: `source bin/ex-env.sh && MIX_ENV=test mix test`.
 ## Hard rules
 
 - The research database (`RESEARCH_DB`, default under `/data/workspace/dot-files/knowledge/ontario-gyms/`) is read-only input. Never write to it from this repo.
-- The app database is the destination format. `listings` columns are the spec; enums are CHECK constraints; a row that doesn't fit doesn't insert. Code never parses prose to guess kind, price, audience or schedule.
+- The app database is the destination format. `listings` columns are the spec; enums are CHECK constraints; a row that doesn't fit doesn't insert. Code never parses prose to guess kind, audience or schedule. Price, rules and booking conditions are not in the schema; they stay on the organizer's page.
 - Curated rows are written through `Catalogue.Import.put_listing/2` (one transaction for the listing and its confirmed dates). Researchers do the judgment; the app validates and loads.
 - `published` is false until every judgment column is filled. Search and event pages read published rows only.
 - `listings.id` is the research event id and leads every public URL. Old slugs redirect.
