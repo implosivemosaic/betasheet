@@ -13,6 +13,7 @@ defmodule ClimbOntarioWeb.ListingControllerTest do
     assert html =~ "https://ocf.example/e"
     assert html =~ "Sat Dec 12"
     assert html =~ "Copy link"
+    assert html =~ "View official event"
   end
 
   test "stale slug redirects to the canonical one; unknown id is 404", %{conn: conn, listing: l} do

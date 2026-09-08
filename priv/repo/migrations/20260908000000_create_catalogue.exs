@@ -47,6 +47,7 @@ defmodule ClimbOntario.Repo.Migrations.CreateCatalogue do
       add :registration_state, :string, null: false
       add :venue_note, :string
       add :organizer_url, :string
+      add :link_kind, :string, null: false, default: "gym"
       add :source_urls, {:array, :string}, null: false, default: []
       add :checked_at, :utc_datetime, null: false
       add :listed, :boolean, null: false, default: true

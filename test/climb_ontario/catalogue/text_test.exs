@@ -14,7 +14,10 @@ defmodule ClimbOntario.Catalogue.TextTest do
              "$196+HST for 7 weeks, U11 v5, OCF Boulder 5.10d"
   end
 
-  test "respace_digits leaves proper-noun casing alone" do
+  test "respace_digits leaves proper-noun casing and ordinals alone" do
+    assert Text.respace_digits("15th Anniversary Party, 2nd edition") ==
+             "15th Anniversary Party, 2nd edition"
+
     assert Text.respace_digits("RockHaus Meetup — September2026") ==
              "RockHaus Meetup — September 2026"
   end
@@ -32,7 +35,9 @@ defmodule ClimbOntario.Catalogue.TextTest do
   test "price_short picks the first amount or Free" do
     assert Text.price_short("CAD 29.99 plus tax per participant") == "$29.99"
     assert Text.price_short("$150/six-week series") == "$150"
-    assert Text.price_short("Free with day pass") == "Free"
+    assert Text.price_short("Free") == "Free"
+    assert Text.price_short("Free with day pass") == nil
+    assert Text.price_short("Finals spectators free; competitor fee not published") == nil
     assert Text.price_short("Programme fee unpublished") == nil
   end
 

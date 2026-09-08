@@ -40,6 +40,7 @@ defmodule ClimbOntario.Catalogue.MapperTest do
     assert l.title == "OCF Boulder U11/ U13/ U15"
     assert l.slug == "303-ocf-boulder-u11-u13-u15"
     assert l.organizer_url == "https://ocf.example/e"
+    assert l.link_kind == "event"
     assert l.listed
   end
 
@@ -97,6 +98,50 @@ defmodule ClimbOntario.Catalogue.MapperTest do
     assert Mapper.to_listing(no_reg, @venue, @today).organizer_url == "https://ocf.example/e"
     bare = event(%{"registration_url" => nil, "sources" => []})
     assert Mapper.to_listing(bare, @venue, @today).organizer_url == "https://gym.example"
+    assert Mapper.to_listing(bare, @venue, @today).link_kind == "gym"
+    booking = event(%{"registration_url" => "https://app.rockgympro.com/b/?bo=abc"})
+    assert Mapper.to_listing(booking, @venue, @today).link_kind == "registration"
+  end
+
+  test "training teams and tryouts are programs, not competitions" do
+    team =
+      event(%{
+        "title" => "Adult Competition Team",
+        "category" => "adult_team",
+        "status" => "recurring",
+        "start_date" => nil,
+        "end_date" => nil
+      })
+
+    assert Mapper.to_listing(team, @venue, @today).kind == "class"
+    tryout = event(%{"title" => "Team HB Try-Outs", "category" => "tryout"})
+    assert Mapper.to_listing(tryout, @venue, @today).kind == "class"
+  end
+
+  test "youth programs named after leagues or teams are classes, not competitions" do
+    for {title, cat} <- [
+          {"League of Ninjas 1.0 — Fall 2026", "fitness_program"},
+          {"Adult Competition Team", "adult_team"},
+          {"Comp Team Training", "youth_program"}
+        ] do
+      l =
+        Mapper.to_listing(
+          event(%{"title" => title, "category" => cat, "notes" => nil}),
+          @venue,
+          @today
+        )
+
+      assert l.kind == "class", title
+    end
+
+    league =
+      event(%{
+        "title" => "Barrie Boulder League — September 21",
+        "category" => "event",
+        "notes" => nil
+      })
+
+    assert Mapper.to_listing(league, @venue, @today).kind == "competition"
   end
 
   test "offsite note hides the venue assumption" do

@@ -43,17 +43,17 @@ defmodule ClimbOntarioWeb.DiscoverLive do
 
   defp path(query), do: ~p"/?#{Query.to_params(query)}"
 
+  defp audience_summary([]), do: ""
+  defp audience_summary(a), do: " · " <> Enum.map_join(a, ", ", &Format.audience_label/1)
+
   @impl true
   def render(assigns) do
     ~H"""
     <Layouts.app flash={@flash}>
-      <section class="pt-6 sm:pt-10">
-        <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-balance">
+      <section class="pt-3 sm:pt-8">
+        <h1 class="text-2xl sm:text-4xl font-bold tracking-tight text-balance">
           What's on in Ontario climbing?
         </h1>
-        <p class="mt-2 text-base-content/70">
-          Competitions, socials, classes and camps from gyms across the province and the OCF, in one place.
-        </p>
 
         <form phx-submit="search" class="mt-5 flex gap-2" role="search">
           <label class="input input-lg flex-1 items-center gap-2 rounded-field pr-1">
@@ -104,12 +104,7 @@ defmodule ClimbOntarioWeb.DiscoverLive do
         </p>
       </section>
 
-      <nav class="mt-5 space-y-2" aria-label="Filters">
-        <div class="flex flex-wrap gap-2">
-          <.chip :for={w <- Query.whens()} patch={path(%{@query | when: w})} active={@query.when == w}>
-            {Format.when_label(w)}
-          </.chip>
-        </div>
+      <nav class="mt-4 space-y-2" aria-label="Filters">
         <div class="flex flex-wrap gap-2">
           <.chip
             :for={k <- Listing.kinds()}
@@ -121,17 +116,27 @@ defmodule ClimbOntarioWeb.DiscoverLive do
           </.chip>
         </div>
         <div class="flex flex-wrap gap-2">
-          <.chip
-            :for={a <- ~w(youth adult family adaptive)}
-            patch={path(Query.toggle_audience(@query, a))}
-            active={a in @query.audience}
-          >
-            {Format.audience_label(a)}
+          <.chip :for={w <- Query.whens()} patch={path(%{@query | when: w})} active={@query.when == w}>
+            {Format.when_label(w)}
           </.chip>
         </div>
+        <details class="text-sm" open={@query.audience != []}>
+          <summary class="cursor-pointer select-none text-base-content/70">
+            Who it's for{audience_summary(@query.audience)}
+          </summary>
+          <div class="mt-2 flex flex-wrap gap-2">
+            <.chip
+              :for={a <- ~w(youth adult family adaptive)}
+              patch={path(Query.toggle_audience(@query, a))}
+              active={a in @query.audience}
+            >
+              {Format.audience_label(a)}
+            </.chip>
+          </div>
+        </details>
       </nav>
 
-      <section class="mt-6" id="results">
+      <section class="mt-5" id="results">
         <div
           :if={@results.total == 0}
           class="rounded-box border border-dashed border-base-300 p-8 text-center"

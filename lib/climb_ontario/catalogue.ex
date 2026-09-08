@@ -40,6 +40,8 @@ defmodule ClimbOntario.Catalogue do
       )
       |> Enum.sort_by(&{&1.schedule_kind != "recurring", &1.distance_km || 0.0, &1.title})
 
+    dated = if q.kinds == [] and q.near == nil, do: interleave_kinds(dated), else: dated
+
     %{dated: dated, ongoing: ongoing, total: length(dated) + length(ongoing)}
   end
 
@@ -60,6 +62,23 @@ defmodule ClimbOntario.Catalogue do
   def window("week", today), do: {today, Date.add(today, 7)}
   def window("month", today), do: {today, Date.add(today, 31)}
   def window(_, today), do: {today, nil}
+
+  # Province-wide with no kind chosen, youth courses would bury everything else. Rotate through
+  # kinds so the first screen shows the soonest competition, social, class and camp in turn.
+  defp interleave_kinds(dated) do
+    dated
+    |> Enum.group_by(& &1.kind)
+    |> Map.values()
+    |> Enum.sort_by(&(-length(&1)))
+    |> rotate([])
+  end
+
+  defp rotate([], acc), do: Enum.reverse(acc)
+
+  defp rotate(lists, acc) do
+    {heads, tails} = lists |> Enum.map(fn [h | t] -> {h, t} end) |> Enum.unzip()
+    rotate(Enum.reject(tails, &(&1 == [])), Enum.reverse(heads) ++ acc)
+  end
 
   # Things already under way sort as "today", after anything that actually starts today.
   defp sort_key(l, today) do

@@ -40,6 +40,7 @@ defmodule ClimbOntario.Catalogue.Listing do
     field :registration_state, :string
     field :venue_note, :string
     field :organizer_url, :string
+    field :link_kind, :string
     field :source_urls, {:array, :string}, default: []
     field :checked_at, :utc_datetime
     field :listed, :boolean, default: true

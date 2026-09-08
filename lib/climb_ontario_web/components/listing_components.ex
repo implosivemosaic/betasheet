@@ -24,7 +24,10 @@ defmodule ClimbOntarioWeb.ListingComponents do
         <.icon name="hero-calendar-days" class="size-4 mt-0.5 shrink-0 text-primary" />
         <span>
           <span class="font-medium">{Format.when_line(@listing, @today)}</span>
-          <span :if={@listing.schedule_note} class="text-base-content/70"> · {@listing.schedule_note}</span>
+          <span
+            :if={@listing.schedule_note && @listing.schedule_kind in ~w(recurring course)}
+            class="text-base-content/70"
+          > · {@listing.schedule_note}</span>
         </span>
       </p>
       <p :if={@listing.summary != ""} class="mt-2 text-sm text-base-content/80 line-clamp-2">
@@ -35,7 +38,7 @@ defmodule ClimbOntarioWeb.ListingComponents do
         <span :for={a <- @listing.audience -- ["youth", "adult"]} class="tag">{Format.audience_label(
           a
         )}</span>
-        <span :if={@listing.price_short} class="tag tag-price">{@listing.price_short}</span>
+        <span :if={p = Format.price(@listing)} class="tag tag-price">{p}</span>
         <span :if={@listing.registration_state == "full"} class="tag tag-muted">Full</span>
         <span :if={@listing.confidence == "tentative"} class="tag tag-muted">Tentative</span>
       </div>

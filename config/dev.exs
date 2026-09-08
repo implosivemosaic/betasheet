@@ -17,6 +17,8 @@ config :climb_ontario, ClimbOntarioWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}, port: String.to_integer(System.get_env("PORT") || "4200")],
+  # Where visitors actually reach the dev preview; used for canonical and share URLs.
+  url: [host: "dot-keith.taild1c720.ts.net", port: 8445, scheme: "https"],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,

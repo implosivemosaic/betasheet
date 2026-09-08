@@ -30,7 +30,7 @@ defmodule ClimbOntario.Catalogue.Text do
     text
     |> String.replace(~r/([A-Za-z]{2,})(\d)/u, "\\1 \\2")
     |> String.replace(~r/(\d)([A-Z][a-z])/u, "\\1 \\2")
-    |> String.replace(~r/(\d)([a-z]{2,})/u, "\\1 \\2")
+    |> String.replace(~r/(\d)(?!st\b|nd\b|rd\b|th\b)([a-z]{2,})/u, "\\1 \\2")
     |> String.replace(~r/(\d)([A-Z]{2,})(?=\b)/u, "\\1 \\2")
   end
 
@@ -59,12 +59,15 @@ defmodule ClimbOntario.Catalogue.Text do
     end)
   end
 
-  @doc "Compact price for a card: the first dollar amount, 'Free', or nil."
+  @doc """
+  Compact price for a card: the first dollar amount, or "Free" only when the text says free
+  with no qualifier (members-only, spectators-only, with a pass and so on stay verbatim). Otherwise nil.
+  """
   def price_short(nil), do: nil
 
   def price_short(text) do
     cond do
-      Regex.match?(~r/\bfree\b/iu, text) and not Regex.match?(~r/\$\s?\d/u, text) -> "Free"
+      Regex.match?(~r/^\s*free\s*(\((hst|tax)[^)]*\))?\s*\.?\s*$/iu, text) -> "Free"
       m = Regex.run(~r/(?:CAD\s?|\$)\s?(\d[\d,]*(?:\.\d{2})?)/u, text) -> "$" <> Enum.at(m, 1)
       true -> nil
     end

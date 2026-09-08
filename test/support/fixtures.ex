@@ -47,6 +47,7 @@ defmodule ClimbOntario.Fixtures do
             confidence: "confirmed",
             registration_state: "open",
             organizer_url: "https://ocf.example/e",
+            link_kind: "event",
             checked_at: ~U[2026-09-07 23:49:00Z],
             listed: true
           },

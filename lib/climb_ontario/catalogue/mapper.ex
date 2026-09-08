@@ -52,6 +52,7 @@ defmodule ClimbOntario.Catalogue.Mapper do
       registration_state: registration_state(blob),
       venue_note: venue_note(blob),
       organizer_url: organizer_url(ev, venue),
+      link_kind: link_kind(ev, venue),
       source_urls: source_urls(ev),
       checked_at: parse_datetime(ev["checked_at"]),
       listed: listed?(status, schedule_kind, start_date, end_date, today)
@@ -61,7 +62,10 @@ defmodule ClimbOntario.Catalogue.Mapper do
   @doc "The four public kinds."
   def kind(category, title \\ "") do
     cond do
-      category =~ ~r/competition|league|tryout/ ->
+      category =~ ~r/team|tryout|coaching/ ->
+        "class"
+
+      category =~ ~r/competition|league/ ->
         "competition"
 
       category =~ ~r/camp/ ->
@@ -71,7 +75,9 @@ defmodule ClimbOntario.Catalogue.Mapper do
           ~r/social|community|meetup|night|open_house|celebration|demonstration|governance|family_climbing|accessible|adaptive|staff_assisted|kids_session|special|outdoor|drytooling/ ->
         "social"
 
-      title =~ ~r/\b(comp|competition|league|tryouts?)\b/i ->
+      title =~ ~r/\b(comp|competition|league)\b/i and
+        not (title =~ ~r/\b(team|programme?s?|course|classes|training)\b/i) and
+          not (category =~ ~r/program|course|class|fitness|training/) ->
         "competition"
 
       true ->
@@ -248,6 +254,34 @@ defmodule ClimbOntario.Catalogue.Mapper do
     ev["registration_url"] ||
       first_source(ev, ["website", "registration", "booking"]) ||
       venue.website
+  end
+
+  @booking ~r/rockgympro|approach\.app|hellocapitan|eventbrite|portal\.|square\.link|challonge|uplifter|interpodia|bookeo|mindbody|zenplanner|ticket/i
+
+  @doc """
+  What the organizer link actually is, so the button can be honest:
+  registration (a booking page), event (a page about this event), gym (only the gym's website).
+  """
+  def link_kind(ev, venue) do
+    cond do
+      ev["registration_url"] && ev["registration_url"] =~ @booking ->
+        "registration"
+
+      ev["registration_url"] ->
+        "event"
+
+      url = first_source(ev, ["website", "registration", "booking"]) ->
+        if deep?(url, venue), do: "event", else: "gym"
+
+      true ->
+        "gym"
+    end
+  end
+
+  defp deep?(url, venue) do
+    path = URI.parse(url).path || "/"
+    same_site = venue.website && URI.parse(url).host == URI.parse(venue.website).host
+    String.length(String.trim(path, "/")) > 0 or not same_site
   end
 
   def source_urls(ev) do

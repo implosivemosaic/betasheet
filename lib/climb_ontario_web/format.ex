@@ -62,6 +62,14 @@ defmodule ClimbOntarioWeb.Format do
       else: "#{name} · #{city}"
   end
 
+  @doc "Price for a card or detail row: the hand-written note wins, then a bare amount, else nil."
+  def price(%{price_note: note}) when is_binary(note) and note != "", do: note
+  def price(%{price_short: short}), do: short
+
+  def link_label("registration"), do: "Register with organizer"
+  def link_label("event"), do: "View official event"
+  def link_label(_), do: "Gym website"
+
   def distance(nil), do: nil
   def distance(km) when km < 1, do: "<1 km"
   def distance(km) when km < 10, do: "#{Float.round(km, 1)} km"
