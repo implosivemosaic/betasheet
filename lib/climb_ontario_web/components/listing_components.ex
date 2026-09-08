@@ -9,7 +9,7 @@ defmodule ClimbOntarioWeb.ListingComponents do
   def listing_card(assigns) do
     ~H"""
     <a
-      href={~p"/e/#{@listing.slug}"}
+      href={~p"/e/#{ClimbOntario.Catalogue.Listing.slug(@listing)}"}
       class="card-lift block rounded-box bg-base-100 border border-base-300 p-4 shadow-sm"
     >
       <div class="flex items-center justify-between gap-2 text-xs">
@@ -39,7 +39,6 @@ defmodule ClimbOntarioWeb.ListingComponents do
           a
         )}</span>
         <span :if={p = Format.price(@listing)} class="tag tag-price">{p}</span>
-        <span :if={@listing.registration_state == "full"} class="tag tag-muted">Full</span>
         <span :if={@listing.confidence == "tentative"} class="tag tag-muted">Tentative</span>
       </div>
     </a>
@@ -51,7 +50,7 @@ defmodule ClimbOntarioWeb.ListingComponents do
   def kind_badge(assigns) do
     ~H"""
     <span class={["badge badge-sm font-medium", "kind-#{@listing.kind}"]}>
-      <.icon name={kind_icon(@listing.kind)} class="size-3.5" /> {@listing.subkind}
+      <.icon name={kind_icon(@listing.kind)} class="size-3.5" /> {@listing.label}
     </span>
     """
   end

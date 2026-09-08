@@ -27,6 +27,18 @@ defmodule ClimbOntarioWeb.Format do
 
   @doc "One line that answers 'when?' for a card."
   def when_line(listing, today \\ nil)
+
+  def when_line(%{schedule_kind: "recurring", occurrences: occ}, today)
+      when is_list(occ) and occ != [] do
+    next =
+      occ
+      |> Enum.map(& &1.date)
+      |> Enum.filter(&(is_nil(today) or Date.compare(&1, today) != :lt))
+      |> Enum.min(Date, fn -> nil end)
+
+    if next, do: "Next #{date(next)}", else: "Ongoing"
+  end
+
   def when_line(%{schedule_kind: "recurring"}, _), do: "Ongoing"
   def when_line(%{schedule_kind: "unscheduled"}, _), do: "Schedule not posted yet"
 
@@ -62,9 +74,10 @@ defmodule ClimbOntarioWeb.Format do
       else: "#{name} · #{city}"
   end
 
-  @doc "Price for a card or detail row: the hand-written note wins, then a bare amount, else nil."
+  @doc "Price line: the published note; 'Free' only when admission is free and no note says more."
   def price(%{price_note: note}) when is_binary(note) and note != "", do: note
-  def price(%{price_short: short}), do: short
+  def price(%{price_state: "admission_free"}), do: "Free"
+  def price(_), do: nil
 
   def link_label("registration"), do: "Register with organizer"
   def link_label("event"), do: "View official event"
@@ -92,5 +105,5 @@ defmodule ClimbOntarioWeb.Format do
   def when_label("week"), do: "Next 7 days"
   def when_label("month"), do: "This month"
 
-  def checked(%DateTime{} = dt), do: date_with_year(DateTime.to_date(dt))
+  def checked(%Date{} = d), do: date_with_year(d)
 end

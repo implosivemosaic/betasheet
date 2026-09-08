@@ -1,5 +1,5 @@
 defmodule ClimbOntario.Catalogue.Venue do
-  @moduledoc "A place events happen at. One row per research gym; coordinates from priv/geo/gyms.json."
+  @moduledoc "A gym. One row per research gym; coordinates from priv/geo/gyms.json."
   use Ecto.Schema
 
   schema "venues" do
@@ -12,7 +12,6 @@ defmodule ClimbOntario.Catalogue.Venue do
     field :website, :string
     field :lat, :float
     field :lng, :float
-    field :verification, :string
     has_many :listings, ClimbOntario.Catalogue.Listing
     timestamps()
   end

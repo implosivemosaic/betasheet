@@ -3,7 +3,7 @@ defmodule ClimbOntario.Catalogue.Query do
   alias ClimbOntario.Geo
 
   @whens ~w(all weekend week month)
-  @audiences ~w(youth adult family adaptive women queer)
+  @audiences ClimbOntario.Catalogue.Listing.audiences()
   @default_km 40
 
   defstruct near_text: nil,
@@ -67,18 +67,21 @@ defmodule ClimbOntario.Catalogue.Query do
   defp list(s) when is_binary(s),
     do: s |> String.split(",", trim: true) |> Enum.map(&String.trim/1)
 
-  defp list(l) when is_list(l), do: l
+  defp list(_), do: []
   defp join([]), do: nil
   defp join(l), do: Enum.join(l, ",")
-  defp blank_to_nil(nil), do: nil
-  defp blank_to_nil(s), do: if(String.trim(s) == "", do: nil, else: String.trim(s))
 
-  defp int(nil, d), do: d
+  defp blank_to_nil(s) when is_binary(s),
+    do: if(String.trim(s) == "", do: nil, else: String.trim(s))
 
-  defp int(s, d) do
-    case Integer.parse(to_string(s)) do
+  defp blank_to_nil(_), do: nil
+
+  defp int(s, d) when is_binary(s) do
+    case Integer.parse(s) do
       {n, _} when n > 0 and n <= 500 -> n
       _ -> d
     end
   end
+
+  defp int(_, d), do: d
 end

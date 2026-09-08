@@ -1,5 +1,5 @@
 defmodule ClimbOntarioWeb.DiscoverLiveTest do
-  use ClimbOntarioWeb.ConnCase, async: true
+  use ClimbOntarioWeb.ConnCase, async: false
   import Phoenix.LiveViewTest
   import ClimbOntario.Fixtures
 
@@ -25,7 +25,7 @@ defmodule ClimbOntarioWeb.DiscoverLiveTest do
     {:ok, view, html} = live(conn, ~p"/")
     assert html =~ "on in Ontario climbing?"
     assert html =~ comp.title
-    assert has_element?(view, "a[href='/e/#{comp.slug}']")
+    assert has_element?(view, "a[href='/e/#{ClimbOntario.Catalogue.Listing.slug(comp)}']")
   end
 
   test "searching a place patches the URL and filters chips stay in it", %{conn: conn, comp: comp} do

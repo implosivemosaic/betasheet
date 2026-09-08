@@ -8,17 +8,17 @@ defmodule ClimbOntarioWeb.ListingController do
   def show(conn, %{"slug" => slug}) do
     with {id, _} <- Integer.parse(slug),
          %Listing{} = listing <- Catalogue.get_listing(id) do
-      if listing.slug == slug do
+      if Listing.slug(listing) == slug do
         today = Clock.today()
 
         render(conn, :show,
           listing: listing,
           today: today,
           page_title: listing.title,
-          meta: meta(listing, today, url(conn, ~p"/e/#{listing.slug}"))
+          meta: meta(listing, today, url(conn, ~p"/e/#{Listing.slug(listing)}"))
         )
       else
-        conn |> put_status(:moved_permanently) |> redirect(to: ~p"/e/#{listing.slug}")
+        conn |> put_status(:moved_permanently) |> redirect(to: ~p"/e/#{Listing.slug(listing)}")
       end
     else
       _ ->
