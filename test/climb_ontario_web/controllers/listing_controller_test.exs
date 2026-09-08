@@ -20,7 +20,22 @@ defmodule ClimbOntarioWeb.ListingControllerTest do
     assert html =~ "https://ocf.example/e"
     assert html =~ "Sat Dec 12"
     assert html =~ "Copy link"
-    assert html =~ "View official event"
+    assert html =~ "View original event"
+    # the CTA sits above the description, not at the bottom
+    assert :binary.match(html, "View original event") < :binary.match(html, "leading-relaxed")
+
+    gym_only =
+      listing!(venue!(%{slug: "other", source_gym_id: 999}), %{
+        id: 4242,
+        link_kind: "gym",
+        link: "https://gym.example"
+      })
+
+    assert conn
+           |> recycle()
+           |> get("/e/#{gym_only.id}-ocf-boulder-u11-u13-u15")
+           |> html_response(200) =~
+             "Visit organizer&#39;s website"
   end
 
   test "stale slug redirects to the canonical one; unknown id is 404", %{conn: conn, listing: l} do

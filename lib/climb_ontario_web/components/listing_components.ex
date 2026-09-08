@@ -78,4 +78,40 @@ defmodule ClimbOntarioWeb.ListingComponents do
     </.link>
     """
   end
+
+  @doc """
+  The one outbound step on an event page. Wording lives here, not in records: a record
+  supplies only the destination and whether it is an event page or just the gym's homepage.
+  """
+  attr :listing, :map, required: true
+  attr :url, :string, required: true, doc: "this page's canonical URL, for Copy link"
+
+  def organizer_cta(assigns) do
+    ~H"""
+    <div class="mt-4">
+      <div class="flex flex-wrap items-center gap-2">
+        <a href={@listing.link} target="_blank" rel="noopener" class="btn btn-primary rounded-field">
+          {Format.link_label(@listing.link_kind)} ↗
+        </a>
+        <button
+          type="button"
+          id="copy-link"
+          phx-hook="CopyLink"
+          data-url={@url}
+          data-title={@listing.title}
+          class="btn btn-ghost rounded-field"
+        >
+          <.icon name="hero-link" class="size-5" /> <span data-label>Copy link</span>
+        </button>
+      </div>
+      <p class="mt-1.5 text-xs text-base-content/60">
+        <%= if @listing.link_kind == "gym" do %>
+          We didn't find a page for this event; the organizer's site is the place to ask.
+        <% else %>
+          Latest details and booking information from the organizer.
+        <% end %>
+      </p>
+    </div>
+    """
+  end
 end

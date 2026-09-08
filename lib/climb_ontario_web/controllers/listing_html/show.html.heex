@@ -43,31 +43,14 @@
       </dd>
     </dl>
 
+    <.organizer_cta listing={@listing} url={@meta.url} />
+
     <p class="mt-5 text-base leading-relaxed">{@listing.summary}</p>
 
     <div :if={@listing.caveat} class="mt-4 flex gap-2 rounded-box bg-warning/15 p-3 text-sm">
       <.icon name="hero-exclamation-triangle" class="size-5 shrink-0 text-warning" />
       <span>{@listing.caveat}</span>
     </div>
-
-    <div class="mt-5 flex flex-wrap items-center gap-2">
-      <a href={@listing.link} target="_blank" rel="noopener" class="btn btn-primary rounded-field">
-        {Format.link_label(@listing.link_kind)} ↗
-      </a>
-      <button
-        type="button"
-        id="copy-link"
-        phx-hook="CopyLink"
-        data-url={@meta.url}
-        data-title={@listing.title}
-        class="btn rounded-field"
-      >
-        <.icon name="hero-link" class="size-5" /> <span data-label>Copy link</span>
-      </button>
-    </div>
-    <p :if={@listing.link_kind == "gym"} class="mt-2 text-xs text-base-content/60">
-      No page for this event was found; the gym's website is the best place to ask.
-    </p>
 
     <div class="mt-8 text-xs text-base-content/60 space-y-1">
       <p>

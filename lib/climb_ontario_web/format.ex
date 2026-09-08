@@ -79,9 +79,8 @@ defmodule ClimbOntarioWeb.Format do
   def price(%{price_state: "admission_free"}), do: "Free"
   def price(_), do: nil
 
-  def link_label("registration"), do: "Register with organizer"
-  def link_label("event"), do: "View official event"
-  def link_label(_), do: "Gym website"
+  def link_label("gym"), do: "Visit organizer's website"
+  def link_label(_), do: "View original event"
 
   def distance(nil), do: nil
   def distance(km) when km < 1, do: "<1 km"
