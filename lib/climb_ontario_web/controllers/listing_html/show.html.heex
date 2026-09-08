@@ -1,0 +1,138 @@
+<Layouts.app flash={@flash}>
+  <article class="pt-4 sm:pt-8">
+    <a href="/" class="text-sm link link-hover text-base-content/70">← All listings</a>
+
+    <div :if={past?(@listing, @today)} class="mt-4 rounded-box bg-base-200 p-3 text-sm">
+      This has already happened. <a href="/" class="link">See what's coming up.</a>
+    </div>
+    <div :if={@listing.status == "cancelled"} class="mt-4 rounded-box bg-error/10 p-3 text-sm">
+      This listing was cancelled by the organizer.
+    </div>
+
+    <div class="mt-4 flex items-center gap-2">
+      <.kind_badge listing={@listing} />
+      <span :if={@listing.confidence == "tentative"} class="tag tag-muted">Tentative</span>
+      <span :if={@listing.registration_state == "full"} class="tag tag-muted">Full</span>
+    </div>
+    <h1 class="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-balance">
+      {@listing.title}
+    </h1>
+    <p class="mt-1 text-base-content/70">{Format.venue_line(@listing.venue)}</p>
+
+    <div class="mt-5 grid gap-3 sm:grid-cols-2">
+      <div class="rounded-box border border-base-300 bg-base-100 p-4">
+        <p class="text-xs font-semibold uppercase tracking-wide text-base-content/60">When</p>
+        <p class="mt-1 font-medium">{Format.when_line(@listing, @today)}</p>
+        <p :if={@listing.schedule_note} class="mt-0.5 text-sm text-base-content/80">
+          {@listing.schedule_note}
+        </p>
+        <p
+          :if={@listing.start_date && @listing.schedule_kind != "one_off"}
+          class="mt-0.5 text-xs text-base-content/60"
+        >
+          {Format.date_with_year(@listing.start_date)}<span :if={@listing.end_date}> to {Format.date_with_year(
+            @listing.end_date
+          )}</span>
+        </p>
+        <p
+          :if={@listing.schedule_kind == "one_off" && @listing.start_date}
+          class="mt-0.5 text-xs text-base-content/60"
+        >
+          {Format.date_with_year(@listing.start_date)}
+        </p>
+      </div>
+      <div class="rounded-box border border-base-300 bg-base-100 p-4">
+        <p class="text-xs font-semibold uppercase tracking-wide text-base-content/60">Where</p>
+        <p class="mt-1 font-medium">{@listing.venue.name}</p>
+        <p
+          :if={@listing.venue_note}
+          class="mt-0.5 text-sm text-warning-content bg-warning/20 rounded px-2 py-1 inline-block"
+        >
+          {@listing.venue_note}
+        </p>
+        <p class="mt-0.5 text-sm text-base-content/80">
+          {@listing.venue.street_address}<span :if={@listing.venue.street_address}>, </span>{@listing.venue.city}
+        </p>
+        <a
+          href={maps_url(@listing.venue)}
+          target="_blank"
+          rel="noopener"
+          class="mt-1 inline-block text-sm link"
+        >Open in Maps ↗</a>
+      </div>
+    </div>
+
+    <div class="mt-3 flex flex-wrap gap-1.5 text-xs">
+      <span :if={@listing.ages} class="tag">{@listing.ages}</span>
+      <span :for={a <- @listing.audience} class="tag">{Format.audience_label(a)}</span>
+      <span :if={@listing.skill == "beginner"} class="tag">Beginner friendly</span>
+      <span :if={@listing.price_note || @listing.price_short} class="tag tag-price">{@listing.price_note ||
+        @listing.price_short}</span>
+    </div>
+
+    <p :if={@listing.summary != ""} class="mt-5 text-base leading-relaxed">{@listing.summary}</p>
+
+    <div :if={@listing.caveat} class="mt-4 flex gap-2 rounded-box bg-warning/15 p-3 text-sm">
+      <.icon name="hero-exclamation-triangle" class="size-5 shrink-0 text-warning" />
+      <span>{@listing.caveat}</span>
+    </div>
+    <p
+      :if={@listing.registration_state == "opens_later"}
+      class="mt-3 text-sm text-base-content/80"
+    >
+      Registration hasn't opened yet.
+    </p>
+
+    <div class="mt-6 flex flex-wrap gap-2">
+      <a
+        :if={@listing.organizer_url}
+        href={@listing.organizer_url}
+        target="_blank"
+        rel="noopener"
+        class="btn btn-primary rounded-field"
+      >
+        Details &amp; registration
+        <span class="text-primary-content/70 text-xs">{host(@listing.organizer_url)}</span>
+      </a>
+      <button
+        type="button"
+        id="copy-link"
+        phx-hook="CopyLink"
+        data-url={@meta.url}
+        data-title={@listing.title}
+        class="btn rounded-field"
+      >
+        <.icon name="hero-link" class="size-5" /> <span data-label>Copy link</span>
+      </button>
+    </div>
+
+    <details
+      :if={@listing.details && @listing.details != @listing.summary}
+      class="mt-6 rounded-box border border-base-300 p-4 text-sm"
+    >
+      <summary class="cursor-pointer font-medium">More from the organizer's listing</summary>
+      <p class="mt-2 whitespace-pre-line text-base-content/80">{@listing.details}</p>
+      <p :if={@listing.price_text} class="mt-2 text-base-content/80">
+        <span class="font-medium">Price:</span> {@listing.price_text}
+      </p>
+      <p :if={@listing.recurrence_text} class="mt-2 text-base-content/80">
+        <span class="font-medium">Schedule:</span> {@listing.recurrence_text}
+      </p>
+    </details>
+
+    <div class="mt-8 text-xs text-base-content/60 space-y-1">
+      <p>
+        Checked {Format.checked(@listing.checked_at)} against the organizer's published information. Things change; confirm before you go.
+      </p>
+      <p :if={@listing.source_urls != []}>
+        Sources:
+        <span :for={{u, i} <- Enum.with_index(@listing.source_urls)}><span :if={i > 0}>, </span><a
+          href={u}
+          target="_blank"
+          rel="noopener"
+          class="link"
+        >{host(u)}</a></span>
+      </p>
+    </div>
+  </article>
+</Layouts.app>

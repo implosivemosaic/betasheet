@@ -1,0 +1,7 @@
+# Source this to run Elixir/mix on the Dot box: strips the host app's release env
+# (ROOTDIR/BINDIR point erl at /app) and puts the real OTP install first on PATH.
+unset ROOTDIR BINDIR PROGNAME ERL_AFLAGS RELEASE_ROOT RELEASE_NAME RELEASE_MODE RELEASE_COOKIE RELEASE_NODE RELEASE_VM_ARGS RELEASE_BOOT_SCRIPT RELEASE_SYS_CONFIG RELEASE_COMMAND RELEASE_TMP RELEASE_BOOT_SCRIPT_CLEAN RELEASE_DISTRIBUTION RELEASE_VSN RELEASE_PROG RELEASE_REMOTE_VM_ARGS
+export PATH=/usr/local/lib/erlang/bin:$PATH
+export MIX_ENV=${CLIMB_MIX_ENV:-dev}
+# The host app exports its own Phoenix env; keep it away from this project.
+unset PORT PHX_SERVER PHX_HOST SECRET_KEY_BASE DATABASE_PATH DATABASE_URL

@@ -1,0 +1,3899 @@
+[
+ {
+  "name": "Addington Highlands",
+  "lat": 45.1427078,
+  "lng": -77.2649632,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Adelaide Metcalfe",
+  "lat": 43.0045288,
+  "lng": -81.7438221,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Adjala-Tosorontio",
+  "lat": 44.1907658,
+  "lng": -79.9403447,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Admaston/Bromley",
+  "lat": 45.50822429999999,
+  "lng": -76.9381092,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Ajax",
+  "lat": 43.8611288,
+  "lng": -79.0259267,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Alberton",
+  "lat": 48.6047564,
+  "lng": -93.4942361,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Alfred and Plantagenet",
+  "lat": 45.53512509999999,
+  "lng": -74.9988235,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Algonquin Highlands",
+  "lat": 45.3688309,
+  "lng": -78.724121,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Alnwick/Haldimand",
+  "lat": 44.084203,
+  "lng": -78.04307200000001,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Amaranth",
+  "lat": 43.9453262,
+  "lng": -80.244785,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Amherstburg",
+  "lat": 42.1000638,
+  "lng": -83.108154,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Ancaster",
+  "lat": 43.2177791,
+  "lng": -79.98728349999999,
+  "types": [
+   "neighborhood",
+   "political"
+  ]
+ },
+ {
+  "name": "Armour",
+  "lat": 45.5744933,
+  "lng": -79.353214,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Armstrong",
+  "lat": 47.7109849,
+  "lng": -79.8243385,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Arnprior",
+  "lat": 45.4347566,
+  "lng": -76.35162389999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Arran-Elderslie",
+  "lat": 44.3993297,
+  "lng": -81.2014475,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Ashfield-Colborne-Wawanosh",
+  "lat": 43.8544494,
+  "lng": -81.59964160000001,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Asphodel-Norwood",
+  "lat": 44.38232070000001,
+  "lng": -77.9799088,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Assiginack",
+  "lat": 45.737315,
+  "lng": -81.81368499999999,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Athens",
+  "lat": 44.6259074,
+  "lng": -75.95238069999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Atikokan",
+  "lat": 48.7575098,
+  "lng": -91.6218292,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Augusta",
+  "lat": 44.722215,
+  "lng": -75.57835089999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Aurora",
+  "lat": 44.0051214,
+  "lng": -79.4437768,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Aylmer",
+  "lat": 42.7730067,
+  "lng": -80.98296619999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Baldwin",
+  "lat": 46.2862798,
+  "lng": -81.75320669999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Bancroft",
+  "lat": 45.0560805,
+  "lng": -77.8530899,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Barrhaven",
+  "lat": 45.2759022,
+  "lng": -75.71855579999999,
+  "types": [
+   "neighborhood",
+   "political"
+  ]
+ },
+ {
+  "name": "Barrie",
+  "lat": 44.3903652,
+  "lng": -79.6910866,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Bayham",
+  "lat": 42.7487076,
+  "lng": -80.7778465,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Beckwith",
+  "lat": 45.0790097,
+  "lng": -76.09550159999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Belleville",
+  "lat": 44.1640002,
+  "lng": -77.3825631,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Billings",
+  "lat": 45.85061169999999,
+  "lng": -82.21946290000001,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Black River-Matheson",
+  "lat": 48.5328835,
+  "lng": -80.46407239999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Blandford-Blenheim",
+  "lat": 43.2368317,
+  "lng": -80.5524113,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Blind River",
+  "lat": 46.1876369,
+  "lng": -82.9486349,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Bluewater",
+  "lat": 43.4211976,
+  "lng": -81.62479010000001,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Bonfield",
+  "lat": 46.2317619,
+  "lng": -79.14321079999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Bonnechere Valley",
+  "lat": 45.5322432,
+  "lng": -77.09710559999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Bracebridge",
+  "lat": 45.0402409,
+  "lng": -79.3085748,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Bradford West Gwillimbury",
+  "lat": 44.1143373,
+  "lng": -79.5647469,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Brampton",
+  "lat": 43.68816899999999,
+  "lng": -79.763015,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Brant",
+  "lat": 43.152667,
+  "lng": -80.17159099999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Brantford",
+  "lat": 43.1394191,
+  "lng": -80.263623,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Brethour",
+  "lat": 47.7111429,
+  "lng": -79.5672597,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Brighton",
+  "lat": 44.0421963,
+  "lng": -77.7370348,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Brock",
+  "lat": 44.3376029,
+  "lng": -79.0954939,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Brockton",
+  "lat": 44.1333857,
+  "lng": -81.1500604,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Brockville",
+  "lat": 44.5896098,
+  "lng": -75.684249,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Brooke-Alvinston",
+  "lat": 42.8203609,
+  "lng": -81.8698175,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Bruce Mines",
+  "lat": 46.3002621,
+  "lng": -83.7932936,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Brudenell, Lyndoch and Raglan",
+  "lat": 45.3120796,
+  "lng": -77.5069804,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Burk's Falls",
+  "lat": 45.6202248,
+  "lng": -79.4089145,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Burlington",
+  "lat": 43.32601200000001,
+  "lng": -79.7982923,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Burpee and Mills",
+  "lat": 45.768246,
+  "lng": -82.4807635,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Caledon",
+  "lat": 43.8701204,
+  "lng": -79.8670882,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Callander",
+  "lat": 46.2226095,
+  "lng": -79.3648655,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Calvin",
+  "lat": 46.24936779999999,
+  "lng": -78.8911485,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Cambridge",
+  "lat": 43.4016935,
+  "lng": -80.32593109999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Carleton Place",
+  "lat": 45.1369568,
+  "lng": -76.142068,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Carling",
+  "lat": 45.4077359,
+  "lng": -80.16066719999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Carlow/Mayo",
+  "lat": 45.1257478,
+  "lng": -77.5784863,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Casey",
+  "lat": 47.6523065,
+  "lng": -79.58866239999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Casselman",
+  "lat": 45.3119016,
+  "lng": -75.0855253,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Cavan Monaghan",
+  "lat": 44.1504432,
+  "lng": -78.44910279999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Central Elgin",
+  "lat": 42.77655310000001,
+  "lng": -81.0831176,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Central Frontenac",
+  "lat": 44.7718762,
+  "lng": -76.6871274,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Central Huron",
+  "lat": 43.6171754,
+  "lng": -81.53973909999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Central Manitoulin",
+  "lat": 45.7321807,
+  "lng": -82.1671813,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Centre Hastings",
+  "lat": 44.5052206,
+  "lng": -77.47265019999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Centre Wellington",
+  "lat": 43.6811021,
+  "lng": -80.4295875,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Chamberlain",
+  "lat": 47.8987516,
+  "lng": -79.9476026,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Champlain",
+  "lat": 45.5196355,
+  "lng": -74.65220459999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Chapleau",
+  "lat": 47.8431918,
+  "lng": -83.40077629999999,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Chapple",
+  "lat": 48.648833,
+  "lng": -93.98478399999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Charlton and Dack",
+  "lat": 47.810514,
+  "lng": -79.99396159999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Chatham-Kent",
+  "lat": 42.4078118,
+  "lng": -82.19110320000001,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Chatsworth",
+  "lat": 44.4568472,
+  "lng": -80.8983102,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Chisholm",
+  "lat": 46.09063889999999,
+  "lng": -79.19827959999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Clarence-Rockland",
+  "lat": 45.5466534,
+  "lng": -75.29388999999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Clarington",
+  "lat": 43.9345347,
+  "lng": -78.6000336,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Clearview",
+  "lat": 44.41834,
+  "lng": -80.0959826,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Cobalt",
+  "lat": 47.3952886,
+  "lng": -79.68570439999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Cobourg",
+  "lat": 43.9599054,
+  "lng": -78.165509,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Cochrane",
+  "lat": 49.0652094,
+  "lng": -81.02975409999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Cockburn Island",
+  "lat": 45.9581955,
+  "lng": -83.3183631,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Coleman",
+  "lat": 47.3744082,
+  "lng": -79.7599097,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Collingwood",
+  "lat": 44.5008798,
+  "lng": -80.2169959,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Conmee",
+  "lat": 48.4843117,
+  "lng": -89.63833369999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Cornwall",
+  "lat": 45.0287624,
+  "lng": -74.7346822,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Cramahe",
+  "lat": 44.0050984,
+  "lng": -77.8880021,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Dawn-Euphemia",
+  "lat": 42.7136559,
+  "lng": -82.2255133,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Dawson",
+  "lat": 48.7220992,
+  "lng": -94.4287897,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Deep River",
+  "lat": 46.0975386,
+  "lng": -77.49355419999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Deseronto",
+  "lat": 44.19641499999999,
+  "lng": -77.04911059999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Dorion",
+  "lat": 48.80897390000001,
+  "lng": -88.57924369999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Douro-Dummer",
+  "lat": 44.428036,
+  "lng": -78.1365288,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Drummond/North Elmsley",
+  "lat": 44.9326599,
+  "lng": -76.24352449999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Dryden",
+  "lat": 49.782044,
+  "lng": -92.83633859999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Dubreuilville",
+  "lat": 48.3500468,
+  "lng": -84.54951799999999,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Dundas",
+  "lat": 43.26650890000001,
+  "lng": -79.9568685,
+  "types": [
+   "neighborhood",
+   "political"
+  ]
+ },
+ {
+  "name": "Dutton/Dunwich",
+  "lat": 42.6637247,
+  "lng": -81.5026839,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Dysart et al",
+  "lat": 45.0463592,
+  "lng": -78.5086559,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Ear Falls",
+  "lat": 50.63782519999999,
+  "lng": -93.23312539999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "East Ferris",
+  "lat": 46.2616436,
+  "lng": -79.29198020000001,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "East Garafraxa",
+  "lat": 43.8865304,
+  "lng": -80.1377084,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "East Gwillimbury",
+  "lat": 44.1023966,
+  "lng": -79.4412208,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "East Hawkesbury",
+  "lat": 45.5015192,
+  "lng": -74.47414599999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "East York",
+  "lat": 43.69120059999999,
+  "lng": -79.34166379999999,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "East Zorra-Tavistock",
+  "lat": 43.2380969,
+  "lng": -80.8061426,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Edwardsburgh/Cardinal",
+  "lat": 44.8721343,
+  "lng": -75.5057442,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Elizabethtown-Kitley",
+  "lat": 44.6179879,
+  "lng": -75.75598699999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Elliot Lake",
+  "lat": 46.3825167,
+  "lng": -82.64160009999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Emo",
+  "lat": 48.6321494,
+  "lng": -93.83378119999999,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Englehart",
+  "lat": 47.8236542,
+  "lng": -79.873137,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Enniskillen",
+  "lat": 42.8325773,
+  "lng": -82.1254818,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Erin",
+  "lat": 43.77491790000001,
+  "lng": -80.0701836,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Espanola",
+  "lat": 46.2647877,
+  "lng": -81.7701891,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Essa",
+  "lat": 44.3308476,
+  "lng": -79.8872468,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Essex",
+  "lat": 42.1639439,
+  "lng": -82.7347142,
+  "types": [
+   "administrative_area_level_2",
+   "political"
+  ]
+ },
+ {
+  "name": "Etobicoke",
+  "lat": 43.6204946,
+  "lng": -79.5131983,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Evanturel",
+  "lat": 47.7976617,
+  "lng": -79.8253809,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Faraday",
+  "lat": 44.9863945,
+  "lng": -77.9725645,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Fauquier-Strickland",
+  "lat": 49.3120115,
+  "lng": -82.0357089,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Fort Erie",
+  "lat": 42.9053716,
+  "lng": -78.9403318,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Fort Frances",
+  "lat": 48.6100357,
+  "lng": -93.3956621,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "French River",
+  "lat": 46.1337279,
+  "lng": -80.43171149999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Front of Yonge",
+  "lat": 44.4808296,
+  "lng": -75.8751218,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Frontenac Islands",
+  "lat": 44.1927153,
+  "lng": -76.4423178,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Gananoque",
+  "lat": 44.3295828,
+  "lng": -76.16252209999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Gauthier",
+  "lat": 48.1243492,
+  "lng": -79.8325855,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Georgian Bay",
+  "lat": 44.8048914,
+  "lng": -79.7376061,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Georgian Bluffs",
+  "lat": 44.55891310000001,
+  "lng": -80.99079359999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Georgina",
+  "lat": 44.30442250000001,
+  "lng": -79.36283170000002,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Gillies",
+  "lat": 48.30606530000001,
+  "lng": -89.706715,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Gloucester",
+  "lat": 45.4473421,
+  "lng": -75.5942867,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Goderich",
+  "lat": 43.7431102,
+  "lng": -81.71228640000001,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Gordon/Barrie Island",
+  "lat": 45.8960382,
+  "lng": -82.4711039,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Gore Bay",
+  "lat": 45.9147013,
+  "lng": -82.4643808,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Grand Valley",
+  "lat": 43.8990963,
+  "lng": -80.31530389999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Gravenhurst",
+  "lat": 44.9197879,
+  "lng": -79.37404699999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Greater Madawaska",
+  "lat": 45.3006915,
+  "lng": -76.72266090000001,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Greater Napanee",
+  "lat": 44.2473184,
+  "lng": -76.9505464,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Greater Sudbury",
+  "lat": 46.4931827,
+  "lng": -80.99052329999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Greenstone",
+  "lat": 49.68001899999999,
+  "lng": -86.9424389,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Grey Highlands",
+  "lat": 44.2837469,
+  "lng": -80.5196821,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Grimsby",
+  "lat": 43.1942126,
+  "lng": -79.56241949999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Guelph",
+  "lat": 43.544821,
+  "lng": -80.2481063,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Guelph/Eramosa",
+  "lat": 43.58592729999999,
+  "lng": -80.2992881,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Haldimand",
+  "lat": 42.9478943,
+  "lng": -79.8690857,
+  "types": [
+   "administrative_area_level_2",
+   "political"
+  ]
+ },
+ {
+  "name": "Halton Hills",
+  "lat": 43.6502664,
+  "lng": -79.90361999999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Hamilton",
+  "lat": 43.2557206,
+  "lng": -79.8711024,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Hanover",
+  "lat": 44.1511736,
+  "lng": -81.026257,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Harley",
+  "lat": 47.6386553,
+  "lng": -79.6757813,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Harris",
+  "lat": 47.5668568,
+  "lng": -79.5883971,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Hastings Highlands",
+  "lat": 45.2309393,
+  "lng": -77.93844460000001,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Havelock-Belmont-Methuen",
+  "lat": 44.4330206,
+  "lng": -77.892308,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Hawkesbury",
+  "lat": 45.6075851,
+  "lng": -74.6049042,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Head, Clara and Maria",
+  "lat": 46.21254039999999,
+  "lng": -77.8939986,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Hearst",
+  "lat": 49.6873827,
+  "lng": -83.6604318,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Highlands East",
+  "lat": 44.9494377,
+  "lng": -78.0423414,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Hilliard",
+  "lat": 47.7257932,
+  "lng": -79.6955437,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Hilton",
+  "lat": 46.2090291,
+  "lng": -83.8354573,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Hilton Beach",
+  "lat": 46.256896,
+  "lng": -83.8887733,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Hornepayne",
+  "lat": 49.2164215,
+  "lng": -84.77448609999999,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Horton",
+  "lat": 45.5152691,
+  "lng": -76.5984543,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Howick",
+  "lat": 43.868034,
+  "lng": -81.03147009999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Hudson",
+  "lat": 47.5227894,
+  "lng": -79.8507946,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Huntsville",
+  "lat": 45.3271003,
+  "lng": -79.216562,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Huron East",
+  "lat": 43.5534317,
+  "lng": -81.39330149999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Huron Shores",
+  "lat": 46.27973249999999,
+  "lng": -83.2211418,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Huron-Kinloss",
+  "lat": 44.07131649999999,
+  "lng": -81.5782833,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Ignace",
+  "lat": 49.415946,
+  "lng": -91.65874400000001,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Ingersoll",
+  "lat": 43.03778399999999,
+  "lng": -80.88223909999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Innisfil",
+  "lat": 44.3124554,
+  "lng": -79.5588661,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Iroquois Falls",
+  "lat": 48.7643056,
+  "lng": -80.68141399999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "James",
+  "lat": 47.7306153,
+  "lng": -80.3312287,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Jocelyn",
+  "lat": 46.1879426,
+  "lng": -83.9789983,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Johnson",
+  "lat": 46.3462219,
+  "lng": -83.922977,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Joly",
+  "lat": 45.7954873,
+  "lng": -79.33263989999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Kanata",
+  "lat": 45.3088185,
+  "lng": -75.89868349999999,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Kapuskasing",
+  "lat": 49.4180843,
+  "lng": -82.4299418,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Kawartha Lakes",
+  "lat": 44.3555651,
+  "lng": -78.7348423,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Kearney",
+  "lat": 45.5579569,
+  "lng": -79.22792530000001,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Kenora",
+  "lat": 49.7652584,
+  "lng": -94.4776469,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Kerns",
+  "lat": 47.6242155,
+  "lng": -79.8457942,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Killaloe, Hagarty and Richards",
+  "lat": 45.5563107,
+  "lng": -77.41781560000001,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Killarney",
+  "lat": 45.9715836,
+  "lng": -81.51175599999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Kincardine",
+  "lat": 44.1788449,
+  "lng": -81.6338584,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "King",
+  "lat": 43.9927234,
+  "lng": -79.67423649999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Kingston",
+  "lat": 44.2334401,
+  "lng": -76.49302949999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Kingsville",
+  "lat": 42.0378779,
+  "lng": -82.739626,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Kirkland Lake",
+  "lat": 48.1510022,
+  "lng": -80.0330591,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Kitchener",
+  "lat": 43.4510934,
+  "lng": -80.4925804,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "La Vallee",
+  "lat": 48.6205645,
+  "lng": -93.67202440000001,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Laird",
+  "lat": 46.3982444,
+  "lng": -84.0678281,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Lake of Bays",
+  "lat": 45.1484347,
+  "lng": -79.1184713,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Lake of the Woods",
+  "lat": 49.0963308,
+  "lng": -94.3164613,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Lakeshore",
+  "lat": 42.2932511,
+  "lng": -82.71168809999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Lambton Shores",
+  "lat": 43.2139848,
+  "lng": -81.8903225,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Lanark Highlands",
+  "lat": 45.019527,
+  "lng": -76.36690039999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Larder Lake",
+  "lat": 48.0976915,
+  "lng": -79.71505530000002,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "LaSalle",
+  "lat": 42.2364797,
+  "lng": -83.1023904,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Latchford",
+  "lat": 47.329887,
+  "lng": -79.811053,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Laurentian Hills",
+  "lat": 46.0185086,
+  "lng": -77.44900059999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Laurentian Valley",
+  "lat": 45.81027419999999,
+  "lng": -77.1474624,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Leamington",
+  "lat": 42.0530892,
+  "lng": -82.59980019999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Leeds and the Thousand Islands",
+  "lat": 44.4057634,
+  "lng": -76.01820810000001,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Limerick",
+  "lat": 44.8941503,
+  "lng": -77.7112738,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Lincoln",
+  "lat": 43.1657895,
+  "lng": -79.4764775,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "London",
+  "lat": 42.9849233,
+  "lng": -81.2452768,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Loyalist",
+  "lat": 44.2769821,
+  "lng": -76.7183141,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Lucan Biddulph",
+  "lat": 43.1877831,
+  "lng": -81.4028847,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Macdonald, Meredith and Aberdeen Additional",
+  "lat": 46.4849986,
+  "lng": -84.0700676,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Machar",
+  "lat": 45.8535629,
+  "lng": -79.42023630000001,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Machin",
+  "lat": 49.86045,
+  "lng": -93.3896731,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Madawaska Valley",
+  "lat": 45.4882055,
+  "lng": -77.67705529999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Madoc",
+  "lat": 44.5052184,
+  "lng": -77.47265019999999,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Magnetawan",
+  "lat": 45.6652044,
+  "lng": -79.6438682,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Malahide",
+  "lat": 42.7638389,
+  "lng": -80.933032,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Manitouwadge",
+  "lat": 49.12560209999999,
+  "lng": -85.8297778,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Mapleton",
+  "lat": 43.7550646,
+  "lng": -80.6713535,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Marathon",
+  "lat": 48.7166318,
+  "lng": -86.3821344,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Markham",
+  "lat": 43.8599076,
+  "lng": -79.3349945,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Markstay-Warren",
+  "lat": 46.4934545,
+  "lng": -80.5422972,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Marmora and Lake",
+  "lat": 44.4828364,
+  "lng": -77.6822387,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Matachewan",
+  "lat": 47.9400282,
+  "lng": -80.6480184,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Mattawa",
+  "lat": 46.3174524,
+  "lng": -78.7022782,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Mattawan",
+  "lat": 46.34921749999999,
+  "lng": -78.7503907,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Mattice-Val Côté",
+  "lat": 49.6124488,
+  "lng": -83.26212029999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "McDougall",
+  "lat": 45.4028678,
+  "lng": -80.06604840000001,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "McGarry",
+  "lat": 48.1442081,
+  "lng": -79.5773899,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "McKellar",
+  "lat": 45.5082273,
+  "lng": -79.920069,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "McMurrich/Monteith",
+  "lat": 45.4898018,
+  "lng": -79.4632407,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "McNab/Braeside",
+  "lat": 45.4658509,
+  "lng": -76.4069403,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Meaford",
+  "lat": 44.6068604,
+  "lng": -80.5917489,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Melancthon",
+  "lat": 44.1073218,
+  "lng": -80.26414799999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Merrickville-Wolford",
+  "lat": 44.9147549,
+  "lng": -75.83661719999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Middlesex Centre",
+  "lat": 42.9071636,
+  "lng": -81.41084029999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Midland",
+  "lat": 44.74972409999999,
+  "lng": -79.88884469999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Milton",
+  "lat": 43.5183005,
+  "lng": -79.87746109999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Minden Hills",
+  "lat": 44.9271767,
+  "lng": -78.725375,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Minto",
+  "lat": 43.91337009999999,
+  "lng": -80.8716913,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Mississauga",
+  "lat": 43.5852774,
+  "lng": -79.6449916,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Mississippi Mills",
+  "lat": 45.2294844,
+  "lng": -76.1930816,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Mono",
+  "lat": 43.9462956,
+  "lng": -80.1042868,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Montague",
+  "lat": 44.9434172,
+  "lng": -75.9645841,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Moonbeam",
+  "lat": 49.34369969999999,
+  "lng": -82.16033589999999,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Moosonee",
+  "lat": 51.2732287,
+  "lng": -80.6445584,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Morley",
+  "lat": 48.6783265,
+  "lng": -94.16318539999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Morris-Turnberry",
+  "lat": 43.8542484,
+  "lng": -81.251025,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Mulmur",
+  "lat": 44.16961879999999,
+  "lng": -80.038421,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Muskoka Lakes",
+  "lat": 45.1165202,
+  "lng": -79.5759987,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Nairn and Hyman",
+  "lat": 46.3306962,
+  "lng": -81.58249699999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Neebing",
+  "lat": 48.1884328,
+  "lng": -89.462184,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Nepean",
+  "lat": 45.33490459999999,
+  "lng": -75.7241006,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "New Tecumseth",
+  "lat": 44.15399439999999,
+  "lng": -79.8692421,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Newbury",
+  "lat": 42.6845915,
+  "lng": -81.79932389999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Newmarket",
+  "lat": 44.05918700000001,
+  "lng": -79.46125599999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Niagara Falls",
+  "lat": 43.0896084,
+  "lng": -79.0849647,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Niagara-on-the-Lake",
+  "lat": 43.2548547,
+  "lng": -79.0775385,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Nipigon",
+  "lat": 49.0125155,
+  "lng": -88.26328050000001,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Nipissing",
+  "lat": 46.0973807,
+  "lng": -79.5149661,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Norfolk",
+  "lat": 42.7967232,
+  "lng": -80.4136271,
+  "types": [
+   "administrative_area_level_2",
+   "political"
+  ]
+ },
+ {
+  "name": "North Algona Wilberforce",
+  "lat": 45.5808514,
+  "lng": -77.2445667,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "North Bay",
+  "lat": 46.329305,
+  "lng": -79.46612259999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "North Dumfries",
+  "lat": 43.2856226,
+  "lng": -80.4498507,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "North Dundas",
+  "lat": 45.0929973,
+  "lng": -75.3537446,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "North Frontenac",
+  "lat": 44.962369,
+  "lng": -76.98397,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "North Glengarry",
+  "lat": 45.3111994,
+  "lng": -74.636676,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "North Grenville",
+  "lat": 45.0213777,
+  "lng": -75.6527261,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "North Huron",
+  "lat": 43.7981545,
+  "lng": -81.46037489999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "North Kawartha",
+  "lat": 44.75379359999999,
+  "lng": -78.0869154,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "North Middlesex",
+  "lat": 43.1470282,
+  "lng": -81.5337693,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "North Perth",
+  "lat": 43.731595,
+  "lng": -80.9531415,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "North Stormont",
+  "lat": 45.2620692,
+  "lng": -74.96969179999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "North York",
+  "lat": 43.7615377,
+  "lng": -79.41107939999999,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Northeastern Manitoulin and the Islands",
+  "lat": 45.9786728,
+  "lng": -81.9247505,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Northern Bruce Peninsula",
+  "lat": 45.0690706,
+  "lng": -81.4138854,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Norwich",
+  "lat": 42.9876575,
+  "lng": -80.5974658,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "O'Connor",
+  "lat": 48.3690979,
+  "lng": -89.7005576,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Oakville",
+  "lat": 43.4507463,
+  "lng": -79.7288749,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Oil Springs",
+  "lat": 42.7837894,
+  "lng": -82.119481,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Oliver Paipoonge",
+  "lat": 48.4119281,
+  "lng": -89.5025079,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Opasatika",
+  "lat": 49.5291149,
+  "lng": -82.8781407,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Orangeville",
+  "lat": 43.9155009,
+  "lng": -80.1145014,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Orillia",
+  "lat": 44.609477,
+  "lng": -79.42065219999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Orleans",
+  "lat": 45.4558019,
+  "lng": -75.5047333,
+  "types": [
+   "neighborhood",
+   "political"
+  ]
+ },
+ {
+  "name": "Oro-Medonte",
+  "lat": 44.4653846,
+  "lng": -79.564267,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Oshawa",
+  "lat": 43.8975974,
+  "lng": -78.8635999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Otonabee-South Monaghan",
+  "lat": 44.2404719,
+  "lng": -78.1618397,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Ottawa",
+  "lat": 45.4200572,
+  "lng": -75.7003397,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Owen Sound",
+  "lat": 44.5748143,
+  "lng": -80.9163427,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Papineau-Cameron",
+  "lat": 46.3062553,
+  "lng": -78.6236255,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Parry Sound",
+  "lat": 45.3436156,
+  "lng": -80.033885,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Pelee",
+  "lat": 41.7834065,
+  "lng": -82.6696839,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Pelham",
+  "lat": 43.0332233,
+  "lng": -79.3306092,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Pembroke",
+  "lat": 45.82665129999999,
+  "lng": -77.1108826,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Penetanguishene",
+  "lat": 44.7687051,
+  "lng": -79.93348259999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Perry",
+  "lat": 45.5281926,
+  "lng": -79.32081509999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Perth",
+  "lat": 44.9017468,
+  "lng": -76.2516287,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Perth East",
+  "lat": 43.5293264,
+  "lng": -80.94354299999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Perth South",
+  "lat": 43.2542711,
+  "lng": -81.19030289999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Petawawa",
+  "lat": 45.8983611,
+  "lng": -77.28270979999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Peterborough",
+  "lat": 44.3047061,
+  "lng": -78.3199606,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Petrolia",
+  "lat": 42.8818215,
+  "lng": -82.1444389,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Pickering",
+  "lat": 43.83841839999999,
+  "lng": -79.086902,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Pickle Lake",
+  "lat": 51.467661,
+  "lng": -90.1941466,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Plummer Additional",
+  "lat": 46.36313879999999,
+  "lng": -83.7432042,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Plympton-Wyoming",
+  "lat": 42.9797099,
+  "lng": -82.1179492,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Point Edward",
+  "lat": 42.9909585,
+  "lng": -82.4036015,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Port Colborne",
+  "lat": 42.8862788,
+  "lng": -79.2513664,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Port Hope",
+  "lat": 43.9491764,
+  "lng": -78.2934834,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Powassan",
+  "lat": 46.0815486,
+  "lng": -79.36128479999999,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Prescott",
+  "lat": 44.716733,
+  "lng": -75.51997,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Prince",
+  "lat": 46.5325848,
+  "lng": -84.52270399999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Prince Edward",
+  "lat": 44.0003383,
+  "lng": -77.25049369999999,
+  "types": [
+   "administrative_area_level_2",
+   "political"
+  ]
+ },
+ {
+  "name": "Puslinch",
+  "lat": 43.4555484,
+  "lng": -80.1909373,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Quinte West",
+  "lat": 44.0997434,
+  "lng": -77.5780666,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Rainy River",
+  "lat": 48.72220189999999,
+  "lng": -94.56843169999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Ramara",
+  "lat": 44.5469047,
+  "lng": -79.1764871,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Red Lake",
+  "lat": 51.0173208,
+  "lng": -93.8297363,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Red Rock",
+  "lat": 48.9453177,
+  "lng": -88.2597215,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Renfrew",
+  "lat": 45.474767,
+  "lng": -76.687654,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Richmond Hill",
+  "lat": 43.8687877,
+  "lng": -79.4137291,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Rideau Lakes",
+  "lat": 44.6064133,
+  "lng": -76.2236803,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Russell",
+  "lat": 45.2573095,
+  "lng": -75.3583257,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Ryerson",
+  "lat": 45.607636,
+  "lng": -79.4530061,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Sables-Spanish Rivers",
+  "lat": 46.21245589999999,
+  "lng": -82.07719689999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Sarnia",
+  "lat": 42.974536,
+  "lng": -82.4065901,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Saugeen Shores",
+  "lat": 44.412449,
+  "lng": -81.3783644,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Sault Ste. Marie",
+  "lat": 46.5153817,
+  "lng": -84.33304869999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Scarborough",
+  "lat": 43.7764258,
+  "lng": -79.2317521,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Schreiber",
+  "lat": 48.8079094,
+  "lng": -87.2673968,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Scugog",
+  "lat": 44.097736,
+  "lng": -78.955784,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Seguin",
+  "lat": 45.2891087,
+  "lng": -79.81476789999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Selwyn",
+  "lat": 44.4062479,
+  "lng": -78.3378513,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Severn",
+  "lat": 44.7493195,
+  "lng": -79.51985619999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Shelburne",
+  "lat": 44.0790495,
+  "lng": -80.20102990000001,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Shuniah",
+  "lat": 48.5529067,
+  "lng": -88.8810515,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Sioux Lookout",
+  "lat": 50.09754400000001,
+  "lng": -91.9220461,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Sioux Narrows-Nestor Falls",
+  "lat": 49.4084786,
+  "lng": -94.0961813,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Smiths Falls",
+  "lat": 44.9037618,
+  "lng": -76.021594,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Smooth Rock Falls",
+  "lat": 49.2728765,
+  "lng": -81.6195501,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "South Algonquin",
+  "lat": 45.502332,
+  "lng": -77.98376180000001,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "South Bruce",
+  "lat": 44.042348,
+  "lng": -81.1190459,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "South Bruce Peninsula",
+  "lat": 44.7418962,
+  "lng": -81.1407899,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "South Dundas",
+  "lat": 44.8994112,
+  "lng": -75.1844954,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "South Frontenac",
+  "lat": 44.4073435,
+  "lng": -76.6005284,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "South Glengarry",
+  "lat": 45.2558148,
+  "lng": -74.595058,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "South Huron",
+  "lat": 43.316667,
+  "lng": -81.5,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "South River",
+  "lat": 45.8410378,
+  "lng": -79.37957279999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "South Stormont",
+  "lat": 45.0348804,
+  "lng": -74.9361667,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "South-West Oxford",
+  "lat": 42.9584801,
+  "lng": -80.79253539999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Southgate",
+  "lat": 44.162076,
+  "lng": -80.3999626,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Southwest Middlesex",
+  "lat": 42.7463464,
+  "lng": -81.70891499999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Southwold",
+  "lat": 42.7394773,
+  "lng": -81.3453895,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Spanish",
+  "lat": 46.1945199,
+  "lng": -82.3419694,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Springwater",
+  "lat": 44.4471323,
+  "lng": -79.730217,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "St. Catharines",
+  "lat": 43.1599795,
+  "lng": -79.2470299,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "St. Clair",
+  "lat": 42.839859,
+  "lng": -82.46388859999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "St. Joseph",
+  "lat": 46.2899924,
+  "lng": -84.0335758,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "St. Marys",
+  "lat": 43.259624,
+  "lng": -81.1407287,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "St. Thomas",
+  "lat": 42.778871,
+  "lng": -81.1827632,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "St.-Charles",
+  "lat": 46.3623606,
+  "lng": -80.41609799999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Stirling-Rawdon",
+  "lat": 44.2962085,
+  "lng": -77.5475462,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Stittsville",
+  "lat": 45.2585131,
+  "lng": -75.92077669999999,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Stone Mills",
+  "lat": 44.4879049,
+  "lng": -76.9916547,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Stoney Creek",
+  "lat": 43.2272182,
+  "lng": -79.7195586,
+  "types": [
+   "neighborhood",
+   "political"
+  ]
+ },
+ {
+  "name": "Stratford",
+  "lat": 43.3714815,
+  "lng": -80.9828641,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Strathroy-Caradoc",
+  "lat": 42.95542,
+  "lng": -81.62323330000001,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Strong",
+  "lat": 45.73910739999999,
+  "lng": -79.470151,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Sundridge",
+  "lat": 45.7717472,
+  "lng": -79.3924524,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Tarbutt",
+  "lat": 46.3523224,
+  "lng": -84.0241418,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Tay",
+  "lat": 44.7448268,
+  "lng": -79.8108786,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Tay Valley",
+  "lat": 44.8853517,
+  "lng": -76.3124898,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Tecumseh",
+  "lat": 42.3117887,
+  "lng": -82.8863126,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Tehkummah",
+  "lat": 45.6561579,
+  "lng": -82.01447019999999,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Temagami",
+  "lat": 47.0633734,
+  "lng": -79.7895671,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Temiskaming Shores",
+  "lat": 47.5085752,
+  "lng": -79.6744156,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Terrace Bay",
+  "lat": 48.783999,
+  "lng": -87.0966258,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Thames Centre",
+  "lat": 42.9886282,
+  "lng": -81.05851969999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "The Archipelago",
+  "lat": 45.5988186,
+  "lng": -80.3854133,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "The Blue Mountains",
+  "lat": 44.5458789,
+  "lng": -80.46168279999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "The Nation",
+  "lat": 45.3806416,
+  "lng": -74.9027962,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "The North Shore",
+  "lat": 46.2137666,
+  "lng": -82.538254,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Thessalon",
+  "lat": 46.256402,
+  "lng": -83.5569356,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Thornloe",
+  "lat": 47.6676932,
+  "lng": -79.75996789999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Thorold",
+  "lat": 43.1236091,
+  "lng": -79.1989299,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Thunder Bay",
+  "lat": 48.3808991,
+  "lng": -89.24777019999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Tillsonburg",
+  "lat": 42.8659037,
+  "lng": -80.73337579999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Timmins",
+  "lat": 48.4761506,
+  "lng": -81.3282732,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Tiny",
+  "lat": 44.6950457,
+  "lng": -79.9952979,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Toronto",
+  "lat": 43.6548253,
+  "lng": -79.388447,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Trent Hills",
+  "lat": 44.3082474,
+  "lng": -77.7979381,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Trent Lakes",
+  "lat": 44.5860819,
+  "lng": -78.5118483,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Tudor and Cashel",
+  "lat": 44.8220806,
+  "lng": -77.61123370000001,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Tweed",
+  "lat": 44.474728,
+  "lng": -77.310249,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Tyendinaga",
+  "lat": 44.3095599,
+  "lng": -77.2037244,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Uxbridge",
+  "lat": 44.10940280000001,
+  "lng": -79.12049979999999,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Val Rita-Harty",
+  "lat": 49.4442629,
+  "lng": -82.54098929999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Vaughan",
+  "lat": 43.82622809999999,
+  "lng": -79.5561668,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Wainfleet",
+  "lat": 42.9233173,
+  "lng": -79.3756911,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Warwick",
+  "lat": 42.9555326,
+  "lng": -81.8799058,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Wasaga Beach",
+  "lat": 44.5233279,
+  "lng": -80.00407430000001,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Waterdown",
+  "lat": 43.3247102,
+  "lng": -79.90303709999999,
+  "types": [
+   "neighborhood",
+   "political"
+  ]
+ },
+ {
+  "name": "Waterloo",
+  "lat": 43.4819752,
+  "lng": -80.5261203,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Wawa",
+  "lat": 47.9922017,
+  "lng": -84.7709192,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Welland",
+  "lat": 42.9921701,
+  "lng": -79.2482475,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Wellesley",
+  "lat": 43.4774918,
+  "lng": -80.7645773,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Wellington North",
+  "lat": 43.92524179999999,
+  "lng": -80.6696331,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "West Elgin",
+  "lat": 42.5683714,
+  "lng": -81.68343349999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "West Grey",
+  "lat": 44.1763705,
+  "lng": -80.81853199999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "West Lincoln",
+  "lat": 43.0998799,
+  "lng": -79.5466297,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "West Nipissing",
+  "lat": 46.3660454,
+  "lng": -79.92489359999999,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "West Perth",
+  "lat": 43.4680946,
+  "lng": -81.1979344,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Westport",
+  "lat": 44.6776761,
+  "lng": -76.3996659,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Whitby",
+  "lat": 43.8997643,
+  "lng": -78.9400809,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Whitchurch-Stouffville",
+  "lat": 43.9691315,
+  "lng": -79.2569089,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "White River",
+  "lat": 48.5925843,
+  "lng": -85.27336040000002,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Whitestone",
+  "lat": 45.6819375,
+  "lng": -79.98338559999999,
+  "types": [
+   "political",
+   "sublocality",
+   "sublocality_level_1"
+  ]
+ },
+ {
+  "name": "Whitewater",
+  "lat": 51.253775,
+  "lng": -85.3232139,
+  "types": [
+   "administrative_area_level_1",
+   "political"
+  ]
+ },
+ {
+  "name": "Wilmot",
+  "lat": 43.4054525,
+  "lng": -80.67309350000001,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Windsor",
+  "lat": 42.3141075,
+  "lng": -83.03675059999999,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Wollaston",
+  "lat": 44.8621734,
+  "lng": -77.8355277,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Woodstock",
+  "lat": 43.1315514,
+  "lng": -80.74727960000001,
+  "types": [
+   "locality",
+   "political"
+  ]
+ },
+ {
+  "name": "Woolwich",
+  "lat": 43.6000033,
+  "lng": -80.5577879,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ },
+ {
+  "name": "Zorra",
+  "lat": 43.0579064,
+  "lng": -80.9995035,
+  "types": [
+   "administrative_area_level_3",
+   "political"
+  ]
+ }
+]

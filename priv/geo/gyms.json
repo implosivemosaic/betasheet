@@ -1,0 +1,576 @@
+[
+  {
+    "gym_id": 1,
+    "name": "Basecamp - Queen West",
+    "query": "186 Spadina Ave. Unit 1A, Toronto, Ontario M5T 3B2",
+    "lat": 43.6497875,
+    "lng": -79.3970569,
+    "location_type": "ROOFTOP",
+    "formatted_address": "186 Spadina Ave. Unit 1A, Toronto, ON M5T 3B2, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 2,
+    "name": "Ethos Climbing",
+    "query": "128 Queens Quay E, Toronto, Ontario M5A 1B6",
+    "lat": 43.6440603,
+    "lng": -79.36925029999999,
+    "location_type": "ROOFTOP",
+    "formatted_address": "128 Queens Quay E, Toronto, ON M5A 1B6, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 3,
+    "name": "Rock On Climbing",
+    "query": "474 Front St E Unit 4, Toronto, Ontario M5A 0E6",
+    "lat": 43.6535958,
+    "lng": -79.3551823,
+    "location_type": "ROOFTOP",
+    "formatted_address": "474 Front St E Unit 4, Toronto, ON M5A 0E6, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 4,
+    "name": "Basecamp - Bloor West",
+    "query": "677 Bloor St W, Toronto, Ontario M6G 1L3",
+    "lat": 43.6637561,
+    "lng": -79.41646329999999,
+    "location_type": "ROOFTOP",
+    "formatted_address": "677 Bloor St W, Toronto, ON M6G 1L3, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 5,
+    "name": "Joe Rockhead’s",
+    "query": "29 Fraser Ave, Toronto, Ontario M6K 3J9",
+    "lat": 43.63640830000001,
+    "lng": -79.42310839999999,
+    "location_type": "ROOFTOP",
+    "formatted_address": "29 Fraser Ave, Toronto, ON M6K 1Y7, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 6,
+    "name": "The Rock Oasis",
+    "query": "388 Carlaw Ave, Toronto, Ontario M4M 2T4",
+    "lat": 43.6657479,
+    "lng": -79.3425118,
+    "location_type": "ROOFTOP",
+    "formatted_address": "388 Carlaw Ave, Toronto, ON M4M 2T4, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 7,
+    "name": "Boulderz Climbing - Toronto",
+    "query": "1444 Dupont St #16, Toronto, Ontario M6P 4H3",
+    "lat": 43.6661986,
+    "lng": -79.44984099999999,
+    "location_type": "ROOFTOP",
+    "formatted_address": "1444 Dupont St #16, Toronto, ON M6P 3S1, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 8,
+    "name": "Toronto Climbing Academy",
+    "query": "11 Curity Ave Unit 3, Toronto, Ontario M4B 1X4",
+    "lat": 43.7092394,
+    "lng": -79.3148578,
+    "location_type": "ROOFTOP",
+    "formatted_address": "11 Curity Ave Unit 3, East York, ON M4B 1X4, Canada",
+    "partial_match": false,
+    "flags": [
+      "city_mismatch(gym=Toronto)"
+    ]
+  },
+  {
+    "gym_id": 9,
+    "name": "Hogtown Boulders",
+    "query": "238 Lesmill Rd, Toronto, Ontario M3B 2T5",
+    "lat": 43.7621782,
+    "lng": -79.3601331,
+    "location_type": "ROOFTOP",
+    "formatted_address": "238 Lesmill Rd, North York, ON M3B 2T5, Canada",
+    "partial_match": false,
+    "flags": [
+      "city_mismatch(gym=Toronto)"
+    ]
+  },
+  {
+    "gym_id": 10,
+    "name": "True North Climbing",
+    "query": "75 Carl Hall Rd Unit 14, Toronto, Ontario M3K 2B9",
+    "lat": 43.7468282,
+    "lng": -79.4735701,
+    "location_type": "ROOFTOP",
+    "formatted_address": "75 Carl Hall Rd #14, North York, ON M3K 2B9, Canada",
+    "partial_match": false,
+    "flags": [
+      "city_mismatch(gym=Toronto)"
+    ]
+  },
+  {
+    "gym_id": 11,
+    "name": "Boulderz Climbing - Etobicoke",
+    "query": "80 The East Mall Unit 9, Toronto, Ontario M8Z 5X1",
+    "lat": 43.6187494,
+    "lng": -79.5496916,
+    "location_type": "ROOFTOP",
+    "formatted_address": "80 The East Mall #9, Etobicoke, ON M8Z 5X1, Canada",
+    "partial_match": false,
+    "flags": [
+      "city_mismatch(gym=Toronto)"
+    ]
+  },
+  {
+    "gym_id": 12,
+    "name": "Up The Bloc",
+    "query": "1224 Dundas St E #28, Mississauga, Ontario L4Y 4A2",
+    "lat": 43.60374729999999,
+    "lng": -79.5844145,
+    "location_type": "ROOFTOP",
+    "formatted_address": "1224 Dundas St E #28, Mississauga, ON L4Y 4A2, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 13,
+    "name": "RockHaus Climbing",
+    "query": "167 Chrislea Rd Unit 5, Vaughan, Ontario L4L 8N6",
+    "lat": 43.7951617,
+    "lng": -79.5422165,
+    "location_type": "ROOFTOP",
+    "formatted_address": "167 Chrislea Rd #5, Woodbridge, ON L4L 8N6, Canada",
+    "partial_match": false,
+    "flags": [
+      "city_mismatch(gym=Vaughan)"
+    ]
+  },
+  {
+    "gym_id": 14,
+    "name": "Hub Climbing - Markham",
+    "query": "165 McIntosh Dr, Markham, Ontario L3R 0N6",
+    "lat": 43.85706070000001,
+    "lng": -79.357373,
+    "location_type": "ROOFTOP",
+    "formatted_address": "165 McIntosh Dr, Markham, ON L3R 0N6, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 15,
+    "name": "Boulder Parc",
+    "query": "1415 Morningside Ave Unit 2, Toronto, Ontario M1B 3J1",
+    "lat": 43.8108699,
+    "lng": -79.20274979999999,
+    "location_type": "ROOFTOP",
+    "formatted_address": "1415 Morningside Ave #2, Scarborough, ON M1B 3J1, Canada",
+    "partial_match": false,
+    "flags": [
+      "city_mismatch(gym=Toronto)"
+    ]
+  },
+  {
+    "gym_id": 16,
+    "name": "Hub Climbing - Mississauga",
+    "query": "3636 Hawkestone Rd Unit 1, Mississauga, Ontario L5C 2V2",
+    "lat": 43.5737947,
+    "lng": -79.6532388,
+    "location_type": "ROOFTOP",
+    "formatted_address": "3636 Hawkestone Rd Unit 1, Mississauga, ON L5C 2V2, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 17,
+    "name": "Toprock Climbing",
+    "query": "284 Orenda Rd Unit 8, Brampton, Ontario L6T 5S3",
+    "lat": 43.7004788,
+    "lng": -79.7140083,
+    "location_type": "ROOFTOP",
+    "formatted_address": "284 Orenda Rd Unit 8, Brampton, ON L6T 5S3, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 18,
+    "name": "Steel Peak Climbing & Ninja",
+    "query": "231 Trade Valley Drive Unit D-F, Vaughan, Ontario L4H 3N6",
+    "lat": 43.7919399,
+    "lng": -79.66108,
+    "location_type": "ROOFTOP",
+    "formatted_address": "231 Trade Valley Dr df, Vaughan, ON L4H 3N6, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 19,
+    "name": "Boulderz Mississauga Climbing Centre",
+    "query": "1705 Argentia Rd #5, Mississauga, Ontario L5N 3A9",
+    "lat": 43.6058852,
+    "lng": -79.73224929999999,
+    "location_type": "ROOFTOP",
+    "formatted_address": "1705 Argentia Rd #5, Mississauga, ON L5N 3A9, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 20,
+    "name": "Ajax Rock Oasis",
+    "query": "75 Centennial Road, Ajax, Ontario L1S 4S4",
+    "lat": 43.83808,
+    "lng": -79.02086779999999,
+    "location_type": "ROOFTOP",
+    "formatted_address": "75 Centennial Rd, Ajax, ON L1S 4S4, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 21,
+    "name": "Reach Indoor Climbing",
+    "query": "212 Earl Stewart Dr Units 7 & 8, Aurora, Ontario L4G 6V7",
+    "lat": 44.0177004,
+    "lng": -79.4496174,
+    "location_type": "ROOFTOP",
+    "formatted_address": "212 Earl Stewart Dr, Aurora, ON L4G 6V7, Canada",
+    "partial_match": true,
+    "flags": [
+      "partial_match"
+    ]
+  },
+  {
+    "gym_id": 22,
+    "name": "Aspire Climbing - Whitby",
+    "query": "1400 Victoria St E Unit 4, Whitby, Ontario L1N 0M2",
+    "lat": 43.8662146,
+    "lng": -78.912328,
+    "location_type": "ROOFTOP",
+    "formatted_address": "1400 Victoria St E Unit 4, Whitby, ON L1N 0M2, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 23,
+    "name": "Of Rock and Chalk",
+    "query": "482 Ontario St, Newmarket, Ontario L3Y 2K7",
+    "lat": 44.0575694,
+    "lng": -79.45824809999999,
+    "location_type": "ROOFTOP",
+    "formatted_address": "482 Ontario St, Newmarket, ON L3Y 2K7, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 24,
+    "name": "Pinnacle Indoor Climbing",
+    "query": "330 Lake Rd, Bowmanville, Ontario L1C 4P8",
+    "lat": 43.89849820000001,
+    "lng": -78.66201989999999,
+    "location_type": "ROOFTOP",
+    "formatted_address": "330 Lake Rd, Clarington, ON L1C 4P8, Canada",
+    "partial_match": false,
+    "flags": [
+      "city_mismatch(gym=Bowmanville)"
+    ]
+  },
+  {
+    "gym_id": 25,
+    "name": "Climber's Rock",
+    "query": "5155 Harvester Rd, Unit 1, Burlington, Ontario L7L 6V2",
+    "lat": 43.3825503,
+    "lng": -79.7635518,
+    "location_type": "ROOFTOP",
+    "formatted_address": "5155 Harvester Rd #1, Burlington, ON L7L 6V2, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 26,
+    "name": "The Board Room by Climber's Rock",
+    "query": "5205 Harvester Rd, Unit 7, Burlington, Ontario L7L 6B5",
+    "lat": 43.3836904,
+    "lng": -79.7625553,
+    "location_type": "ROOFTOP",
+    "formatted_address": "5205 Harvester Rd Unit 7, Burlington, ON L7L 6B5, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 27,
+    "name": "Aspire Climbing Milton",
+    "query": "270 Bronte St N, Unit 2, Milton, Ontario L9T 2N9",
+    "lat": 43.5136215,
+    "lng": -79.895746,
+    "location_type": "ROOFTOP",
+    "formatted_address": "270 Bronte St N #2, Milton, ON L9T 2N9, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 28,
+    "name": "Gravity Hamilton",
+    "query": "70 Frid St, Unit 6, Hamilton, Ontario L8P 4M4",
+    "lat": 43.25821000000001,
+    "lng": -79.89336000000002,
+    "location_type": "ROOFTOP",
+    "formatted_address": "70 Frid St #6, Hamilton, ON L8P 4M4, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 29,
+    "name": "Gravity Niagara",
+    "query": "399 Vansickle Rd, Unit 3, St. Catharines, Ontario L2S 3T4",
+    "lat": 43.1509246,
+    "lng": -79.2714309,
+    "location_type": "ROOFTOP",
+    "formatted_address": "399 Vansickle Rd Unit 3, St. Catharines, ON L2S 3T4, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 30,
+    "name": "Grand River Rocks Waterloo",
+    "query": "80 Lodge St #1, Waterloo, Ontario N2J 2V6",
+    "lat": 43.47533050000001,
+    "lng": -80.5202454,
+    "location_type": "ROOFTOP",
+    "formatted_address": "80 Lodge St #1, Waterloo, ON N2J 2V6, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 31,
+    "name": "Conquer Climbing Centre",
+    "query": "34 Dalkeith Dr Building 2, Brantford, Ontario N3P 1N6",
+    "lat": 43.1768543,
+    "lng": -80.2338573,
+    "location_type": "ROOFTOP",
+    "formatted_address": "34 Dalkeith Dr building 2, Brantford, ON N3P 1N6, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 32,
+    "name": "The Guelph Grotto",
+    "query": "199 Victoria Road South, Guelph, Ontario N1E 6T9",
+    "lat": 43.5521271,
+    "lng": -80.224612,
+    "location_type": "ROOFTOP",
+    "formatted_address": "199 Victoria Rd S, Guelph, ON N1E 6T9, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 33,
+    "name": "Junction Climbing Centre",
+    "query": "1030 Elias St, London, Ontario N5W 3P6",
+    "lat": 42.9983826,
+    "lng": -81.2177492,
+    "location_type": "ROOFTOP",
+    "formatted_address": "1030 Elias St, London, ON N5W 3P6, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 34,
+    "name": "J2 Bouldering",
+    "query": "1828 Blue Heron Drive, London, Ontario N6H 0B7",
+    "lat": 43.0044467,
+    "lng": -81.3386293,
+    "location_type": "GEOMETRIC_CENTER",
+    "formatted_address": "1828 Blue Heron Dr, London, ON N6H 5S1, Canada",
+    "partial_match": false,
+    "flags": [
+      "location_type=GEOMETRIC_CENTER"
+    ]
+  },
+  {
+    "gym_id": 35,
+    "name": "Windsor Rock Gym",
+    "query": "1215 Walker Road, Windsor, Ontario N8Y 2N9",
+    "lat": 42.3155193,
+    "lng": -83.0035056,
+    "location_type": "ROOFTOP",
+    "formatted_address": "1215 Walker Rd, Windsor, ON N8Y 2N9, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 36,
+    "name": "Intencity at East Park",
+    "query": "1275 Hamilton Road, London, Ontario N5W 1B1",
+    "lat": 42.9724154,
+    "lng": -81.16706649999999,
+    "location_type": "ROOFTOP",
+    "formatted_address": "1275 Hamilton Rd, London, ON N5W 1B1, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 37,
+    "name": "University of Guelph Climbing Wall",
+    "query": "50 E Ring Rd, Guelph, Ontario N1G 4Z8",
+    "lat": 43.533826,
+    "lng": -80.2241135,
+    "location_type": "ROOFTOP",
+    "formatted_address": "50 E Ring Rd, Guelph, ON N1G 4Z8, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 38,
+    "name": "Grand River Rocks Kitchener",
+    "query": "264 Victoria St N, Kitchener, Ontario N2H 5C8",
+    "lat": 43.4576382,
+    "lng": -80.4866843,
+    "location_type": "ROOFTOP",
+    "formatted_address": "264 Victoria St N, Kitchener, ON N2H 5C8, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 39,
+    "name": "Coyote Rock Gym",
+    "query": "1737B St Laurent Boulevard, Ottawa, Ontario K1G 3V4",
+    "lat": 45.4055519,
+    "lng": -75.6255812,
+    "location_type": "ROOFTOP",
+    "formatted_address": "1737B St. Laurent Blvd, Ottawa, ON K1G 3V4, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 40,
+    "name": "Altitude Gym Kanata",
+    "query": "501 Palladium Dr., Ottawa, Ontario K2V 0E5",
+    "lat": 45.2980998,
+    "lng": -75.91095059999999,
+    "location_type": "ROOFTOP",
+    "formatted_address": "501 Palladium Dr, Ottawa, ON K2V 1A6, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 41,
+    "name": "Altitude Gym Orléans",
+    "query": "265 Centrum Blvd, Ottawa, Ontario K1E 3X7",
+    "lat": 45.4811464,
+    "lng": -75.50948149999999,
+    "location_type": "ROOFTOP",
+    "formatted_address": "265 Centrum Blvd, Ottawa, ON K1E 3X7, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 42,
+    "name": "Klimat Ottawa",
+    "query": "265 City Centre Ave, Ottawa, Ontario K1R 7R7",
+    "lat": 45.408617,
+    "lng": -75.7173272,
+    "location_type": "ROOFTOP",
+    "formatted_address": "265 City Centre Ave, Ottawa, ON K1R 6P1, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 43,
+    "name": "Alt. Rock",
+    "query": "445 Dunlop Street West, Unit A, Barrie, Ontario L4N 1C2",
+    "lat": 44.3760565,
+    "lng": -79.7181859,
+    "location_type": "ROOFTOP",
+    "formatted_address": "445 Dunlop St W a, Barrie, ON L4N 1C2, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 44,
+    "name": "Rock and Rope Climbing Centre",
+    "query": "Unit 16, 280 Perry St., Peterborough, Ontario K9J 2J4",
+    "lat": 44.2953892,
+    "lng": -78.3244883,
+    "location_type": "ROOFTOP",
+    "formatted_address": "280 Perry St Unit 16, Peterborough, ON K9J 2J4, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 45,
+    "name": "Climb Muskoka",
+    "query": "24 Kirkhill Drive, Bracebridge, Ontario P1L 0A1",
+    "lat": 45.0066873,
+    "lng": -79.3168082,
+    "location_type": "ROOFTOP",
+    "formatted_address": "Town of, 24 Kirkhill Dr, Bracebridge, ON P1L 0A1, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 46,
+    "name": "Boiler Room Climbing Gym — Kingston",
+    "query": "993 Princess St, Unit 12, Kingston, Ontario K7L 1H3",
+    "lat": 44.2442996,
+    "lng": -76.51348159999999,
+    "location_type": "ROOFTOP",
+    "formatted_address": "993 Princess St Unit 12, Kingston, ON K7L 1H3, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 47,
+    "name": "Garrison Petawawa Indoor Rock Climbing Club",
+    "query": "57 Festubert Blvd, Building P-118 (Dundonald Hall), Petawawa, Ontario K8H 2X3",
+    "lat": 45.911608,
+    "lng": -77.2792946,
+    "location_type": "ROOFTOP",
+    "formatted_address": "57 Festubert Blvd building p-118, Petawawa, ON K8H 1X3, Canada",
+    "partial_match": true,
+    "flags": [
+      "partial_match"
+    ]
+  },
+  {
+    "gym_id": 48,
+    "name": "Kingston Bouldering Co-operative",
+    "query": "12 Cataraqui Street #4, Kingston, Ontario K7K 1Z7",
+    "lat": 44.24161369999999,
+    "lng": -76.4828236,
+    "location_type": "ROOFTOP",
+    "formatted_address": "12 Cataraqui St #4, Kingston, ON K7K 3A7, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 49,
+    "name": "Georgian College Rock Wall — Barrie",
+    "query": "One Georgian Dr., Barrie, Ontario L4M 3X9",
+    "lat": 44.4147306,
+    "lng": -79.6678988,
+    "location_type": "GEOMETRIC_CENTER",
+    "formatted_address": "Georgian Dr, Barrie, ON L4M 3X9, Canada",
+    "partial_match": true,
+    "flags": [
+      "location_type=GEOMETRIC_CENTER",
+      "partial_match"
+    ]
+  },
+  {
+    "gym_id": 50,
+    "name": "Deerhurst Resort Indoor Rock Climbing",
+    "query": "1235 Deerhurst Drive, Huntsville, Ontario P1H 2E8",
+    "lat": 45.346882,
+    "lng": -79.1319723,
+    "location_type": "ROOFTOP",
+    "formatted_address": "Deerhurst Resort, 1235 Deerhurst Dr, Huntsville, ON P1H 2E8, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 51,
+    "name": "Boiler Room Climbing Gym — Belleville",
+    "query": "40 Hanna Ct, Unit 105, Belleville, Ontario K8P 5J2",
+    "lat": 44.1854281,
+    "lng": -77.4167398,
+    "location_type": "ROOFTOP",
+    "formatted_address": "Unit 105, 40 Hanna Ct Unit 105, Belleville, ON K8P 5J2, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 52,
+    "name": "ARC Climbing & Yoga",
+    "query": "1981 Old Burwash Road, Sudbury, Ontario P3E 4Z3",
+    "lat": 46.4491883,
+    "lng": -80.99909009999999,
+    "location_type": "ROOFTOP",
+    "formatted_address": "1981 Old Burwash Rd, Greater Sudbury, ON P3E 4Z3, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 53,
+    "name": "Rock Room",
+    "query": "319 Victoria Ave E, Thunder Bay, Ontario P7C 1A4",
+    "lat": 48.3842148,
+    "lng": -89.2436231,
+    "location_type": "ROOFTOP",
+    "formatted_address": "319 Victoria Ave E, Thunder Bay, ON P7C 1A4, Canada",
+    "partial_match": false
+  },
+  {
+    "gym_id": 54,
+    "name": "Pursuit Climbing",
+    "query": "615 Erie St Unit 2, Stratford, Ontario N5A 2N9",
+    "lat": 43.3567385,
+    "lng": -80.9946428,
+    "location_type": "ROOFTOP",
+    "formatted_address": "615 Erie St #2, Stratford, ON N5A 2N9, Canada",
+    "partial_match": false
+  }
+]

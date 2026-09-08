@@ -1,0 +1,730 @@
+{
+  "1": {
+    "summary": "Gym anniversary celebration with an auto-belay competition, climbing challenges, a vendor market and other activities.",
+    "schedule_note": null,
+    "price_note": null,
+    "ages": null,
+    "caveat": null
+  },
+  "2": {
+    "summary": "Ten-week youth climbing program in four time/age cohorts. Gear during class included, plus a belay lesson for ages 13+.",
+    "schedule_note": "Mon/Wed or Tue/Thu, 5-7 pm (ages 7-12) or 7-9 pm (ages 11-17); 20 two-hour classes",
+    "price_note": "$475 + tax; $575-$615 with membership",
+    "ages": "Ages 7-17",
+    "caveat": "Free Eventbrite ticket is only a temporary spot reservation; payment is due separately."
+  },
+  "3": {
+    "summary": "Tryouts for the gym's high-performance competitive climbing team, for athletes aged 8-18.",
+    "schedule_note": null,
+    "price_note": null,
+    "ages": "Ages 8-18",
+    "caveat": null
+  },
+  "4": {
+    "summary": "Breakfast social followed by climbing. Breakfast is advertised as free; climbing admission is not specified.",
+    "schedule_note": null,
+    "price_note": "Free breakfast; admission not specified",
+    "ages": null,
+    "caveat": null
+  },
+  "5": {
+    "summary": "Additional tryout date for the competitive climbing team, for ages 7-13.",
+    "schedule_note": null,
+    "price_note": "$15 + tax; free for current Aspire athletes",
+    "ages": "Ages 7-13",
+    "caveat": "Published eligibility varies: ages 7-13, born 2013-2017, or 8-14 as of Dec 31, 2027; confirm with gym."
+  },
+  "6": {
+    "summary": "Inclusive climbing event for adaptive climbers of different abilities and experience levels, supported by experienced staff and volunteers. Spectators welcome.",
+    "schedule_note": null,
+    "price_note": "$29.99 + tax per participant",
+    "ages": null,
+    "caveat": null
+  },
+  "7": {
+    "summary": "80s-themed anniversary boulder scramble with peer judging; your top six problems count. For ages 12+ or members of competitive/advanced programs.",
+    "schedule_note": "Check-in 3 pm, briefing 3:45 pm, climbing 4-7 pm, podium 8 pm",
+    "price_note": "$32-$45 + tax; spectators free",
+    "ages": "Ages 12+",
+    "caveat": "Early-bird price ($32) ends September 20; separate ninja activities run 4-8 pm."
+  },
+  "8": {
+    "summary": "Small-group yoga for all levels, ages 12+, capacity 10. Book at least three hours ahead; booking opens two weeks before each class.",
+    "schedule_note": "Wednesdays and Fridays, 7-8 pm",
+    "price_note": "Free for members; $16 drop-in, day pass separate",
+    "ages": "Ages 12+",
+    "caveat": null
+  },
+  "9": {
+    "summary": "OCF speed qualifying competition for U13 through senior categories. Lead and speed walls are unavailable to members on competition day.",
+    "schedule_note": null,
+    "price_note": null,
+    "ages": null,
+    "caveat": "Athlete schedule, fee and registration link not yet published."
+  },
+  "10": {
+    "summary": "OCF speed provincial championship for U13 through senior categories. Lead and speed walls are unavailable to members that day.",
+    "schedule_note": null,
+    "price_note": null,
+    "ages": null,
+    "caveat": "Athlete schedule, fee and registration link not yet published."
+  },
+  "11": {
+    "summary": "Canadian boulder and lead national championships announced for this venue; the gym closes to the public during the event.",
+    "schedule_note": null,
+    "price_note": null,
+    "ages": null,
+    "caveat": "Dates are a tentative window; exact schedule not yet posted and not on the OCF calendar."
+  },
+  "12": {
+    "summary": "Beginner climbing program for a small group of up to eight, with shoes, chalk and an eight-week gym membership included.",
+    "schedule_note": "Wednesdays, 5:15-6:15 pm, eight classes",
+    "price_note": "$310; tax treatment not shown",
+    "ages": "Ages 6-9 (born 2017-2020)",
+    "caveat": "All sessions were sold out at last check."
+  },
+  "13": {
+    "summary": "Beginner and intermediate youth climbing for a group of up to eight; eight-week membership, shoes and chalk included.",
+    "schedule_note": "Wednesdays, 6:30-7:30 pm, eight classes",
+    "price_note": "$310; tax treatment not shown",
+    "ages": "Ages 10-13 (born 2013-2016)",
+    "caveat": "Sold out at last check. Program page still says 'Starting April 29'; confirm dates with gym."
+  },
+  "14": {
+    "summary": "All-level guided workouts with coach Adam focused on strength, mobility and climbing longevity. Maximum eight participants.",
+    "schedule_note": "Weekly on Wednesdays, 7:30-9 pm",
+    "price_note": "Free for members; membership or pass required",
+    "ages": null,
+    "caveat": "Listing says 7:30-9 pm but generic description says 8-9:30 pm; confirm time with gym."
+  },
+  "15": {
+    "summary": "Weekly 90-minute coaching for experienced youth climbers who completed a gym youth program or have equivalent experience. Includes unlimited gym access, shoes and chalk.",
+    "schedule_note": "Thursdays, 5:30-7 pm, ongoing",
+    "price_note": "$179/month; tax unspecified",
+    "ages": null,
+    "caveat": null
+  },
+  "16": {
+    "summary": "Empower Climb community climbing session. Times, eligibility, pricing and format are not published.",
+    "schedule_note": null,
+    "price_note": null,
+    "ages": null,
+    "caveat": "Event times, eligibility and price are unconfirmed; check with the gym."
+  },
+  "17": {
+    "summary": "Bouldering competition with scramble qualifiers in two waves and world-cup-style finals; top six per men's/women's category advance. Cash and raffle prizes, food, beer and DJ.",
+    "schedule_note": "Qualifiers 9 am-12 pm or 12:30-3:30 pm; finals 6 pm; check-in 8 am / 11:30 am",
+    "price_note": "Competitor fee not published; finals spectators free",
+    "ages": null,
+    "caveat": "Gym closed to public climbing on competition day; spectator doors listed as both 5 pm and 6 pm."
+  },
+  "18": {
+    "summary": "Two-hour beginner bouldering course for ages 16+ in a group of five, covering V1-2 and below, including first-timers.",
+    "schedule_note": null,
+    "price_note": "$45 + tax; rental shoes included, admission extra",
+    "ages": "Ages 16+",
+    "caveat": "No upcoming class dates published; check the booking page."
+  },
+  "19": {
+    "summary": "Ten-week youth climbing program with age-banded groups for ages 6-8, 9-10 and 11-13, plus a hybrid climbing/ninja group for ages 4-5.",
+    "schedule_note": "Weekly Mon, Tue, Wed or Thu, one-hour classes, 10 weeks (varies by age group)",
+    "price_note": "$399.99 prepaid (approx. $452 with tax); $100 deposit",
+    "ages": "Ages 4-13",
+    "caveat": "Oldest group listed as both 11+ and 11-13; several ages 4-5 cohorts full/waitlist only."
+  },
+  "20": {
+    "summary": "Monthly recreational ninja competition: one course, two runs, points combined, in easy, moderate and hard categories. Not a climbing competition.",
+    "schedule_note": "Roughly monthly, 6-8 pm",
+    "price_note": "$17 + HST ($19.21) per event",
+    "ages": null,
+    "caveat": "Website and booking portal disagree on October/November dates; confirm date before attending."
+  },
+  "21": {
+    "summary": "Six two-hour bouldering classes for new and intermediate climbers covering vocabulary, movement, route reading, tactics and injury prevention. Minimum four to run.",
+    "schedule_note": null,
+    "price_note": "$225 members / $365 non-members; gear extra",
+    "ages": null,
+    "caveat": "No upcoming session dates published."
+  },
+  "22": {
+    "summary": "After-school climbing programs: Explorers and Trailblazers for ages 6-12, Voyagers for 12+, High Performance for 10+. Shoes and harness included each session.",
+    "schedule_note": "Weekly Mon-Thu, 4-6 pm (Explorers 4-5:45 pm), 13-15 classes",
+    "price_note": "$38-$47.50 + HST per class; 10% sibling discount",
+    "ages": "Ages 6+ (varies by group)",
+    "caveat": "Trailblazers/Voyagers listed as ending 5:45 pm and 6 pm; several cohorts full."
+  },
+  "23": {
+    "summary": "Playful climbing lessons and games for ages 7-10, building fitness and friendships. Shoes, harness, chalk and membership for the class term included.",
+    "schedule_note": "Mondays 4:30-6 pm, Saturdays 9-10:30 am or Sundays 9:30-11 am; 13 classes",
+    "price_note": "$585 + HST per cohort",
+    "ages": "Ages 7-10",
+    "caveat": null
+  },
+  "24": {
+    "summary": "Youth climbing program introducing belaying and more independent climbing. Rental shoes, harness, chalk and membership included for the term.",
+    "schedule_note": "Wed 4:30-6 pm (15 classes), or Sat 11 am-12:30 pm / Sun 11:30 am-1 pm (13 classes)",
+    "price_note": "$600 + HST (Wed) or $520 + HST (weekend)",
+    "ages": "Ages 10-16",
+    "caveat": "Wednesday cohort was full at last check."
+  },
+  "25": {
+    "summary": "Four-week course of weekly two-hour classes for purple-tape climbers progressing toward pink: custom boulders, coordination dynos, fear management and falling. Max six.",
+    "schedule_note": null,
+    "price_note": "$139 + HST; gym entry extra",
+    "ages": "Ages 14+",
+    "caveat": "No upcoming dates published."
+  },
+  "26": {
+    "summary": "Semester-long youth climbing in four streams: Pebble (6-7), Rock Club (8-10), Rec Team (11-13) and Dev Team (13-17). Rentals, term membership and store discount included.",
+    "schedule_note": "Weekly, one weekday afternoon or weekend morning slot; 17-19 classes",
+    "price_note": "From $714 + HST depending on weeks/pickup",
+    "ages": "Ages 6-17",
+    "caveat": "Dev Team age listed as 13-17 on website and 13-18 in booking; several cohorts full."
+  },
+  "27": {
+    "summary": "Youth technique and movement classes in levels for ages 8-11, 12-14 and 14-18. Higher levels need approval; Advanced requires a tryout. Register via program director.",
+    "schedule_note": "Weekly classes of 1.5-2.5 hours, various days/times; 12-week term",
+    "price_note": null,
+    "ages": "Ages 8-18",
+    "caveat": "Page intro says ages 8-17 but groups run to 18; many timeslots full. Fees not published."
+  },
+  "28": {
+    "summary": "Monthly women's bouldering night with a reserved bouldering area and coaching tips from instructors. All skill levels welcome.",
+    "schedule_note": "Last Friday of the month, 7-9 pm",
+    "price_note": "Members free; 2-for-1 day pass for non-members",
+    "ages": null,
+    "caveat": null
+  },
+  "29": {
+    "summary": "Development pathway toward the youth competitive team for ages 5-9; assessment required. Includes membership, weekly training, uniforms, rentals and parent intro lessons.",
+    "schedule_note": "Once weekly, September to June, excluding holidays",
+    "price_note": "$345/month including HST",
+    "ages": "Ages 5-9",
+    "caveat": "Weekday/time and cohort start not published; assessment scheduled on request."
+  },
+  "30": {
+    "summary": "Hour-long coached climbing and games for ages 5-6, with youth membership during the session and class equipment included. Choose one cohort.",
+    "schedule_note": "Mon or Tue 5:45-6:45 pm, or Sat 10:15-11:15 am; six classes",
+    "price_note": "$217.50 + HST for six weeks",
+    "ages": "Ages 5-6",
+    "caveat": null
+  },
+  "31": {
+    "summary": "One-hour classes for ages 5-6 with games, movement skills and an optional friendly mini-competition. Youth membership and class equipment included.",
+    "schedule_note": "Tue 5:30-6:30 pm or Sat 10:15-11:15 am; six classes",
+    "price_note": null,
+    "ages": "Ages 5-6",
+    "caveat": null
+  },
+  "32": {
+    "summary": "Structured introductory youth climbing for ages 8-14 with membership and rental shoes included; 6:1 ratio.",
+    "schedule_note": "12-week sessions; contact the gym to book",
+    "price_note": "$370 incl. membership and gear; tax unspecified",
+    "ages": "Ages 8-14",
+    "caveat": "Website lists both ten-week ($370) and twelve-week versions; confirm current length and price."
+  },
+  "33": {
+    "summary": "Competitive youth training in movement, fitness and mental problem-solving; membership included.",
+    "schedule_note": "Tue/Thu 5-8 pm and Sun 12-4 pm, September to June",
+    "price_note": "Contact gym for cost",
+    "ages": null,
+    "caveat": null
+  },
+  "34": {
+    "summary": "Six weekly two-hour bouldering technique classes for ages 14+; new courses start monthly.",
+    "schedule_note": "Weekly, 7-9 pm, six weeks; new courses monthly",
+    "price_note": "$195 + HST; gym entry extra",
+    "ages": "Ages 14+",
+    "caveat": "Target level differs between website (blue and up) and booking (green-purple); confirm fit."
+  },
+  "35": {
+    "summary": "Summer bloc party with vendors and side quests.",
+    "schedule_note": null,
+    "price_note": null,
+    "ages": null,
+    "caveat": null
+  },
+  "36": {
+    "summary": "An unnamed follow-up event announced for October; name, date and details not yet released.",
+    "schedule_note": null,
+    "price_note": null,
+    "ages": null,
+    "caveat": "Placeholder listing; no name or exact date announced yet."
+  },
+  "37": {
+    "summary": "Two-for-one admission on Fridays for ages 14+, valid at all three locations. Book a check-in window; you may stay beyond it.",
+    "schedule_note": "Fridays; check-in windows 9 am-3 pm, 3-7 pm, 7-11 pm; booking opens a week ahead",
+    "price_note": "$28 + tax for two people (2-for-1)",
+    "ages": "Ages 14+",
+    "caveat": "Offer ends September 18 per website, though the booking calendar shows later Fridays."
+  },
+  "38": {
+    "summary": "90-minute lessons teaching age-appropriate climbing movement for ages 6-10.",
+    "schedule_note": "Saturdays or Sundays, 10-11:30 am or 11:30 am-1 pm; 13 classes",
+    "price_note": "Fee not published; shoe/harness rental extra",
+    "ages": "Ages 6-10",
+    "caveat": "All four cohorts were full at last check."
+  },
+  "39": {
+    "summary": "Two-for-one admission on Fridays for ages 14+, valid at all three locations. Book a check-in window; you may stay beyond it.",
+    "schedule_note": "Fridays; check-in windows 9 am-3 pm, 3-7 pm, 7-11 pm; booking opens a week ahead",
+    "price_note": "$32 + tax for two people (2-for-1)",
+    "ages": "Ages 14+",
+    "caveat": "Offer ends September 18 per website, though the booking calendar shows later Fridays."
+  },
+  "40": {
+    "summary": "90-minute lessons teaching age-appropriate climbing movement for ages 6-10.",
+    "schedule_note": "Weekdays 4-5:30 pm, or Sat/Sun 10-11:30 am or 12:15-1:45 pm; 13 classes",
+    "price_note": "Fee not published; rentals extra",
+    "ages": "Ages 6-10",
+    "caveat": "All eight cohorts were full at last check."
+  },
+  "41": {
+    "summary": "Two-for-one admission on Fridays for ages 14+, valid at all three locations. Book a check-in window; you may stay beyond it.",
+    "schedule_note": "Fridays; check-in windows 2-6 pm and 6-10 pm; booking opens a week ahead",
+    "price_note": "2-for-1 admission; exact fee not displayed",
+    "ages": "Ages 14+",
+    "caveat": "Offer ends September 18 per website, though the booking calendar shows later Fridays."
+  },
+  "42": {
+    "summary": "90-minute lessons teaching age-appropriate climbing movement for ages 6-10.",
+    "schedule_note": "Wednesdays 4:30-6 pm or Saturdays 1:15-2:45 pm; 13 classes",
+    "price_note": "Fee not published; shoe rental extra",
+    "ages": "Ages 6-10",
+    "caveat": "Booking page lists ages 7-10 while website says 6-10; only 3 and 1 spaces left at last check."
+  },
+  "43": {
+    "summary": "Bring climbing shoes without holes and swap them for another pair; kids' and adult sizes.",
+    "schedule_note": null,
+    "price_note": null,
+    "ages": null,
+    "caveat": "Event page gives conflicting times (10 am-3 pm vs 6-9 pm); confirm before attending."
+  },
+  "44": {
+    "summary": "Ten-class youth climbing programs: Junior (6-10), Senior (10-13) and a Sunday group for ages 6+. All rental equipment included.",
+    "schedule_note": "Fri or Mon: Junior 5-6 pm, Senior 6:15-7:15 pm; Sunday 9:15-10:15 am; 10 classes",
+    "price_note": "$295 + HST per ten-class cohort",
+    "ages": "Ages 6+",
+    "caveat": "Program descriptions say six weeks but each cohort runs ten classes."
+  },
+  "45": {
+    "summary": "Student night for high-school, college and university students with valid ID; day pass, rentals and beginner orientation included.",
+    "schedule_note": "Every Friday, 6-11 pm",
+    "price_note": "$15 + HST incl. rentals and orientation",
+    "ages": null,
+    "caveat": "Website describes it as a summer offer, but fall dates are bookable; confirm continuation."
+  },
+  "46": {
+    "summary": "All-abilities elimination bouldering competition with harder rounds through the evening and a random prize draw; members and day-pass climbers welcome.",
+    "schedule_note": null,
+    "price_note": null,
+    "ages": null,
+    "caveat": null
+  },
+  "47": {
+    "summary": "Ten-class youth climbing season in tiers: Tykes (4-7), Junior (7-10), Senior (10-12), Intermediate (12-14) and Advanced (14-17).",
+    "schedule_note": "Tykes Mon 4:30-6:30, Junior Tue 5-7, Senior Wed 5-7, Intermediate Thu 6:45-8:45 pm",
+    "price_note": "Senior $440 + tax ($497.20); others not shown",
+    "ages": "Ages 4-17",
+    "caveat": "Tykes and Junior full at last check; Junior age listed as both 7-9 and 7-10; no Advanced calendar."
+  },
+  "48": {
+    "summary": "Ten-week youth climbing season for ages 4-17 across five ability/age tiers in The Youth Lab.",
+    "schedule_note": "Ten-week season; registration in March 2027",
+    "price_note": null,
+    "ages": "Ages 4-17",
+    "caveat": "Cohort days, times and fees not yet published."
+  },
+  "49": {
+    "summary": "Beginner-friendly adult recreational climbing club for ages 18+.",
+    "schedule_note": "Tuesdays, 7-9 pm",
+    "price_note": "Included with membership or day pass",
+    "ages": "Ages 18+",
+    "caveat": null
+  },
+  "50": {
+    "summary": "Recreational adult climbing team for ages 18+ at grades G0-G4: technique drills, group projecting and climbing workouts. Capped at ten.",
+    "schedule_note": "Five weekly sessions; day/time to be confirmed",
+    "price_note": "$80 + HST; day pass/punch required for non-members",
+    "ages": "Ages 18+",
+    "caveat": "Website says Wednesdays 7-9 pm; booking says Fridays 5-9 or 7-9 pm. No upcoming cohort dates."
+  },
+  "51": {
+    "summary": "Ninety-minute dynamic movement clinic for G3-G5 climbers, capped at ten.",
+    "schedule_note": null,
+    "price_note": "$25 plus gym access",
+    "ages": null,
+    "caveat": null
+  },
+  "52": {
+    "summary": "Weekly eight-class youth programs for ages 4-16, from Astro-Tots to Rovers, Challengers and Voyagers; membership, rental gear and one parent intro belay lesson included.",
+    "schedule_note": "Weekly Mon-Sat, afternoon/evening or Saturday slots by age group; eight classes",
+    "price_note": "$267.61-$312.21 + HST depending on program",
+    "ages": "Ages 4-16",
+    "caveat": "Sr Challengers price printed as $2312.21 (likely $312.21); Sr Rovers listed as 1.5 h but runs 2 h."
+  },
+  "53": {
+    "summary": "Scramble bouldering competition with male, female and nonbinary categories and door prizes; gym entry includes competition entry.",
+    "schedule_note": null,
+    "price_note": "Included with gym entry; members free",
+    "ages": null,
+    "caveat": null
+  },
+  "54": {
+    "summary": "Mixed beginner/intermediate bouldering class for G0-G5 emphasizing technique and coordination, with an intro to hangboard training. Coached by Krista.",
+    "schedule_note": "Four Thursdays, 6-7:30 pm",
+    "price_note": "$40 for four weeks plus gym entry",
+    "ages": null,
+    "caveat": "Website advertises $80 classes; the linked booking charges $40. Grade range listed as G0-G4 or G0-G5."
+  },
+  "55": {
+    "summary": "Weekly 90-minute coached climbing for ages 5-6 over eight weeks. Program-length membership, rental equipment and one parent/guardian day pass included.",
+    "schedule_note": "Wednesdays 4:30-6 pm or Saturdays 10:30 am-12 pm; eight classes",
+    "price_note": "$267.61 + HST",
+    "ages": "Ages 5-6",
+    "caveat": null
+  },
+  "56": {
+    "summary": "Fun social climbing program for new or experienced climbers ages 7-10, eight weekly classes; program membership, rental equipment and a parent day pass included.",
+    "schedule_note": "Tuesdays 4:30-6 pm or Saturdays 12:30-2 pm; eight classes",
+    "price_note": "$267.61 + HST",
+    "ages": "Ages 7-10",
+    "caveat": null
+  },
+  "57": {
+    "summary": "Social climbing and skill improvement for new or experienced climbers ages 11-13, eight weekly classes; program membership and rental equipment included.",
+    "schedule_note": "Tuesdays 6:15-8:15 pm or Saturdays 2:30-4:30 pm; eight classes",
+    "price_note": "$275.04 + HST",
+    "ages": "Ages 11-13",
+    "caveat": "Tuesday cohort was full at last check."
+  },
+  "58": {
+    "summary": "Invite-only program for experienced climbers ages 8-13 developing technique and athletic performance; requires a completed Rovers session and coach assessment.",
+    "schedule_note": "Wednesdays, 6:15-8:15 pm, eight weeks",
+    "price_note": "$312.21 + HST",
+    "ages": "Ages 8-13",
+    "caveat": "Website says 1.5-hour sessions but lists 6:15-8:15 pm; not in online booking, contact gym."
+  },
+  "59": {
+    "summary": "Video-game-themed boulder climbs, an arcade prize table, raffles and video game/VR stations. Open to new climbers, families and friends; an event, not a competition.",
+    "schedule_note": null,
+    "price_note": "Paid entry, amount not published; free shoes 12 and under",
+    "ages": null,
+    "caveat": null
+  },
+  "60": {
+    "summary": "Members' friends and family open house with raffle prizes; members may bring up to four guests for free entry and climbing. Regular day users welcome.",
+    "schedule_note": null,
+    "price_note": "Free for members' guests; rentals extra",
+    "ages": null,
+    "caveat": "Listing omits the year and runs until close; registration not yet open. Confirm with gym."
+  },
+  "61": {
+    "summary": "Saturday morning hours designated as sensory friendly. Specific accommodations and admission conditions are not described.",
+    "schedule_note": "Saturdays, 8-10 am",
+    "price_note": null,
+    "ages": null,
+    "caveat": null
+  },
+  "62": {
+    "summary": "Six-session course for new climbers ages 16+: top-rope belay instruction, auto-belay orientation, falling, terminology and climbing strength. Rental gear included; max eight.",
+    "schedule_note": "Sundays, 10:30 am-12 pm, six sessions (drop-in option available)",
+    "price_note": "Drop-in $35 (members) / $50 + tax; full-course price n/a",
+    "ages": "Ages 16+",
+    "caveat": "Full six-session price not published; drop-in per-session booking is an alternative."
+  },
+  "63": {
+    "summary": "Six-session course for climbers ages 16+ moving into blue/red boulders: footwork, efficient movement, holds, problem reading, coordination and dynamic movement.",
+    "schedule_note": "Mondays, 6:30-8 pm, six sessions (drop-in option available)",
+    "price_note": "$199 members / $289 non-members + tax; drop-in $35/$50",
+    "ages": "Ages 16+",
+    "caveat": "Booking text still refers to a past July start; confirm cohort with gym."
+  },
+  "64": {
+    "summary": "District Ice Cream visits the gym to scoop ice cream for an hour, while supplies last. Part of the gym's anniversary series.",
+    "schedule_note": null,
+    "price_note": null,
+    "ages": null,
+    "caveat": null
+  },
+  "65": {
+    "summary": "Design your own tote bag for climbing or groceries; totes provided and spots limited.",
+    "schedule_note": null,
+    "price_note": "$10 including tax",
+    "ages": null,
+    "caveat": "Whether climbing admission is included is not stated."
+  },
+  "66": {
+    "summary": "Team race for groups of 3-4: twelve routes, twelve easy/moderate boulders, crate stacking and brain-teaser tasks with a staff judge. Costumes earn bonus points; prizes.",
+    "schedule_note": "45-minute heats at 10, 10:45 and 11:30 am; arrive 15 minutes early",
+    "price_note": "$31.86 + tax per team early bird; $42.48 + tax after",
+    "ages": null,
+    "caveat": "Early-bird pricing ends September 19; finish time listed as noon or 12:15 pm."
+  },
+  "67": {
+    "summary": "Regular coached climbing and technique development for ages 18+. Must be belay-certified at the gym before the first class; rental equipment included.",
+    "schedule_note": "Wednesdays, 7:30-8:30 pm, ten sessions",
+    "price_note": "$292.04 + tax",
+    "ages": "Ages 18+",
+    "caveat": "Registration deadline has passed and online booking is closed; contact gym about remaining spots."
+  },
+  "68": {
+    "summary": "Recreational climbing with peers for children born 2016-2021, prioritizing climbing time over structured lessons. All equipment included during sessions.",
+    "schedule_note": "Weekly one-hour class, Mon-Fri evenings or Sunday 9 am; ten sessions",
+    "price_note": "$256.64 + tax; membership/rental add-ons extra",
+    "ages": "Born 2016-2021",
+    "caveat": "Online booking closed and most cohorts full; contact gym about Tuesday 8 pm or Wednesday spots."
+  },
+  "69": {
+    "summary": "Tryouts for the senior youth competitive team, ages 12+ with prior climbing experience; advance sign-up required, no walk-ins. Team members compete regionally.",
+    "schedule_note": null,
+    "price_note": null,
+    "ages": "Ages 12+",
+    "caveat": "Sign-up deadline was September 7; general youth page says competitive team starts at 11+."
+  },
+  "70": {
+    "summary": "Fall youth climbing programs by age (Alpine: 6-8, 8-10, 10-13, 13+) and by level (Beta 1-4). Optional membership bundle covers every program plus camps.",
+    "schedule_note": "Alpine Mon/Wed, Beta Tue/Thu; one class weekly, 4:15-9:30 pm slots by group",
+    "price_note": "$176.89-$449 + tax depending on group/day",
+    "ages": "Ages 6+",
+    "caveat": "Monday cohorts have eight classes (holiday) rather than nine; minimum four per cohort."
+  },
+  "71": {
+    "summary": "90-minute drop-in beginner class covering footwork, dynamic movement and body positioning. Maximum four participants.",
+    "schedule_note": null,
+    "price_note": "Member/punch-pass discount; amount not shown",
+    "ages": null,
+    "caveat": null
+  },
+  "72": {
+    "summary": "Drop-in guided training on the adjustable Kilter Board with the head setter/coach, with personalized feedback. Intro and experienced tracks alternate weekly.",
+    "schedule_note": "Saturdays, 1-2 pm, alternating Intro and Experienced",
+    "price_note": "Free with membership or day pass",
+    "ages": null,
+    "caveat": null
+  },
+  "73": {
+    "summary": "Coached Sunday session with project support, personalized feedback and technique coaching; introductory and experienced tracks alternate.",
+    "schedule_note": "Sundays, 1-2 pm, alternating Intro and Experienced",
+    "price_note": "Free with day pass or membership",
+    "ages": null,
+    "caveat": "Not every track runs every Sunday; check the booking calendar."
+  },
+  "74": {
+    "summary": "Clinic on setting climbing goals and planning sessions, hosted by the Elevate club for women and gender-diverse climbers; bring friends or meet new people.",
+    "schedule_note": null,
+    "price_note": "Free with day pass or membership",
+    "ages": null,
+    "caveat": null
+  },
+  "75": {
+    "summary": "Weekly queer social climbing club for all experience levels, led by Alanna: group warm-up, climbing, meeting people and shared snacks. Drop-in.",
+    "schedule_note": "Every Wednesday, 7 pm",
+    "price_note": "No extra fee with day pass or membership",
+    "ages": null,
+    "caveat": null
+  },
+  "76": {
+    "summary": "All-level queer/trans bouldering meetup with Queer Climb Toronto. First-time visitors arrive 15 minutes early for orientation, fall test and waiver.",
+    "schedule_note": null,
+    "price_note": "20% off guest day passes and rental shoes",
+    "ages": null,
+    "caveat": "Booking page text still shows an old 5 pm start; current listing is 2-5 pm."
+  },
+  "77": {
+    "summary": "One-on-one goal-setting and tailored climbing coaching with the head setter/coach, for newer or experienced climbers. Starts with a discovery session.",
+    "schedule_note": "By appointment via brad@ethosclimbing.ca",
+    "price_note": "Discovery $100/h; $75-$100/session, packs available",
+    "ages": null,
+    "caveat": null
+  },
+  "78": {
+    "summary": "One-hour intro class covering safety, falling, problem reading and basic technique; max six. Book by email; stay to practise afterward.",
+    "schedule_note": "Sundays, 10 am; runs only if booked by the previous evening",
+    "price_note": "$50 + HST, rental shoes included",
+    "ages": null,
+    "caveat": "A promo poster also lists Thursdays 6 pm, not confirmed on the class page."
+  },
+  "79": {
+    "summary": "Five-week beginner bouldering program of weekly two-hour classes; message the gym to register.",
+    "schedule_note": "Weekly, 1-3 pm, five weeks",
+    "price_note": "$150; tax/entry unspecified",
+    "ages": null,
+    "caveat": "Later session dates not published."
+  },
+  "80": {
+    "summary": "Five-week technique and plateau-breaking course for climbers beyond 101, with coach/setter Jeremy Yang. Max eight; gym reserved for the class in the first hour.",
+    "schedule_note": "Sundays, 9-11 am, five weeks; next course TBD",
+    "price_note": "$185 + HST members / $285 + HST non-members",
+    "ages": null,
+    "caveat": "Next cohort not scheduled; email to join the waitlist."
+  },
+  "81": {
+    "summary": "Customized one-on-one climbing coaching in one-hour sessions, tailored to individual abilities.",
+    "schedule_note": "By appointment, subject to coach availability",
+    "price_note": "$80 + HST/hour; $50 to add a friend",
+    "ages": null,
+    "caveat": null
+  },
+  "82": {
+    "summary": "Community trivia night with host Kels.",
+    "schedule_note": "Monthly on a Thursday, 8 pm",
+    "price_note": null,
+    "ages": null,
+    "caveat": "Poster says first Thursday monthly, but recent editions ran on second Thursdays; confirm date."
+  },
+  "83": {
+    "summary": "Parents bring their babies to climb and connect with other climbing parents. Non-climbing children must stay in a carrier or stroller.",
+    "schedule_note": "Mondays, 9 am-12 pm",
+    "price_note": "$20 per adult non-member",
+    "ages": null,
+    "caveat": "Only an undated poster found; confirm the program is currently running."
+  },
+  "84": {
+    "summary": "Casual drop-in climbing alongside coach Jenny at her weekly session.",
+    "schedule_note": "Every Sunday, 4-8 pm",
+    "price_note": null,
+    "ages": null,
+    "caveat": "Only an undated poster found; confirm schedule and leader with gym."
+  },
+  "85": {
+    "summary": "Discounted student day passes every Saturday.",
+    "schedule_note": "Every Saturday",
+    "price_note": "$15 first visit, $20 returning; tax unspecified",
+    "ages": null,
+    "caveat": "Undated promo; confirm eligibility and pricing with gym."
+  },
+  "86": {
+    "summary": "Structured youth climbing building safety, technique, strength, flexibility and confidence. Harness required (own or rental); climbing shoes recommended.",
+    "schedule_note": "Weekdays 4:30-6:30 or 6:35-8:35 pm; Sat/Sun two-hour slots from 10 am",
+    "price_note": "Call for price; discounts for 6 or 8+ weeks",
+    "ages": "Ages 5-16",
+    "caveat": "Upper age listed as 16 on website and 18 on poster; call 416-406-5900 for class counts."
+  },
+  "87": {
+    "summary": "Three-session beginner adult course teaching essential climbing skills and building confidence. Register by phone; limited spots.",
+    "schedule_note": "Three Wednesdays, 6:30-8:30 pm",
+    "price_note": "$120; $180 with three-week membership",
+    "ages": null,
+    "caveat": null
+  },
+  "88": {
+    "summary": "Discounted Monday evening climbing for all ages.",
+    "schedule_note": "Every Monday from 6 pm to close, fall season",
+    "price_note": "$20 day pass; tax/rentals unspecified",
+    "ages": null,
+    "caveat": null
+  },
+  "89": {
+    "summary": "Friday evening climbing and social time with dedicated staff help for belay partners, technique tips or extra support.",
+    "schedule_note": "Fridays, 6:30-9 pm",
+    "price_note": "Regular admission",
+    "ages": null,
+    "caveat": null
+  },
+  "90": {
+    "summary": "Top-rope belay fundamentals for ages 13+, plus climbing technique, auto-belays, bouldering and fitness/Kilter orientation. Reserve by phone.",
+    "schedule_note": "Daily by advance reservation",
+    "price_note": "$54 + HST incl. rentals and one-week pass",
+    "ages": "Ages 13+",
+    "caveat": "Two-week extension priced as both $45 tax-included and $40 + HST."
+  },
+  "91": {
+    "summary": "One-hour belay lesson for parents who want to climb with their children; rentals included. Book by email or phone.",
+    "schedule_note": null,
+    "price_note": "$45 tax included; $60 with one-week pass",
+    "ages": null,
+    "caveat": "Offer has no stated expiry; confirm it is still available."
+  },
+  "92": {
+    "summary": "Two three-hour sessions covering indoor lead climbing and lead belaying, safety and preparation for outdoor sport climbing. Join the waitlist with preferred times.",
+    "schedule_note": null,
+    "price_note": "$235 + HST incl. two-week membership; $200 + HST members",
+    "ages": null,
+    "caveat": "No upcoming dates; waitlist only."
+  },
+  "93": {
+    "summary": "Beginner bouldering clinic (V0-V2) covering technique, terminology and body mechanics.",
+    "schedule_note": null,
+    "price_note": null,
+    "ages": null,
+    "caveat": "Next clinic date not yet announced."
+  },
+  "94": {
+    "summary": "Route-climbing technique up to 5.9: footwork, body mechanics and endurance. Must pass the gym's top-rope belay test to participate.",
+    "schedule_note": null,
+    "price_note": null,
+    "ages": null,
+    "caveat": "Next clinic date not yet announced."
+  },
+  "95": {
+    "summary": "Individualized instruction for beginners or experienced climbers, in private or two-person sessions; shoes, harness and all-day pass included.",
+    "schedule_note": "By advance request, hourly",
+    "price_note": "$102-$160/hour + HST depending on option",
+    "ages": null,
+    "caveat": null
+  },
+  "96": {
+    "summary": "PA Day youth climbing camps covering knots, auto-belays, movement, balance and confidence. Full-day or short afternoon slots; phone registration.",
+    "schedule_note": "Full day 9 am-3:45 pm or short slots 12-1:45 / 2-3:45 pm",
+    "price_note": "$107 + HST full day; $40 + HST short slot",
+    "ages": null,
+    "caveat": "Remaining PA Day dates not listed; ask the gym."
+  },
+  "97": {
+    "summary": "One-hour beginner session covering safety, falling, problem reading and basic climbing; stay and practise afterward. Book three days ahead; max six.",
+    "schedule_note": "Saturdays and Sundays, 4-5 pm or 6-7 pm (bookable dates)",
+    "price_note": "$45 + HST, rental shoes included",
+    "ages": null,
+    "caveat": "Website also advertises Wednesdays and Fridays, but only weekend slots are bookable."
+  },
+  "98": {
+    "summary": "Technique class for V1-V3 climbers: body positioning, footwork, route reading, mental approach, drills and personalized feedback. Max six; book three days ahead.",
+    "schedule_note": "Sundays, 10:30 am-12 pm (bookable)",
+    "price_note": "$50 + HST",
+    "ages": null,
+    "caveat": "Website and booking text list other start times (Sun 10/11:30 am, Mon/Thu 6 pm); use live calendar."
+  },
+  "99": {
+    "summary": "Eight-week coached bouldering for ages 8-12 building fundamentals, movement, confidence, coordination and teamwork. Instructor Lisa Kazuhara; max eight.",
+    "schedule_note": "Wednesdays, 5-6 pm, eight sessions",
+    "price_note": "$440 + tax",
+    "ages": "Ages 8-12",
+    "caveat": "Booking page heading still shows a July cohort; confirm correct session before paying."
+  },
+  "100": {
+    "summary": "Discounted weekly student climbing with rental shoes included. Students over 18 need valid student ID and must be under 22.",
+    "schedule_note": "Every Tuesday",
+    "price_note": "$15 first visit; $20 after; shoes included",
+    "ages": "Under 22 (students)",
+    "caveat": null
+  },
+  "101": {
+    "summary": "Weekly coached climbing fundamentals for ages 6-14, with membership and rental equipment included for the program duration. Book a trial class first.",
+    "schedule_note": "Ages 6-9: Wed 5-6 or 6:15-7:15 pm, Thu 5-6 pm; ages 10-14: Thu 6:15-7:15 pm",
+    "price_note": "Fee not published; $40 + tax trial credited",
+    "ages": "Ages 6-14",
+    "caveat": "Ages 10-14 cohort full at last check; continuous enrolment."
+  },
+  "102": {
+    "summary": "Weekly coached balance, agility, strength and coordination on ninja obstacles for ages 6-14; membership and rental equipment included during the program.",
+    "schedule_note": "Mon or Tue 5-6 pm; Tue 6:15-7:15 pm (10-14); Thu 5-6 and 6:15-7:15 pm",
+    "price_note": "Fee not published; $40 + tax trial credited",
+    "ages": "Ages 6-14",
+    "caveat": "Most Tuesday-evening and Thursday cohorts full at last check; email for waitlist."
+  },
+  "103": {
+    "summary": "Combined ninja and climbing program for ages 4-5; continuous enrolment, book a trial first.",
+    "schedule_note": "Saturdays, 10-11 am",
+    "price_note": "Fee not published; $40 + tax trial credited",
+    "ages": "Ages 4-5",
+    "caveat": null
+  },
+  "104": {
+    "summary": "45-minute trial for ages 4-14 to meet instructors and sample climbing or ninja; indicate your preferred program when registering.",
+    "schedule_note": "Tuesdays, Thursdays and Fridays; evening slots",
+    "price_note": "$40 + tax, credited toward program registration",
+    "ages": "Ages 4-14",
+    "caveat": null
+  }
+}

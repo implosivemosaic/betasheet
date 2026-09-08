@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="csrf-token" content={get_csrf_token()} />
+    <.live_title default="Climb Ontario" suffix=" · Climb Ontario" phx-no-format>{assigns[:page_title]}</.live_title>
+    <%= if meta = assigns[:meta] do %>
+      <meta name="description" content={meta.description} />
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="Climb Ontario" />
+      <meta property="og:title" content={meta.title} />
+      <meta property="og:description" content={meta.description} />
+      <meta property="og:url" content={meta.url} />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:title" content={meta.title} />
+      <meta name="twitter:description" content={meta.description} />
+      <link rel="canonical" href={meta.url} />
+    <% else %>
+      <meta
+        name="description"
+        content="Climbing competitions, socials, classes and camps across Ontario, near you."
+      />
+    <% end %>
+    <meta name="theme-color" content="#f7f4ee" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1f26" media="(prefers-color-scheme: dark)" />
+    <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
+    </script>
+  </head>
+  <body>
+    {@inner_content}
+  </body>
+</html>

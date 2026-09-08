@@ -1,0 +1,4708 @@
+{
+ "in_use": [
+  "K0A",
+  "K0B",
+  "K0C",
+  "K0E",
+  "K0G",
+  "K0H",
+  "K0J",
+  "K0K",
+  "K0L",
+  "K0M",
+  "K1A",
+  "K1B",
+  "K1C",
+  "K1E",
+  "K1G",
+  "K1H",
+  "K1J",
+  "K1K",
+  "K1L",
+  "K1M",
+  "K1N",
+  "K1P",
+  "K1R",
+  "K1S",
+  "K1T",
+  "K1V",
+  "K1W",
+  "K1X",
+  "K1Y",
+  "K1Z",
+  "K2A",
+  "K2B",
+  "K2C",
+  "K2E",
+  "K2G",
+  "K2H",
+  "K2J",
+  "K2K",
+  "K2L",
+  "K2M",
+  "K2P",
+  "K2R",
+  "K2S",
+  "K2T",
+  "K2V",
+  "K2W",
+  "K4A",
+  "K4B",
+  "K4C",
+  "K4K",
+  "K4M",
+  "K4P",
+  "K4R",
+  "K6A",
+  "K6H",
+  "K6J",
+  "K6K",
+  "K6T",
+  "K6V",
+  "K7A",
+  "K7C",
+  "K7G",
+  "K7H",
+  "K7K",
+  "K7L",
+  "K7M",
+  "K7N",
+  "K7P",
+  "K7R",
+  "K7S",
+  "K7V",
+  "K8A",
+  "K8B",
+  "K8H",
+  "K8N",
+  "K8P",
+  "K8R",
+  "K8V",
+  "K9A",
+  "K9H",
+  "K9J",
+  "K9K",
+  "K9L",
+  "K9V",
+  "L0A",
+  "L0B",
+  "L0C",
+  "L0E",
+  "L0G",
+  "L0H",
+  "L0J",
+  "L0K",
+  "L0L",
+  "L0M",
+  "L0N",
+  "L0P",
+  "L0R",
+  "L0S",
+  "L1A",
+  "L1B",
+  "L1C",
+  "L1E",
+  "L1G",
+  "L1H",
+  "L1J",
+  "L1K",
+  "L1L",
+  "L1M",
+  "L1N",
+  "L1P",
+  "L1R",
+  "L1S",
+  "L1T",
+  "L1V",
+  "L1W",
+  "L1X",
+  "L1Y",
+  "L1Z",
+  "L2A",
+  "L2E",
+  "L2G",
+  "L2H",
+  "L2J",
+  "L2M",
+  "L2N",
+  "L2P",
+  "L2R",
+  "L2S",
+  "L2T",
+  "L2V",
+  "L2W",
+  "L3B",
+  "L3C",
+  "L3E",
+  "L3J",
+  "L3K",
+  "L3L",
+  "L3M",
+  "L3P",
+  "L3R",
+  "L3S",
+  "L3T",
+  "L3V",
+  "L3W",
+  "L3X",
+  "L3Y",
+  "L3Z",
+  "L4A",
+  "L4B",
+  "L4C",
+  "L4E",
+  "L4G",
+  "L4H",
+  "L4J",
+  "L4K",
+  "L4L",
+  "L4M",
+  "L4N",
+  "L4P",
+  "L4R",
+  "L4S",
+  "L4T",
+  "L4V",
+  "L4W",
+  "L4X",
+  "L4Y",
+  "L4Z",
+  "L5A",
+  "L5B",
+  "L5C",
+  "L5E",
+  "L5G",
+  "L5H",
+  "L5J",
+  "L5K",
+  "L5L",
+  "L5M",
+  "L5N",
+  "L5P",
+  "L5R",
+  "L5S",
+  "L5T",
+  "L5V",
+  "L5W",
+  "L6A",
+  "L6B",
+  "L6C",
+  "L6E",
+  "L6G",
+  "L6H",
+  "L6J",
+  "L6K",
+  "L6L",
+  "L6M",
+  "L6P",
+  "L6R",
+  "L6S",
+  "L6T",
+  "L6V",
+  "L6W",
+  "L6X",
+  "L6Y",
+  "L6Z",
+  "L7A",
+  "L7B",
+  "L7C",
+  "L7E",
+  "L7G",
+  "L7J",
+  "L7K",
+  "L7L",
+  "L7M",
+  "L7N",
+  "L7P",
+  "L7R",
+  "L7S",
+  "L7T",
+  "L8B",
+  "L8E",
+  "L8G",
+  "L8H",
+  "L8J",
+  "L8K",
+  "L8L",
+  "L8M",
+  "L8N",
+  "L8P",
+  "L8R",
+  "L8S",
+  "L8T",
+  "L8V",
+  "L8W",
+  "L9A",
+  "L9B",
+  "L9C",
+  "L9E",
+  "L9G",
+  "L9H",
+  "L9J",
+  "L9K",
+  "L9L",
+  "L9M",
+  "L9N",
+  "L9P",
+  "L9R",
+  "L9S",
+  "L9T",
+  "L9V",
+  "L9W",
+  "L9X",
+  "L9Y",
+  "L9Z",
+  "M1B",
+  "M1C",
+  "M1E",
+  "M1G",
+  "M1H",
+  "M1J",
+  "M1K",
+  "M1L",
+  "M1M",
+  "M1N",
+  "M1P",
+  "M1R",
+  "M1S",
+  "M1T",
+  "M1V",
+  "M1W",
+  "M1X",
+  "M2H",
+  "M2J",
+  "M2K",
+  "M2L",
+  "M2M",
+  "M2N",
+  "M2P",
+  "M2R",
+  "M3A",
+  "M3B",
+  "M3C",
+  "M3H",
+  "M3J",
+  "M3K",
+  "M3L",
+  "M3M",
+  "M3N",
+  "M4A",
+  "M4B",
+  "M4C",
+  "M4E",
+  "M4G",
+  "M4H",
+  "M4J",
+  "M4K",
+  "M4L",
+  "M4M",
+  "M4N",
+  "M4P",
+  "M4R",
+  "M4S",
+  "M4T",
+  "M4V",
+  "M4W",
+  "M4X",
+  "M4Y",
+  "M5A",
+  "M5B",
+  "M5C",
+  "M5E",
+  "M5G",
+  "M5H",
+  "M5J",
+  "M5K",
+  "M5L",
+  "M5M",
+  "M5N",
+  "M5P",
+  "M5R",
+  "M5S",
+  "M5T",
+  "M5V",
+  "M5W",
+  "M5X",
+  "M6A",
+  "M6B",
+  "M6C",
+  "M6E",
+  "M6G",
+  "M6H",
+  "M6J",
+  "M6K",
+  "M6L",
+  "M6M",
+  "M6N",
+  "M6P",
+  "M6R",
+  "M6S",
+  "M7A",
+  "M7R",
+  "M7Y",
+  "M8V",
+  "M8W",
+  "M8X",
+  "M8Y",
+  "M8Z",
+  "M9A",
+  "M9B",
+  "M9C",
+  "M9L",
+  "M9M",
+  "M9N",
+  "M9P",
+  "M9R",
+  "M9V",
+  "M9W",
+  "N0A",
+  "N0B",
+  "N0C",
+  "N0E",
+  "N0G",
+  "N0H",
+  "N0J",
+  "N0K",
+  "N0L",
+  "N0M",
+  "N0N",
+  "N0P",
+  "N0R",
+  "N1A",
+  "N1C",
+  "N1E",
+  "N1G",
+  "N1H",
+  "N1K",
+  "N1L",
+  "N1M",
+  "N1P",
+  "N1R",
+  "N1S",
+  "N1T",
+  "N2A",
+  "N2B",
+  "N2C",
+  "N2E",
+  "N2G",
+  "N2H",
+  "N2J",
+  "N2K",
+  "N2L",
+  "N2M",
+  "N2N",
+  "N2P",
+  "N2R",
+  "N2T",
+  "N2V",
+  "N2Z",
+  "N3A",
+  "N3B",
+  "N3C",
+  "N3E",
+  "N3H",
+  "N3L",
+  "N3P",
+  "N3R",
+  "N3S",
+  "N3T",
+  "N3V",
+  "N3W",
+  "N3Y",
+  "N4B",
+  "N4G",
+  "N4K",
+  "N4L",
+  "N4N",
+  "N4S",
+  "N4T",
+  "N4V",
+  "N4W",
+  "N4X",
+  "N4Z",
+  "N5A",
+  "N5C",
+  "N5H",
+  "N5L",
+  "N5P",
+  "N5R",
+  "N5V",
+  "N5W",
+  "N5X",
+  "N5Y",
+  "N5Z",
+  "N6A",
+  "N6B",
+  "N6C",
+  "N6E",
+  "N6G",
+  "N6H",
+  "N6J",
+  "N6K",
+  "N6L",
+  "N6M",
+  "N6N",
+  "N6P",
+  "N7A",
+  "N7G",
+  "N7L",
+  "N7M",
+  "N7S",
+  "N7T",
+  "N7V",
+  "N7W",
+  "N7X",
+  "N8A",
+  "N8H",
+  "N8L",
+  "N8M",
+  "N8N",
+  "N8P",
+  "N8R",
+  "N8S",
+  "N8T",
+  "N8V",
+  "N8W",
+  "N8X",
+  "N8Y",
+  "N9A",
+  "N9B",
+  "N9C",
+  "N9E",
+  "N9G",
+  "N9H",
+  "N9J",
+  "N9K",
+  "N9V",
+  "N9Y",
+  "P0A",
+  "P0B",
+  "P0C",
+  "P0E",
+  "P0G",
+  "P0H",
+  "P0J",
+  "P0K",
+  "P0L",
+  "P0M",
+  "P0N",
+  "P0P",
+  "P0R",
+  "P0S",
+  "P0T",
+  "P0V",
+  "P0W",
+  "P0X",
+  "P0Y",
+  "P1A",
+  "P1B",
+  "P1C",
+  "P1H",
+  "P1L",
+  "P1P",
+  "P2A",
+  "P2B",
+  "P2N",
+  "P3A",
+  "P3B",
+  "P3C",
+  "P3E",
+  "P3G",
+  "P3L",
+  "P3N",
+  "P3P",
+  "P3Y",
+  "P4N",
+  "P4P",
+  "P4R",
+  "P5A",
+  "P5E",
+  "P5N",
+  "P6A",
+  "P6B",
+  "P6C",
+  "P7A",
+  "P7B",
+  "P7C",
+  "P7E",
+  "P7G",
+  "P7J",
+  "P7K",
+  "P7L",
+  "P8N",
+  "P8T",
+  "P9A",
+  "P9N"
+ ],
+ "unused": [
+  "K0N",
+  "K0P",
+  "K0R",
+  "K0S",
+  "K0T",
+  "K0V",
+  "K0W",
+  "K0X",
+  "K0Y",
+  "K0Z",
+  "K2N",
+  "K2X",
+  "K2Y",
+  "K2Z",
+  "K4E",
+  "K4G",
+  "K4H",
+  "K4J",
+  "K4L",
+  "K4N",
+  "K4S",
+  "K4T",
+  "K4V",
+  "K4W",
+  "K4X",
+  "K4Y",
+  "K4Z",
+  "K6B",
+  "K6C",
+  "K6E",
+  "K6G",
+  "K6L",
+  "K6M",
+  "K6N",
+  "K6P",
+  "K6R",
+  "K6S",
+  "K6W",
+  "K6X",
+  "K6Y",
+  "K6Z",
+  "K7B",
+  "K7E",
+  "K7J",
+  "K7T",
+  "K7W",
+  "K7X",
+  "K7Y",
+  "K7Z",
+  "K8C",
+  "K8E",
+  "K8G",
+  "K8J",
+  "K8K",
+  "K8L",
+  "K8M",
+  "K8S",
+  "K8T",
+  "K8W",
+  "K8X",
+  "K8Y",
+  "K8Z",
+  "K9B",
+  "K9C",
+  "K9E",
+  "K9G",
+  "K9M",
+  "K9N",
+  "K9P",
+  "K9R",
+  "K9S",
+  "K9T",
+  "K9W",
+  "K9X",
+  "K9Y",
+  "K9Z",
+  "L0T",
+  "L0V",
+  "L0W",
+  "L0X",
+  "L0Y",
+  "L0Z",
+  "L2B",
+  "L2C",
+  "L2K",
+  "L2L",
+  "L2X",
+  "L2Y",
+  "L2Z",
+  "L3A",
+  "L3G",
+  "L3H",
+  "L3N",
+  "L5X",
+  "L5Y",
+  "L5Z",
+  "L6N",
+  "L7H",
+  "L7V",
+  "L7W",
+  "L7X",
+  "L7Y",
+  "L7Z",
+  "L8A",
+  "L8C",
+  "L8X",
+  "L8Y",
+  "L8Z",
+  "M1A",
+  "M1Y",
+  "M1Z",
+  "M2A",
+  "M2B",
+  "M2C",
+  "M2E",
+  "M2G",
+  "M2S",
+  "M2T",
+  "M2V",
+  "M2W",
+  "M2X",
+  "M2Y",
+  "M2Z",
+  "M3E",
+  "M3G",
+  "M3P",
+  "M3R",
+  "M3S",
+  "M3T",
+  "M3V",
+  "M3W",
+  "M3X",
+  "M3Y",
+  "M3Z",
+  "M4Z",
+  "M5Y",
+  "M5Z",
+  "M6T",
+  "M6V",
+  "M6W",
+  "M6X",
+  "M6Y",
+  "M6Z",
+  "M7B",
+  "M7C",
+  "M7E",
+  "M7G",
+  "M7H",
+  "M7J",
+  "M7K",
+  "M7L",
+  "M7M",
+  "M7N",
+  "M7P",
+  "M7S",
+  "M7T",
+  "M7V",
+  "M7W",
+  "M7X",
+  "M7Z",
+  "M8A",
+  "M8B",
+  "M8C",
+  "M8E",
+  "M8G",
+  "M8H",
+  "M8J",
+  "M8K",
+  "M8L",
+  "M8M",
+  "M8N",
+  "M8P",
+  "M8R",
+  "M8S",
+  "M8T",
+  "M9E",
+  "M9G",
+  "M9H",
+  "M9J",
+  "M9K",
+  "M9S",
+  "M9T",
+  "M9X",
+  "M9Y",
+  "M9Z",
+  "N0S",
+  "N0T",
+  "N0V",
+  "N0W",
+  "N0X",
+  "N0Y",
+  "N0Z",
+  "N1B",
+  "N1J",
+  "N1N",
+  "N1V",
+  "N1W",
+  "N1X",
+  "N1Y",
+  "N1Z",
+  "N2S",
+  "N2W",
+  "N2X",
+  "N2Y",
+  "N3G",
+  "N3J",
+  "N3K",
+  "N3M",
+  "N3N",
+  "N3X",
+  "N3Z",
+  "N4A",
+  "N4C",
+  "N4E",
+  "N4H",
+  "N4J",
+  "N4M",
+  "N4P",
+  "N4R",
+  "N4Y",
+  "N5B",
+  "N5E",
+  "N5G",
+  "N5J",
+  "N5K",
+  "N5M",
+  "N5N",
+  "N5S",
+  "N5T",
+  "N6R",
+  "N6S",
+  "N6T",
+  "N6V",
+  "N6W",
+  "N6X",
+  "N6Y",
+  "N6Z",
+  "N7B",
+  "N7C",
+  "N7E",
+  "N7H",
+  "N7J",
+  "N7K",
+  "N7N",
+  "N7P",
+  "N7R",
+  "N7Y",
+  "N7Z",
+  "N8B",
+  "N8C",
+  "N8E",
+  "N8G",
+  "N8J",
+  "N8K",
+  "N8Z",
+  "N9L",
+  "N9M",
+  "N9N",
+  "N9P",
+  "N9R",
+  "N9S",
+  "N9T",
+  "N9W",
+  "N9X",
+  "N9Z",
+  "P0Z",
+  "P1E",
+  "P1G",
+  "P1J",
+  "P1K",
+  "P1M",
+  "P1N",
+  "P1R",
+  "P1S",
+  "P1T",
+  "P1V",
+  "P1W",
+  "P1X",
+  "P1Y",
+  "P1Z",
+  "P2C",
+  "P2E",
+  "P2G",
+  "P2H",
+  "P2J",
+  "P2K",
+  "P2L",
+  "P2M",
+  "P2P",
+  "P2R",
+  "P2S",
+  "P2T",
+  "P2V",
+  "P2W",
+  "P2X",
+  "P2Y",
+  "P2Z",
+  "P3H",
+  "P3J",
+  "P3K",
+  "P3M",
+  "P3R",
+  "P3S",
+  "P3T",
+  "P3V",
+  "P3W",
+  "P3X",
+  "P3Z",
+  "P4A",
+  "P4B",
+  "P4C",
+  "P4E",
+  "P4G",
+  "P4H",
+  "P4J",
+  "P4K",
+  "P4L",
+  "P4M",
+  "P4S",
+  "P4T",
+  "P4V",
+  "P4W",
+  "P4X",
+  "P4Y",
+  "P4Z",
+  "P5B",
+  "P5C",
+  "P5G",
+  "P5H",
+  "P5J",
+  "P5K",
+  "P5L",
+  "P5M",
+  "P5P",
+  "P5R",
+  "P5S",
+  "P5T",
+  "P5V",
+  "P5W",
+  "P5X",
+  "P5Y",
+  "P5Z",
+  "P6E",
+  "P6G",
+  "P6H",
+  "P6J",
+  "P6K",
+  "P6L",
+  "P6M",
+  "P6N",
+  "P6P",
+  "P6R",
+  "P6S",
+  "P6T",
+  "P6V",
+  "P6W",
+  "P6X",
+  "P6Y",
+  "P6Z",
+  "P7H",
+  "P7M",
+  "P7N",
+  "P7P",
+  "P7R",
+  "P7S",
+  "P7T",
+  "P7V",
+  "P7W",
+  "P7X",
+  "P7Y",
+  "P7Z",
+  "P8A",
+  "P8B",
+  "P8C",
+  "P8E",
+  "P8G",
+  "P8H",
+  "P8J",
+  "P8K",
+  "P8L",
+  "P8M",
+  "P8P",
+  "P8R",
+  "P8S",
+  "P8V",
+  "P8W",
+  "P8X",
+  "P8Y",
+  "P8Z",
+  "P9B",
+  "P9C",
+  "P9E",
+  "P9G",
+  "P9H",
+  "P9J",
+  "P9K",
+  "P9L",
+  "P9M",
+  "P9P",
+  "P9R",
+  "P9S",
+  "P9T",
+  "P9V",
+  "P9W",
+  "P9X",
+  "P9Y",
+  "P9Z"
+ ],
+ "all": {
+  "K1A": {
+   "desc": "Government of Canada",
+   "unused": false
+  },
+  "K2A": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K4A": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K6A": {
+   "desc": "Hawkesbury",
+   "unused": false
+  },
+  "K7A": {
+   "desc": "Smiths Falls",
+   "unused": false
+  },
+  "K8A": {
+   "desc": "Pembroke",
+   "unused": false
+  },
+  "K9A": {
+   "desc": "Cobourg",
+   "unused": false
+  },
+  "K1B": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K2B": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K4B": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K6B": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K7B": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K8B": {
+   "desc": "Pembroke",
+   "unused": false
+  },
+  "K9B": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K1C": {
+   "desc": "Ottawa (Orleans West)",
+   "unused": false
+  },
+  "K2C": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K4C": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K6C": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K7C": {
+   "desc": "Carleton Place",
+   "unused": false
+  },
+  "K8C": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K9C": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K1E": {
+   "desc": "Ottawa (Orleans Central)",
+   "unused": false
+  },
+  "K2E": {
+   "desc": "Ottawa (Nepean East)",
+   "unused": false
+  },
+  "K4E": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K6E": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K7E": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K8E": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K9E": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K1G": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K2G": {
+   "desc": "Ottawa (Nepean Central)",
+   "unused": false
+  },
+  "K4G": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K6G": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K7G": {
+   "desc": "Gananoque",
+   "unused": false
+  },
+  "K8G": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K9G": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K1H": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K2H": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K4H": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K6H": {
+   "desc": "Cornwall",
+   "unused": false
+  },
+  "K7H": {
+   "desc": "Perth",
+   "unused": false
+  },
+  "K8H": {
+   "desc": "Petawawa",
+   "unused": false
+  },
+  "K9H": {
+   "desc": "Peterborough",
+   "unused": false
+  },
+  "K1J": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K2J": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K4J": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K6J": {
+   "desc": "Cornwall",
+   "unused": false
+  },
+  "K7J": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K8J": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K9J": {
+   "desc": "Peterborough",
+   "unused": false
+  },
+  "K1K": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K2K": {
+   "desc": "Ottawa (Kanata North)",
+   "unused": false
+  },
+  "K4K": {
+   "desc": "Rockland",
+   "unused": false
+  },
+  "K6K": {
+   "desc": "Cornwall",
+   "unused": false
+  },
+  "K7K": {
+   "desc": "Kingston Main",
+   "unused": false
+  },
+  "K8K": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K9K": {
+   "desc": "Peterborough",
+   "unused": false
+  },
+  "K1L": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K2L": {
+   "desc": "Ottawa (Kanata Central)",
+   "unused": false
+  },
+  "K4L": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K6L": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K7L": {
+   "desc": "Kingston Main",
+   "unused": false
+  },
+  "K8L": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K9L": {
+   "desc": "Peterborough",
+   "unused": false
+  },
+  "K1M": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K2M": {
+   "desc": "Ottawa (Kanata South)",
+   "unused": false
+  },
+  "K4M": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K6M": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K7M": {
+   "desc": "Kingston Station \"A\"",
+   "unused": false
+  },
+  "K8M": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K9M": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K1N": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K2N": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K4N": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K6N": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K7N": {
+   "desc": "Amherstview",
+   "unused": false
+  },
+  "K8N": {
+   "desc": "Belleville",
+   "unused": false
+  },
+  "K9N": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K1P": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K2P": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K4P": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K6P": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K7P": {
+   "desc": "Kingston Station \"A\"",
+   "unused": false
+  },
+  "K8P": {
+   "desc": "Belleville",
+   "unused": false
+  },
+  "K9P": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K1R": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K2R": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K4R": {
+   "desc": "Russell",
+   "unused": false
+  },
+  "K6R": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K7R": {
+   "desc": "Napanee",
+   "unused": false
+  },
+  "K8R": {
+   "desc": "Belleville",
+   "unused": false
+  },
+  "K9R": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K1S": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K2S": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K4S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K6S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K7S": {
+   "desc": "Arnprior",
+   "unused": false
+  },
+  "K8S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K9S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K1T": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K2T": {
+   "desc": "Ottawa (Kanata West)",
+   "unused": false
+  },
+  "K4T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K6T": {
+   "desc": "Elizabethtown-Kitley",
+   "unused": false
+  },
+  "K7T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K8T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K9T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K1V": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K2V": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K4V": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K6V": {
+   "desc": "Brockville",
+   "unused": false
+  },
+  "K7V": {
+   "desc": "Renfrew",
+   "unused": false
+  },
+  "K8V": {
+   "desc": "Trenton",
+   "unused": false
+  },
+  "K9V": {
+   "desc": "Lindsay",
+   "unused": false
+  },
+  "K1W": {
+   "desc": "Ottawa (Orleans Southwest)",
+   "unused": false
+  },
+  "K2W": {
+   "desc": "Ottawa (March)",
+   "unused": false
+  },
+  "K4W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K6W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K7W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K8W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K9W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K1X": {
+   "desc": "Ottawa (South Gloucester)",
+   "unused": false
+  },
+  "K2X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K4X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K6X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K7X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K8X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K9X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K1Y": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K2Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K4Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K6Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K7Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K8Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K9Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K1Z": {
+   "desc": "Ottawa",
+   "unused": false
+  },
+  "K2Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K4Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K6Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K7Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K8Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K9Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "K0A": {
+   "desc": "National Capital Region",
+   "unused": false
+  },
+  "K0B": {
+   "desc": "Eastern & Central Prescott and Russell United Counties",
+   "unused": false
+  },
+  "K0C": {
+   "desc": "Stormont, Dundas and Glengarry United Counties",
+   "unused": false
+  },
+  "K0E": {
+   "desc": "South Leeds and Grenville United Counties",
+   "unused": false
+  },
+  "K0G": {
+   "desc": "Rideau Lakes area",
+   "unused": false
+  },
+  "K0H": {
+   "desc": "Frontenac County, Lennox and Addington County, Southwest Leeds and Loyalist Shores",
+   "unused": false
+  },
+  "K0J": {
+   "desc": "Renfrew County and Lanark Highlands Township",
+   "unused": false
+  },
+  "K0K": {
+   "desc": "Quinte Shores, East Northumberland County & Prince Edward County",
+   "unused": false
+  },
+  "K0L": {
+   "desc": "Peterborough County and North Hastings County",
+   "unused": false
+  },
+  "K0M": {
+   "desc": "Kawartha Lakes and Haliburton County",
+   "unused": false
+  },
+  "K0N": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "K0P": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "K0R": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "K0S": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "K0T": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "K0V": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "K0W": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "K0X": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "K0Y": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "K0Z": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "L1A": {
+   "desc": "Port Hope",
+   "unused": false
+  },
+  "L2A": {
+   "desc": "Fort Erie",
+   "unused": false
+  },
+  "L3A": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L4A": {
+   "desc": "Stouffville",
+   "unused": false
+  },
+  "L5A": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L6A": {
+   "desc": "Vaughan",
+   "unused": false
+  },
+  "L7A": {
+   "desc": "Brampton",
+   "unused": false
+  },
+  "L8A": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L9A": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L1B": {
+   "desc": "Bowmanville",
+   "unused": false
+  },
+  "L2B": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L3B": {
+   "desc": "Welland",
+   "unused": false
+  },
+  "L4B": {
+   "desc": "Richmond Hill",
+   "unused": false
+  },
+  "L5B": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L6B": {
+   "desc": "Markham",
+   "unused": false
+  },
+  "L7B": {
+   "desc": "King City",
+   "unused": false
+  },
+  "L8B": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L9B": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L1C": {
+   "desc": "Bowmanville",
+   "unused": false
+  },
+  "L2C": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L3C": {
+   "desc": "Welland",
+   "unused": false
+  },
+  "L4C": {
+   "desc": "Richmond Hill",
+   "unused": false
+  },
+  "L5C": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L6C": {
+   "desc": "Markham",
+   "unused": false
+  },
+  "L7C": {
+   "desc": "Caledon",
+   "unused": false
+  },
+  "L8C": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L9C": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L1E": {
+   "desc": "Courtice",
+   "unused": false
+  },
+  "L2E": {
+   "desc": "Niagara Falls",
+   "unused": false
+  },
+  "L3E": {
+   "desc": "Fonthill",
+   "unused": false
+  },
+  "L4E": {
+   "desc": "Richmond Hill",
+   "unused": false
+  },
+  "L5E": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L6E": {
+   "desc": "Markham",
+   "unused": false
+  },
+  "L7E": {
+   "desc": "Bolton",
+   "unused": false
+  },
+  "L8E": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L9E": {
+   "desc": "Milton",
+   "unused": false
+  },
+  "L1G": {
+   "desc": "Oshawa",
+   "unused": false
+  },
+  "L2G": {
+   "desc": "Niagara Falls",
+   "unused": false
+  },
+  "L3G": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L4G": {
+   "desc": "Aurora",
+   "unused": false
+  },
+  "L5G": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L6G": {
+   "desc": "Markham",
+   "unused": false
+  },
+  "L7G": {
+   "desc": "Georgetown",
+   "unused": false
+  },
+  "L8G": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L9G": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L1H": {
+   "desc": "Oshawa",
+   "unused": false
+  },
+  "L2H": {
+   "desc": "Niagara Falls",
+   "unused": false
+  },
+  "L3H": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L4H": {
+   "desc": "Woodbridge",
+   "unused": false
+  },
+  "L5H": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L6H": {
+   "desc": "Oakville",
+   "unused": false
+  },
+  "L7H": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L8H": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L9H": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L1J": {
+   "desc": "Oshawa",
+   "unused": false
+  },
+  "L2J": {
+   "desc": "Niagara Falls",
+   "unused": false
+  },
+  "L3J": {
+   "desc": "Beamsville[3]",
+   "unused": false
+  },
+  "L4J": {
+   "desc": "Thornhill",
+   "unused": false
+  },
+  "L5J": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L6J": {
+   "desc": "Oakville",
+   "unused": false
+  },
+  "L7J": {
+   "desc": "Acton",
+   "unused": false
+  },
+  "L8J": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L9J": {
+   "desc": "Barrie",
+   "unused": false
+  },
+  "L1K": {
+   "desc": "Oshawa",
+   "unused": false
+  },
+  "L2K": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L3K": {
+   "desc": "Port Colborne",
+   "unused": false
+  },
+  "L4K": {
+   "desc": "Concord",
+   "unused": false
+  },
+  "L5K": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L6K": {
+   "desc": "Oakville",
+   "unused": false
+  },
+  "L7K": {
+   "desc": "Caledon",
+   "unused": false
+  },
+  "L8K": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L9K": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L1L": {
+   "desc": "Oshawa",
+   "unused": false
+  },
+  "L2L": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L3L": {
+   "desc": "Woodbridge",
+   "unused": false
+  },
+  "L4L": {
+   "desc": "Woodbridge",
+   "unused": false
+  },
+  "L5L": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L6L": {
+   "desc": "Oakville",
+   "unused": false
+  },
+  "L7L": {
+   "desc": "Burlington",
+   "unused": false
+  },
+  "L8L": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L9L": {
+   "desc": "Port Perry",
+   "unused": false
+  },
+  "L1M": {
+   "desc": "Whitby",
+   "unused": false
+  },
+  "L2M": {
+   "desc": "St. Catharines",
+   "unused": false
+  },
+  "L3M": {
+   "desc": "Grimsby",
+   "unused": false
+  },
+  "L4M": {
+   "desc": "Barrie",
+   "unused": false
+  },
+  "L5M": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L6M": {
+   "desc": "Oakville",
+   "unused": false
+  },
+  "L7M": {
+   "desc": "Burlington",
+   "unused": false
+  },
+  "L8M": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L9M": {
+   "desc": "Penetanguishene",
+   "unused": false
+  },
+  "L1N": {
+   "desc": "Whitby",
+   "unused": false
+  },
+  "L2N": {
+   "desc": "St. Catharines",
+   "unused": false
+  },
+  "L3N": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L4N": {
+   "desc": "Barrie",
+   "unused": false
+  },
+  "L5N": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L6N": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L7N": {
+   "desc": "Burlington",
+   "unused": false
+  },
+  "L8N": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L9N": {
+   "desc": "East Gwillimbury",
+   "unused": false
+  },
+  "L1P": {
+   "desc": "Whitby",
+   "unused": false
+  },
+  "L2P": {
+   "desc": "St. Catharines",
+   "unused": false
+  },
+  "L3P": {
+   "desc": "Markham",
+   "unused": false
+  },
+  "L4P": {
+   "desc": "Keswick",
+   "unused": false
+  },
+  "L5P": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L6P": {
+   "desc": "Brampton",
+   "unused": false
+  },
+  "L7P": {
+   "desc": "Burlington",
+   "unused": false
+  },
+  "L8P": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L9P": {
+   "desc": "Uxbridge",
+   "unused": false
+  },
+  "L1R": {
+   "desc": "Whitby",
+   "unused": false
+  },
+  "L2R": {
+   "desc": "St. Catharines",
+   "unused": false
+  },
+  "L3R": {
+   "desc": "Markham",
+   "unused": false
+  },
+  "L4R": {
+   "desc": "Midland",
+   "unused": false
+  },
+  "L5R": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L6R": {
+   "desc": "Brampton",
+   "unused": false
+  },
+  "L7R": {
+   "desc": "Burlington",
+   "unused": false
+  },
+  "L8R": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L9R": {
+   "desc": "Alliston",
+   "unused": false
+  },
+  "L1S": {
+   "desc": "Ajax",
+   "unused": false
+  },
+  "L2S": {
+   "desc": "St. Catharines",
+   "unused": false
+  },
+  "L3S": {
+   "desc": "Markham",
+   "unused": false
+  },
+  "L4S": {
+   "desc": "Richmond Hill",
+   "unused": false
+  },
+  "L5S": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L6S": {
+   "desc": "Brampton",
+   "unused": false
+  },
+  "L7S": {
+   "desc": "Burlington",
+   "unused": false
+  },
+  "L8S": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L9S": {
+   "desc": "Innisfil",
+   "unused": false
+  },
+  "L1T": {
+   "desc": "Ajax",
+   "unused": false
+  },
+  "L2T": {
+   "desc": "St. Catharines",
+   "unused": false
+  },
+  "L3T": {
+   "desc": "Thornhill",
+   "unused": false
+  },
+  "L4T": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L5T": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L6T": {
+   "desc": "Brampton",
+   "unused": false
+  },
+  "L7T": {
+   "desc": "Burlington",
+   "unused": false
+  },
+  "L8T": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L9T": {
+   "desc": "Milton",
+   "unused": false
+  },
+  "L1V": {
+   "desc": "Pickering",
+   "unused": false
+  },
+  "L2V": {
+   "desc": "Thorold",
+   "unused": false
+  },
+  "L3V": {
+   "desc": "Orillia",
+   "unused": false
+  },
+  "L4V": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L5V": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L6V": {
+   "desc": "Brampton",
+   "unused": false
+  },
+  "L7V": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L8V": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L9V": {
+   "desc": "Orangeville",
+   "unused": false
+  },
+  "L1W": {
+   "desc": "Pickering",
+   "unused": false
+  },
+  "L2W": {
+   "desc": "St. Catharines",
+   "unused": false
+  },
+  "L3W": {
+   "desc": "Angus",
+   "unused": false
+  },
+  "L4W": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L5W": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L6W": {
+   "desc": "Brampton",
+   "unused": false
+  },
+  "L7W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L8W": {
+   "desc": "Hamilton",
+   "unused": false
+  },
+  "L9W": {
+   "desc": "Orangeville",
+   "unused": false
+  },
+  "L1X": {
+   "desc": "Pickering",
+   "unused": false
+  },
+  "L2X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L3X": {
+   "desc": "Newmarket",
+   "unused": false
+  },
+  "L4X": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L5X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L6X": {
+   "desc": "Brampton",
+   "unused": false
+  },
+  "L7X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L8X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L9X": {
+   "desc": "Springwater",
+   "unused": false
+  },
+  "L1Y": {
+   "desc": "Pickering",
+   "unused": false
+  },
+  "L2Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L3Y": {
+   "desc": "Newmarket",
+   "unused": false
+  },
+  "L4Y": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L5Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L6Y": {
+   "desc": "Brampton",
+   "unused": false
+  },
+  "L7Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L8Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L9Y": {
+   "desc": "Collingwood",
+   "unused": false
+  },
+  "L1Z": {
+   "desc": "Ajax",
+   "unused": false
+  },
+  "L2Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L3Z": {
+   "desc": "Bradford",
+   "unused": false
+  },
+  "L4Z": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "L5Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L6Z": {
+   "desc": "Brampton",
+   "unused": false
+  },
+  "L7Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L8Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "L9Z": {
+   "desc": "Wasaga Beach",
+   "unused": false
+  },
+  "L0A": {
+   "desc": "West Northumberland County / South Kawartha Lakes",
+   "unused": false
+  },
+  "L0B": {
+   "desc": "East Durham Region",
+   "unused": false
+  },
+  "L0C": {
+   "desc": "West Durham Region",
+   "unused": false
+  },
+  "L0E": {
+   "desc": "Lake Simcoe Southeast Shore",
+   "unused": false
+  },
+  "L0G": {
+   "desc": "Ontario Centre",
+   "unused": false
+  },
+  "L0H": {
+   "desc": "York/Durham Boundary South",
+   "unused": false
+  },
+  "L0J": {
+   "desc": "Peel/York Boundary South",
+   "unused": false
+  },
+  "L0K": {
+   "desc": "Lake Simcoe North Shore",
+   "unused": false
+  },
+  "L0L": {
+   "desc": "Lake Simcoe West Shore",
+   "unused": false
+  },
+  "L0M": {
+   "desc": "Georgian Bay South Shore",
+   "unused": false
+  },
+  "L0N": {
+   "desc": "Peel/Dufferin Boundary West",
+   "unused": false
+  },
+  "L0P": {
+   "desc": "Halton Region / Halton/Peel Boundary North",
+   "unused": false
+  },
+  "L0R": {
+   "desc": "East Haldimand County / Northwest Niagara Region / Most of rural Hamilton",
+   "unused": false
+  },
+  "L0S": {
+   "desc": "South and Northeast Niagara Region",
+   "unused": false
+  },
+  "L0T": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "L0V": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "L0W": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "L0X": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "L0Y": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "L0Z": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "M1A": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M2A": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M3A": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M4A": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M5A": {
+   "desc": "Downtown Toronto",
+   "unused": false
+  },
+  "M6A": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M7A": {
+   "desc": "Queen's Park",
+   "unused": false
+  },
+  "M8A": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M9A": {
+   "desc": "Etobicoke",
+   "unused": false
+  },
+  "M1B": {
+   "desc": "Scarborough",
+   "unused": false
+  },
+  "M2B": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M3B": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M4B": {
+   "desc": "East York",
+   "unused": false
+  },
+  "M5B": {
+   "desc": "Downtown Toronto",
+   "unused": false
+  },
+  "M6B": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M7B": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M8B": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M9B": {
+   "desc": "Etobicoke",
+   "unused": false
+  },
+  "M1C": {
+   "desc": "Scarborough",
+   "unused": false
+  },
+  "M2C": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M3C": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M4C": {
+   "desc": "East York",
+   "unused": false
+  },
+  "M5C": {
+   "desc": "Downtown Toronto",
+   "unused": false
+  },
+  "M6C": {
+   "desc": "York",
+   "unused": false
+  },
+  "M7C": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M8C": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M9C": {
+   "desc": "Etobicoke",
+   "unused": false
+  },
+  "M1E": {
+   "desc": "Scarborough",
+   "unused": false
+  },
+  "M2E": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M3E": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M4E": {
+   "desc": "East Toronto",
+   "unused": false
+  },
+  "M5E": {
+   "desc": "Downtown Toronto",
+   "unused": false
+  },
+  "M6E": {
+   "desc": "York",
+   "unused": false
+  },
+  "M7E": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M8E": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M9E": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M1G": {
+   "desc": "Scarborough",
+   "unused": false
+  },
+  "M2G": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M3G": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M4G": {
+   "desc": "East York",
+   "unused": false
+  },
+  "M5G": {
+   "desc": "Downtown Toronto",
+   "unused": false
+  },
+  "M6G": {
+   "desc": "Downtown Toronto",
+   "unused": false
+  },
+  "M7G": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M8G": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M9G": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M1H": {
+   "desc": "Scarborough",
+   "unused": false
+  },
+  "M2H": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M3H": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M4H": {
+   "desc": "East York",
+   "unused": false
+  },
+  "M5H": {
+   "desc": "Downtown Toronto",
+   "unused": false
+  },
+  "M6H": {
+   "desc": "West Toronto",
+   "unused": false
+  },
+  "M7H": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M8H": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M9H": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M1J": {
+   "desc": "Scarborough",
+   "unused": false
+  },
+  "M2J": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M3J": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M4J": {
+   "desc": "East York",
+   "unused": false
+  },
+  "M5J": {
+   "desc": "Downtown Toronto",
+   "unused": false
+  },
+  "M6J": {
+   "desc": "West Toronto",
+   "unused": false
+  },
+  "M7J": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M8J": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M9J": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M1K": {
+   "desc": "Scarborough",
+   "unused": false
+  },
+  "M2K": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M3K": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M4K": {
+   "desc": "East Toronto",
+   "unused": false
+  },
+  "M5K": {
+   "desc": "Downtown Toronto",
+   "unused": false
+  },
+  "M6K": {
+   "desc": "West Toronto",
+   "unused": false
+  },
+  "M7K": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M8K": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M9K": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M1L": {
+   "desc": "Scarborough",
+   "unused": false
+  },
+  "M2L": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M3L": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M4L": {
+   "desc": "East Toronto",
+   "unused": false
+  },
+  "M5L": {
+   "desc": "Downtown Toronto",
+   "unused": false
+  },
+  "M6L": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M7L": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M8L": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M9L": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M1M": {
+   "desc": "Scarborough",
+   "unused": false
+  },
+  "M2M": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M3M": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M4M": {
+   "desc": "East Toronto",
+   "unused": false
+  },
+  "M5M": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M6M": {
+   "desc": "York",
+   "unused": false
+  },
+  "M7M": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M8M": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M9M": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M1N": {
+   "desc": "Scarborough",
+   "unused": false
+  },
+  "M2N": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M3N": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M4N": {
+   "desc": "Central Toronto",
+   "unused": false
+  },
+  "M5N": {
+   "desc": "Central Toronto",
+   "unused": false
+  },
+  "M6N": {
+   "desc": "York",
+   "unused": false
+  },
+  "M7N": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M8N": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M9N": {
+   "desc": "York",
+   "unused": false
+  },
+  "M1P": {
+   "desc": "Scarborough",
+   "unused": false
+  },
+  "M2P": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M3P": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M4P": {
+   "desc": "Central Toronto",
+   "unused": false
+  },
+  "M5P": {
+   "desc": "Central Toronto",
+   "unused": false
+  },
+  "M6P": {
+   "desc": "West Toronto",
+   "unused": false
+  },
+  "M7P": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M8P": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M9P": {
+   "desc": "Etobicoke",
+   "unused": false
+  },
+  "M1R": {
+   "desc": "Scarborough",
+   "unused": false
+  },
+  "M2R": {
+   "desc": "North York",
+   "unused": false
+  },
+  "M3R": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M4R": {
+   "desc": "Central Toronto",
+   "unused": false
+  },
+  "M5R": {
+   "desc": "Central Toronto",
+   "unused": false
+  },
+  "M6R": {
+   "desc": "West Toronto",
+   "unused": false
+  },
+  "M7R": {
+   "desc": "Mississauga",
+   "unused": false
+  },
+  "M8R": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M9R": {
+   "desc": "Etobicoke",
+   "unused": false
+  },
+  "M1S": {
+   "desc": "Scarborough",
+   "unused": false
+  },
+  "M2S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M3S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M4S": {
+   "desc": "Central Toronto",
+   "unused": false
+  },
+  "M5S": {
+   "desc": "Downtown Toronto",
+   "unused": false
+  },
+  "M6S": {
+   "desc": "West Toronto",
+   "unused": false
+  },
+  "M7S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M8S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M9S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M1T": {
+   "desc": "Scarborough",
+   "unused": false
+  },
+  "M2T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M3T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M4T": {
+   "desc": "Central Toronto",
+   "unused": false
+  },
+  "M5T": {
+   "desc": "Downtown Toronto",
+   "unused": false
+  },
+  "M6T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M7T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M8T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M9T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M1V": {
+   "desc": "Scarborough",
+   "unused": false
+  },
+  "M2V": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M3V": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M4V": {
+   "desc": "Central Toronto",
+   "unused": false
+  },
+  "M5V": {
+   "desc": "Downtown Toronto",
+   "unused": false
+  },
+  "M6V": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M7V": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M8V": {
+   "desc": "Etobicoke",
+   "unused": false
+  },
+  "M9V": {
+   "desc": "Etobicoke",
+   "unused": false
+  },
+  "M1W": {
+   "desc": "Scarborough",
+   "unused": false
+  },
+  "M2W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M3W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M4W": {
+   "desc": "Downtown Toronto",
+   "unused": false
+  },
+  "M5W": {
+   "desc": "Downtown Toronto",
+   "unused": false
+  },
+  "M6W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M7W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M8W": {
+   "desc": "Etobicoke",
+   "unused": false
+  },
+  "M9W": {
+   "desc": "Etobicoke",
+   "unused": false
+  },
+  "M1X": {
+   "desc": "Scarborough",
+   "unused": false
+  },
+  "M2X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M3X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M4X": {
+   "desc": "Downtown Toronto",
+   "unused": false
+  },
+  "M5X": {
+   "desc": "Downtown Toronto",
+   "unused": false
+  },
+  "M6X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M7X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M8X": {
+   "desc": "Etobicoke",
+   "unused": false
+  },
+  "M9X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M1Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M2Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M3Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M4Y": {
+   "desc": "Downtown Toronto",
+   "unused": false
+  },
+  "M5Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M6Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M7Y": {
+   "desc": "East Toronto",
+   "unused": false
+  },
+  "M8Y": {
+   "desc": "Etobicoke",
+   "unused": false
+  },
+  "M9Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M1Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M2Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M3Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M4Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M5Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M6Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M7Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "M8Z": {
+   "desc": "Etobicoke",
+   "unused": false
+  },
+  "M9Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N1A": {
+   "desc": "Dunnville",
+   "unused": false
+  },
+  "N2A": {
+   "desc": "Kitchener",
+   "unused": false
+  },
+  "N3A": {
+   "desc": "New Hamburg",
+   "unused": false
+  },
+  "N4A": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N5A": {
+   "desc": "Stratford",
+   "unused": false
+  },
+  "N6A": {
+   "desc": "London",
+   "unused": false
+  },
+  "N7A": {
+   "desc": "Goderich",
+   "unused": false
+  },
+  "N8A": {
+   "desc": "Wallaceburg",
+   "unused": false
+  },
+  "N9A": {
+   "desc": "Windsor",
+   "unused": false
+  },
+  "N1B": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N2B": {
+   "desc": "Kitchener",
+   "unused": false
+  },
+  "N3B": {
+   "desc": "Elmira",
+   "unused": false
+  },
+  "N4B": {
+   "desc": "Delhi",
+   "unused": false
+  },
+  "N5B": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N6B": {
+   "desc": "London",
+   "unused": false
+  },
+  "N7B": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N8B": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N9B": {
+   "desc": "Windsor",
+   "unused": false
+  },
+  "N1C": {
+   "desc": "Guelph",
+   "unused": false
+  },
+  "N2C": {
+   "desc": "Kitchener",
+   "unused": false
+  },
+  "N3C": {
+   "desc": "Cambridge",
+   "unused": false
+  },
+  "N4C": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N5C": {
+   "desc": "Ingersoll",
+   "unused": false
+  },
+  "N6C": {
+   "desc": "London",
+   "unused": false
+  },
+  "N7C": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N8C": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N9C": {
+   "desc": "Windsor",
+   "unused": false
+  },
+  "N1E": {
+   "desc": "Guelph",
+   "unused": false
+  },
+  "N2E": {
+   "desc": "Kitchener",
+   "unused": false
+  },
+  "N3E": {
+   "desc": "Cambridge",
+   "unused": false
+  },
+  "N4E": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N5E": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N6E": {
+   "desc": "London",
+   "unused": false
+  },
+  "N7E": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N8E": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N9E": {
+   "desc": "Windsor",
+   "unused": false
+  },
+  "N1G": {
+   "desc": "Guelph",
+   "unused": false
+  },
+  "N2G": {
+   "desc": "Kitchener",
+   "unused": false
+  },
+  "N3G": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N4G": {
+   "desc": "Tillsonburg",
+   "unused": false
+  },
+  "N5G": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N6G": {
+   "desc": "London",
+   "unused": false
+  },
+  "N7G": {
+   "desc": "Strathroy-Caradoc",
+   "unused": false
+  },
+  "N8G": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N9G": {
+   "desc": "Windsor",
+   "unused": false
+  },
+  "N1H": {
+   "desc": "Guelph",
+   "unused": false
+  },
+  "N2H": {
+   "desc": "Kitchener",
+   "unused": false
+  },
+  "N3H": {
+   "desc": "Cambridge",
+   "unused": false
+  },
+  "N4H": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N5H": {
+   "desc": "Aylmer",
+   "unused": false
+  },
+  "N6H": {
+   "desc": "London",
+   "unused": false
+  },
+  "N7H": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N8H": {
+   "desc": "Leamington",
+   "unused": false
+  },
+  "N9H": {
+   "desc": "LaSalle",
+   "unused": false
+  },
+  "N1J": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N2J": {
+   "desc": "Waterloo",
+   "unused": false
+  },
+  "N3J": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N4J": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N5J": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N6J": {
+   "desc": "London",
+   "unused": false
+  },
+  "N7J": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N8J": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N9J": {
+   "desc": "La Salle",
+   "unused": false
+  },
+  "N1K": {
+   "desc": "Guelph",
+   "unused": false
+  },
+  "N2K": {
+   "desc": "Waterloo",
+   "unused": false
+  },
+  "N3K": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N4K": {
+   "desc": "Owen Sound",
+   "unused": false
+  },
+  "N5K": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N6K": {
+   "desc": "London",
+   "unused": false
+  },
+  "N7K": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N8K": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N9K": {
+   "desc": "Windsor",
+   "unused": false
+  },
+  "N1L": {
+   "desc": "Guelph",
+   "unused": false
+  },
+  "N2L": {
+   "desc": "Waterloo",
+   "unused": false
+  },
+  "N3L": {
+   "desc": "Paris",
+   "unused": false
+  },
+  "N4L": {
+   "desc": "Meaford",
+   "unused": false
+  },
+  "N5L": {
+   "desc": "Port Stanley",
+   "unused": false
+  },
+  "N6L": {
+   "desc": "London",
+   "unused": false
+  },
+  "N7L": {
+   "desc": "Chatham\u2013Kent",
+   "unused": false
+  },
+  "N8L": {
+   "desc": "Belle River",
+   "unused": false
+  },
+  "N9L": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N1M": {
+   "desc": "Fergus",
+   "unused": false
+  },
+  "N2M": {
+   "desc": "Kitchener",
+   "unused": false
+  },
+  "N3M": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N4M": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N5M": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N6M": {
+   "desc": "London",
+   "unused": false
+  },
+  "N7M": {
+   "desc": "Chatham\u2013Kent",
+   "unused": false
+  },
+  "N8M": {
+   "desc": "Essex",
+   "unused": false
+  },
+  "N9M": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N1N": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N2N": {
+   "desc": "Kitchener",
+   "unused": false
+  },
+  "N3N": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N4N": {
+   "desc": "Hanover",
+   "unused": false
+  },
+  "N5N": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N6N": {
+   "desc": "London",
+   "unused": false
+  },
+  "N7N": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N8N": {
+   "desc": "Tecumseh",
+   "unused": false
+  },
+  "N9N": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N1P": {
+   "desc": "Cambridge",
+   "unused": false
+  },
+  "N2P": {
+   "desc": "Kitchener",
+   "unused": false
+  },
+  "N3P": {
+   "desc": "Brantford",
+   "unused": false
+  },
+  "N4P": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N5P": {
+   "desc": "St. Thomas",
+   "unused": false
+  },
+  "N6P": {
+   "desc": "London",
+   "unused": false
+  },
+  "N7P": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N8P": {
+   "desc": "Windsor",
+   "unused": false
+  },
+  "N9P": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N1R": {
+   "desc": "Cambridge",
+   "unused": false
+  },
+  "N2R": {
+   "desc": "Kitchener",
+   "unused": false
+  },
+  "N3R": {
+   "desc": "Brantford",
+   "unused": false
+  },
+  "N4R": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N5R": {
+   "desc": "St. Thomas",
+   "unused": false
+  },
+  "N6R": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N7R": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N8R": {
+   "desc": "Windsor",
+   "unused": false
+  },
+  "N9R": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N1S": {
+   "desc": "Cambridge",
+   "unused": false
+  },
+  "N2S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N3S": {
+   "desc": "Brantford",
+   "unused": false
+  },
+  "N4S": {
+   "desc": "Woodstock",
+   "unused": false
+  },
+  "N5S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N6S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N7S": {
+   "desc": "Sarnia",
+   "unused": false
+  },
+  "N8S": {
+   "desc": "Windsor",
+   "unused": false
+  },
+  "N9S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N1T": {
+   "desc": "Cambridge",
+   "unused": false
+  },
+  "N2T": {
+   "desc": "Waterloo",
+   "unused": false
+  },
+  "N3T": {
+   "desc": "Brantford",
+   "unused": false
+  },
+  "N4T": {
+   "desc": "Woodstock",
+   "unused": false
+  },
+  "N5T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N6T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N7T": {
+   "desc": "Sarnia",
+   "unused": false
+  },
+  "N8T": {
+   "desc": "Windsor",
+   "unused": false
+  },
+  "N9T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N1V": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N2V": {
+   "desc": "Waterloo",
+   "unused": false
+  },
+  "N3V": {
+   "desc": "Brantford",
+   "unused": false
+  },
+  "N4V": {
+   "desc": "Woodstock",
+   "unused": false
+  },
+  "N5V": {
+   "desc": "London",
+   "unused": false
+  },
+  "N6V": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N7V": {
+   "desc": "Sarnia",
+   "unused": false
+  },
+  "N8V": {
+   "desc": "Windsor",
+   "unused": false
+  },
+  "N9V": {
+   "desc": "Amherstburg",
+   "unused": false
+  },
+  "N1W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N2W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N3W": {
+   "desc": "Caledonia",
+   "unused": false
+  },
+  "N4W": {
+   "desc": "Listowel",
+   "unused": false
+  },
+  "N5W": {
+   "desc": "London",
+   "unused": false
+  },
+  "N6W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N7W": {
+   "desc": "Sarnia",
+   "unused": false
+  },
+  "N8W": {
+   "desc": "Windsor",
+   "unused": false
+  },
+  "N9W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N1X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N2X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N3X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N4X": {
+   "desc": "St. Marys",
+   "unused": false
+  },
+  "N5X": {
+   "desc": "London",
+   "unused": false
+  },
+  "N6X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N7X": {
+   "desc": "Sarnia",
+   "unused": false
+  },
+  "N8X": {
+   "desc": "Windsor",
+   "unused": false
+  },
+  "N9X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N1Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N2Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N3Y": {
+   "desc": "Simcoe",
+   "unused": false
+  },
+  "N4Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N5Y": {
+   "desc": "London",
+   "unused": false
+  },
+  "N6Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N7Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N8Y": {
+   "desc": "Windsor",
+   "unused": false
+  },
+  "N9Y": {
+   "desc": "Kingsville",
+   "unused": false
+  },
+  "N1Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N2Z": {
+   "desc": "Kincardine",
+   "unused": false
+  },
+  "N3Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N4Z": {
+   "desc": "Stratford",
+   "unused": false
+  },
+  "N5Z": {
+   "desc": "London",
+   "unused": false
+  },
+  "N6Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N7Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N8Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N9Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "N0A": {
+   "desc": "West Haldimand County",
+   "unused": false
+  },
+  "N0B": {
+   "desc": "Wellington County & Rural Waterloo Region",
+   "unused": false
+  },
+  "N0C": {
+   "desc": "Georgian Bay Southwest Shore",
+   "unused": false
+  },
+  "N0E": {
+   "desc": "Brant and Norfolk Counties",
+   "unused": false
+  },
+  "N0G": {
+   "desc": "Southern Bruce and Huron Counties",
+   "unused": false
+  },
+  "N0H": {
+   "desc": "Bruce Peninsula",
+   "unused": false
+  },
+  "N0J": {
+   "desc": "Oxford County",
+   "unused": false
+  },
+  "N0K": {
+   "desc": "Perth County",
+   "unused": false
+  },
+  "N0L": {
+   "desc": "Elgin County",
+   "unused": false
+  },
+  "N0M": {
+   "desc": "Middlesex County",
+   "unused": false
+  },
+  "N0N": {
+   "desc": "Lambton County",
+   "unused": false
+  },
+  "N0P": {
+   "desc": "Kent County",
+   "unused": false
+  },
+  "N0R": {
+   "desc": "Essex County",
+   "unused": false
+  },
+  "N0S": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "N0T": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "N0V": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "N0W": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "N0X": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "N0Y": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "N0Z": {
+   "desc": "Not in use",
+   "unused": true
+  },
+  "P1A": {
+   "desc": "North Bay",
+   "unused": false
+  },
+  "P2A": {
+   "desc": "Parry Sound",
+   "unused": false
+  },
+  "P3A": {
+   "desc": "Greater Sudbury",
+   "unused": false
+  },
+  "P4A": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P5A": {
+   "desc": "Elliot Lake",
+   "unused": false
+  },
+  "P6A": {
+   "desc": "Sault Ste. Marie",
+   "unused": false
+  },
+  "P7A": {
+   "desc": "Thunder Bay",
+   "unused": false
+  },
+  "P8A": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P9A": {
+   "desc": "Fort Frances",
+   "unused": false
+  },
+  "P1B": {
+   "desc": "North Bay",
+   "unused": false
+  },
+  "P2B": {
+   "desc": "Sturgeon Falls",
+   "unused": false
+  },
+  "P3B": {
+   "desc": "Greater Sudbury",
+   "unused": false
+  },
+  "P4B": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P5B": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P6B": {
+   "desc": "Sault Ste. Marie",
+   "unused": false
+  },
+  "P7B": {
+   "desc": "Thunder Bay",
+   "unused": false
+  },
+  "P8B": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P9B": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P1C": {
+   "desc": "North Bay",
+   "unused": false
+  },
+  "P2C": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P3C": {
+   "desc": "Greater Sudbury",
+   "unused": false
+  },
+  "P4C": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P5C": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P6C": {
+   "desc": "Sault Ste. Marie",
+   "unused": false
+  },
+  "P7C": {
+   "desc": "Thunder Bay",
+   "unused": false
+  },
+  "P8C": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P9C": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P1E": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P2E": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P3E": {
+   "desc": "Greater Sudbury",
+   "unused": false
+  },
+  "P4E": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P5E": {
+   "desc": "Espanola",
+   "unused": false
+  },
+  "P6E": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P7E": {
+   "desc": "Thunder Bay",
+   "unused": false
+  },
+  "P8E": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P9E": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P1G": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P2G": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P3G": {
+   "desc": "Greater Sudbury",
+   "unused": false
+  },
+  "P4G": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P5G": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P6G": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P7G": {
+   "desc": "Thunder Bay",
+   "unused": false
+  },
+  "P8G": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P9G": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P1H": {
+   "desc": "Huntsville",
+   "unused": false
+  },
+  "P2H": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P3H": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P4H": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P5H": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P6H": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P7H": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P8H": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P9H": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P1J": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P2J": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P3J": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P4J": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P5J": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P6J": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P7J": {
+   "desc": "Thunder Bay",
+   "unused": false
+  },
+  "P8J": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P9J": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P1K": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P2K": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P3K": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P4K": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P5K": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P6K": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P7K": {
+   "desc": "Thunder Bay",
+   "unused": false
+  },
+  "P8K": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P9K": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P1L": {
+   "desc": "Bracebridge",
+   "unused": false
+  },
+  "P2L": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P3L": {
+   "desc": "Greater Sudbury",
+   "unused": false
+  },
+  "P4L": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P5L": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P6L": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P7L": {
+   "desc": "Neebing",
+   "unused": false
+  },
+  "P8L": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P9L": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P1M": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P2M": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P3M": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P4M": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P5M": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P6M": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P7M": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P8M": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P9M": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P1N": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P2N": {
+   "desc": "Kirkland Lake",
+   "unused": false
+  },
+  "P3N": {
+   "desc": "Greater Sudbury",
+   "unused": false
+  },
+  "P4N": {
+   "desc": "Timmins",
+   "unused": false
+  },
+  "P5N": {
+   "desc": "Kapuskasing",
+   "unused": false
+  },
+  "P6N": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P7N": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P8N": {
+   "desc": "Dryden",
+   "unused": false
+  },
+  "P9N": {
+   "desc": "Kenora",
+   "unused": false
+  },
+  "P1P": {
+   "desc": "Gravenhurst",
+   "unused": false
+  },
+  "P2P": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P3P": {
+   "desc": "Greater Sudbury",
+   "unused": false
+  },
+  "P4P": {
+   "desc": "Timmins",
+   "unused": false
+  },
+  "P5P": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P6P": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P7P": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P8P": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P9P": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P1R": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P2R": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P3R": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P4R": {
+   "desc": "Timmins",
+   "unused": false
+  },
+  "P5R": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P6R": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P7R": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P8R": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P9R": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P1S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P2S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P3S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P4S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P5S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P6S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P7S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P8S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P9S": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P1T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P2T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P3T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P4T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P5T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P6T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P7T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P8T": {
+   "desc": "Sioux Lookout",
+   "unused": false
+  },
+  "P9T": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P1V": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P2V": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P3V": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P4V": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P5V": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P6V": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P7V": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P8V": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P9V": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P1W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P2W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P3W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P4W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P5W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P6W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P7W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P8W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P9W": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P1X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P2X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P3X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P4X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P5X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P6X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P7X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P8X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P9X": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P1Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P2Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P3Y": {
+   "desc": "Greater Sudbury",
+   "unused": false
+  },
+  "P4Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P5Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P6Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P7Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P8Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P9Y": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P1Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P2Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P3Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P4Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P5Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P6Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P7Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P8Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P9Z": {
+   "desc": "Not assigned",
+   "unused": true
+  },
+  "P0A": {
+   "desc": "Parry Sound - Almaguin Highlands",
+   "unused": false
+  },
+  "P0B": {
+   "desc": "Muskoka",
+   "unused": false
+  },
+  "P0C": {
+   "desc": "Muskoka West",
+   "unused": false
+  },
+  "P0E": {
+   "desc": "Muskoka South",
+   "unused": false
+  },
+  "P0G": {
+   "desc": "Parry Sound North Shore",
+   "unused": false
+  },
+  "P0H": {
+   "desc": "Nipissing",
+   "unused": false
+  },
+  "P0J": {
+   "desc": "Timiskaming South",
+   "unused": false
+  },
+  "P0K": {
+   "desc": "Timiskaming North",
+   "unused": false
+  },
+  "P0L": {
+   "desc": "Cochrane District",
+   "unused": false
+  },
+  "P0M": {
+   "desc": "Algoma, Sudbury District and Rural Greater Sudbury",
+   "unused": false
+  },
+  "P0N": {
+   "desc": "Timmins Region",
+   "unused": false
+  },
+  "P0P": {
+   "desc": "Manitoulin",
+   "unused": false
+  },
+  "P0R": {
+   "desc": "Algoma Southwest",
+   "unused": false
+  },
+  "P0S": {
+   "desc": "Lake Superior East Shore",
+   "unused": false
+  },
+  "P0T": {
+   "desc": "Lake Superior North Shore",
+   "unused": false
+  },
+  "P0V": {
+   "desc": "Northwestern Ontario",
+   "unused": false
+  },
+  "P0W": {
+   "desc": "Rainy River Region",
+   "unused": false
+  },
+  "P0X": {
+   "desc": "Kenora Region",
+   "unused": false
+  },
+  "P0Y": {
+   "desc": "Whiteshell Park Region",
+   "unused": false
+  },
+  "P0Z": {
+   "desc": "Not in use",
+   "unused": true
+  }
+ }
+}

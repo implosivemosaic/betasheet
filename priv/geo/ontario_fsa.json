@@ -1,0 +1,2632 @@
+{
+ "K0A": {
+  "lat": 45.31739959999999,
+  "lng": -75.1832534,
+  "name": "National Capital Region"
+ },
+ "K0B": {
+  "lat": 45.5228174,
+  "lng": -74.70791849999999,
+  "name": "Eastern & Central Prescott and Russell United Counties"
+ },
+ "K0C": {
+  "lat": 45.1227553,
+  "lng": -74.87332959999999,
+  "name": "Stormont, Dundas and Glengarry United Counties"
+ },
+ "K0E": {
+  "lat": 44.5111581,
+  "lng": -76.00358829999999,
+  "name": "South Leeds and Grenville United Counties"
+ },
+ "K0G": {
+  "lat": 44.9435617,
+  "lng": -76.1394964,
+  "name": "Rideau Lakes area"
+ },
+ "K0H": {
+  "lat": 44.7665674,
+  "lng": -76.8720416,
+  "name": "Frontenac County, Lennox and Addington County, Southwest Leeds and Loyalist Shores"
+ },
+ "K0J": {
+  "lat": 45.6383081,
+  "lng": -77.1674026,
+  "name": "Renfrew County and Lanark Highlands Township"
+ },
+ "K0K": {
+  "lat": 44.3806352,
+  "lng": -77.4385348,
+  "name": "Quinte Shores, East Northumberland County & Prince Edward County"
+ },
+ "K0L": {
+  "lat": 44.7470141,
+  "lng": -78.05121280000002,
+  "name": "Peterborough County and North Hastings County"
+ },
+ "K0M": {
+  "lat": 44.8856366,
+  "lng": -78.6661591,
+  "name": "Kawartha Lakes and Haliburton County"
+ },
+ "K1A": {
+  "lat": 45.4247204,
+  "lng": -75.7003546,
+  "name": "Ottawa"
+ },
+ "K1B": {
+  "lat": 45.4242934,
+  "lng": -75.5985003,
+  "name": "Ottawa"
+ },
+ "K1C": {
+  "lat": 45.4270854,
+  "lng": -75.5455483,
+  "name": "Orléans"
+ },
+ "K1E": {
+  "lat": 45.4769369,
+  "lng": -75.5036813,
+  "name": "Orléans"
+ },
+ "K1G": {
+  "lat": 45.3882737,
+  "lng": -75.6169883,
+  "name": "Gloucester"
+ },
+ "K1H": {
+  "lat": 45.3854424,
+  "lng": -75.6698286,
+  "name": "Ottawa"
+ },
+ "K1J": {
+  "lat": 45.4438636,
+  "lng": -75.60132449999999,
+  "name": "Gloucester"
+ },
+ "K1K": {
+  "lat": 45.43949509999999,
+  "lng": -75.6421817,
+  "name": "Vanier"
+ },
+ "K1L": {
+  "lat": 45.4399434,
+  "lng": -75.66446429999999,
+  "name": "Vanier"
+ },
+ "K1M": {
+  "lat": 45.4467637,
+  "lng": -75.68027099999999,
+  "name": "Ottawa"
+ },
+ "K1N": {
+  "lat": 45.4279636,
+  "lng": -75.6834408,
+  "name": "Ottawa"
+ },
+ "K1P": {
+  "lat": 45.4214233,
+  "lng": -75.698021,
+  "name": "Ottawa"
+ },
+ "K1R": {
+  "lat": 45.4122448,
+  "lng": -75.7107264,
+  "name": "Ottawa"
+ },
+ "K1S": {
+  "lat": 45.399393,
+  "lng": -75.6851768,
+  "name": "Ottawa"
+ },
+ "K1T": {
+  "lat": 45.32439309999999,
+  "lng": -75.60481159999999,
+  "name": "Ottawa"
+ },
+ "K1V": {
+  "lat": 45.3336382,
+  "lng": -75.6770452,
+  "name": "Ottawa"
+ },
+ "K1W": {
+  "lat": 45.4408976,
+  "lng": -75.522307,
+  "name": "Gloucester"
+ },
+ "K1X": {
+  "lat": 45.2884494,
+  "lng": -75.6232515,
+  "name": "Gloucester"
+ },
+ "K1Y": {
+  "lat": 45.4021315,
+  "lng": -75.7255034,
+  "name": "Ottawa"
+ },
+ "K1Z": {
+  "lat": 45.38224410000001,
+  "lng": -75.73882600000002,
+  "name": "Ottawa"
+ },
+ "K2A": {
+  "lat": 45.378164,
+  "lng": -75.7633321,
+  "name": "Ottawa"
+ },
+ "K2B": {
+  "lat": 45.3616756,
+  "lng": -75.7845033,
+  "name": "Ottawa"
+ },
+ "K2C": {
+  "lat": 45.3810479,
+  "lng": -75.71057600000002,
+  "name": "Ottawa"
+ },
+ "K2E": {
+  "lat": 45.343506,
+  "lng": -75.716875,
+  "name": "Ottawa"
+ },
+ "K2G": {
+  "lat": 45.3217783,
+  "lng": -75.734336,
+  "name": "Ottawa"
+ },
+ "K2H": {
+  "lat": 45.33092389999999,
+  "lng": -75.8064706,
+  "name": "Ottawa"
+ },
+ "K2J": {
+  "lat": 45.2678321,
+  "lng": -75.76174259999999,
+  "name": "Nepean"
+ },
+ "K2K": {
+  "lat": 45.3430362,
+  "lng": -75.90259619999999,
+  "name": "Kanata"
+ },
+ "K2L": {
+  "lat": 45.3152395,
+  "lng": -75.8718856,
+  "name": "Kanata"
+ },
+ "K2M": {
+  "lat": 45.294218,
+  "lng": -75.85694409999999,
+  "name": "Kanata"
+ },
+ "K2P": {
+  "lat": 45.4144453,
+  "lng": -75.6903397,
+  "name": "Ottawa"
+ },
+ "K2R": {
+  "lat": 45.2806823,
+  "lng": -75.8254797,
+  "name": "Nepean"
+ },
+ "K2S": {
+  "lat": 45.2732592,
+  "lng": -75.91849169999999,
+  "name": "Stittsville"
+ },
+ "K2T": {
+  "lat": 45.31377029999999,
+  "lng": -75.9364184,
+  "name": "Ottawa"
+ },
+ "K2V": {
+  "lat": 45.2991332,
+  "lng": -75.9150684,
+  "name": "Kanata"
+ },
+ "K2W": {
+  "lat": 45.3648318,
+  "lng": -75.9618856,
+  "name": "Kanata"
+ },
+ "K4A": {
+  "lat": 45.4801712,
+  "lng": -75.4729414,
+  "name": "Orléans"
+ },
+ "K4B": {
+  "lat": 45.4293585,
+  "lng": -75.4702252,
+  "name": "Ottawa"
+ },
+ "K4C": {
+  "lat": 45.4887471,
+  "lng": -75.39088079999999,
+  "name": "Cumberland"
+ },
+ "K4K": {
+  "lat": 45.5629391,
+  "lng": -75.22217429999999,
+  "name": "Rockland"
+ },
+ "K4M": {
+  "lat": 45.2024124,
+  "lng": -75.6609004,
+  "name": "Manotick"
+ },
+ "K4P": {
+  "lat": 45.2432778,
+  "lng": -75.5695562,
+  "name": "Greely"
+ },
+ "K4R": {
+  "lat": 45.2560302,
+  "lng": -75.3542377,
+  "name": "Russell"
+ },
+ "K6A": {
+  "lat": 45.6005837,
+  "lng": -74.6060563,
+  "name": "Hawkesbury"
+ },
+ "K6H": {
+  "lat": 45.0290106,
+  "lng": -74.7107016,
+  "name": "Cornwall"
+ },
+ "K6J": {
+  "lat": 45.0232508,
+  "lng": -74.7559074,
+  "name": "Cornwall"
+ },
+ "K6K": {
+  "lat": 45.0584541,
+  "lng": -74.76907899999999,
+  "name": "Cornwall"
+ },
+ "K6T": {
+  "lat": 44.6343486,
+  "lng": -75.74771220000001,
+  "name": "Brockville"
+ },
+ "K6V": {
+  "lat": 44.595098,
+  "lng": -75.6986155,
+  "name": "Brockville"
+ },
+ "K7A": {
+  "lat": 44.8935346,
+  "lng": -76.0227903,
+  "name": "Smiths Falls"
+ },
+ "K7C": {
+  "lat": 45.12930799999999,
+  "lng": -76.14237659999999,
+  "name": "Carleton Place"
+ },
+ "K7G": {
+  "lat": 44.3316936,
+  "lng": -76.163876,
+  "name": "Gananoque"
+ },
+ "K7H": {
+  "lat": 44.8982165,
+  "lng": -76.25277439999999,
+  "name": "Perth"
+ },
+ "K7K": {
+  "lat": 44.25714139999999,
+  "lng": -76.49239399999999,
+  "name": "Kingston"
+ },
+ "K7L": {
+  "lat": 44.2306721,
+  "lng": -76.505109,
+  "name": "Kingston"
+ },
+ "K7M": {
+  "lat": 44.2338749,
+  "lng": -76.57086129999999,
+  "name": "Kingston"
+ },
+ "K7N": {
+  "lat": 44.2226125,
+  "lng": -76.6525683,
+  "name": "Amherstview"
+ },
+ "K7P": {
+  "lat": 44.2747111,
+  "lng": -76.60029589999999,
+  "name": "Westbrook"
+ },
+ "K7R": {
+  "lat": 44.2481436,
+  "lng": -76.94990279999999,
+  "name": "Napanee"
+ },
+ "K7S": {
+  "lat": 45.4331407,
+  "lng": -76.3609305,
+  "name": "Arnprior"
+ },
+ "K7V": {
+  "lat": 45.4718665,
+  "lng": -76.6841393,
+  "name": "Greater Madawaska"
+ },
+ "K8A": {
+  "lat": 45.82148540000001,
+  "lng": -77.12790970000002,
+  "name": "Pembroke"
+ },
+ "K8B": {
+  "lat": 45.805566,
+  "lng": -77.0941047,
+  "name": "Pembroke"
+ },
+ "K8H": {
+  "lat": 45.8903748,
+  "lng": -77.2672051,
+  "name": "Petawawa"
+ },
+ "K8N": {
+  "lat": 44.1766389,
+  "lng": -77.3668965,
+  "name": "Belleville"
+ },
+ "K8P": {
+  "lat": 44.165829,
+  "lng": -77.39560039999999,
+  "name": "Belleville"
+ },
+ "K8R": {
+  "lat": 44.1360915,
+  "lng": -77.46446069999999,
+  "name": "Belleville"
+ },
+ "K8V": {
+  "lat": 44.1100711,
+  "lng": -77.5676735,
+  "name": "Trenton"
+ },
+ "K9A": {
+  "lat": 43.9686875,
+  "lng": -78.17354379999999,
+  "name": "Cobourg"
+ },
+ "K9H": {
+  "lat": 44.330811,
+  "lng": -78.3216329,
+  "name": "Peterborough"
+ },
+ "K9J": {
+  "lat": 44.2852776,
+  "lng": -78.33301569999999,
+  "name": "Peterborough"
+ },
+ "K9K": {
+  "lat": 44.2779894,
+  "lng": -78.37568999999999,
+  "name": "Peterborough"
+ },
+ "K9L": {
+  "lat": 44.3304956,
+  "lng": -78.2960172,
+  "name": "Peterborough"
+ },
+ "K9V": {
+  "lat": 44.35588509999999,
+  "lng": -78.7532884,
+  "name": "Lindsay"
+ },
+ "L0A": {
+  "lat": 44.0750691,
+  "lng": -78.4297187,
+  "name": "Millbrook"
+ },
+ "L0B": {
+  "lat": 44.01834179999999,
+  "lng": -78.6114999,
+  "name": "Hampton"
+ },
+ "L0C": {
+  "lat": 44.2132512,
+  "lng": -79.06450559999999,
+  "name": "Sunderland"
+ },
+ "L0E": {
+  "lat": 44.2889044,
+  "lng": -79.2676668,
+  "name": "Baldwin"
+ },
+ "L0G": {
+  "lat": 44.0386034,
+  "lng": -79.60528839999999,
+  "name": "Ontario Centre"
+ },
+ "L0H": {
+  "lat": 43.8956056,
+  "lng": -79.08710049999999,
+  "name": "Gormley"
+ },
+ "L0J": {
+  "lat": 43.8363372,
+  "lng": -79.87448359999999,
+  "name": "Kleinburg"
+ },
+ "L0K": {
+  "lat": 44.70670639999999,
+  "lng": -79.538752,
+  "name": "Lake Simcoe North Shore"
+ },
+ "L0L": {
+  "lat": 44.5049644,
+  "lng": -79.7848422,
+  "name": "Simcoe County"
+ },
+ "L0M": {
+  "lat": 44.3792957,
+  "lng": -80.0534923,
+  "name": "Simcoe County"
+ },
+ "L0N": {
+  "lat": 43.906958,
+  "lng": -80.03113640000001,
+  "name": "Alton"
+ },
+ "L0P": {
+  "lat": 43.540487,
+  "lng": -79.96403389999999,
+  "name": "Halton Region / Halton/Peel Boundary North"
+ },
+ "L0R": {
+  "lat": 43.117576,
+  "lng": -79.5153773,
+  "name": "East Haldimand County / Northwest Niagara Region / Most of rural Hamilton"
+ },
+ "L0S": {
+  "lat": 43.0410809,
+  "lng": -79.3127543,
+  "name": "Ridgeville"
+ },
+ "L1A": {
+  "lat": 43.9629149,
+  "lng": -78.2988637,
+  "name": "Port Hope"
+ },
+ "L1B": {
+  "lat": 43.9083566,
+  "lng": -78.5944718,
+  "name": "Newcastle"
+ },
+ "L1C": {
+  "lat": 43.9080434,
+  "lng": -78.68525509999999,
+  "name": "Bowmanville"
+ },
+ "L1E": {
+  "lat": 43.8940611,
+  "lng": -78.78162189999999,
+  "name": "Bowmanville"
+ },
+ "L1G": {
+  "lat": 43.9260211,
+  "lng": -78.8665733,
+  "name": "Oshawa"
+ },
+ "L1H": {
+  "lat": 43.8849512,
+  "lng": -78.83260159999999,
+  "name": "Oshawa"
+ },
+ "L1J": {
+  "lat": 43.8652605,
+  "lng": -78.8722341,
+  "name": "Oshawa"
+ },
+ "L1K": {
+  "lat": 43.9332185,
+  "lng": -78.84392679999999,
+  "name": "Oshawa"
+ },
+ "L1L": {
+  "lat": 43.9531248,
+  "lng": -78.8906295,
+  "name": "Oshawa"
+ },
+ "L1M": {
+  "lat": 43.952634,
+  "lng": -78.9457948,
+  "name": "Whitby"
+ },
+ "L1N": {
+  "lat": 43.8697004,
+  "lng": -78.9175088,
+  "name": "Whitby"
+ },
+ "L1P": {
+  "lat": 43.914065,
+  "lng": -78.9853813,
+  "name": "Whitby"
+ },
+ "L1R": {
+  "lat": 43.9232492,
+  "lng": -78.9344814,
+  "name": "Whitby"
+ },
+ "L1S": {
+  "lat": 43.8429373,
+  "lng": -79.0306032,
+  "name": "Ajax"
+ },
+ "L1T": {
+  "lat": 43.8776305,
+  "lng": -79.04755589999999,
+  "name": "Ajax"
+ },
+ "L1V": {
+  "lat": 43.8274868,
+  "lng": -79.1153367,
+  "name": "Pickering"
+ },
+ "L1W": {
+  "lat": 43.82422649999999,
+  "lng": -79.0814523,
+  "name": "Pickering"
+ },
+ "L1X": {
+  "lat": 43.8521146,
+  "lng": -79.1012197,
+  "name": "Pickering"
+ },
+ "L1Y": {
+  "lat": 43.9679684,
+  "lng": -79.10404319999999,
+  "name": "Pickering"
+ },
+ "L1Z": {
+  "lat": 43.8732498,
+  "lng": -79.002342,
+  "name": "Ajax"
+ },
+ "L2A": {
+  "lat": 42.9038743,
+  "lng": -78.9344814,
+  "name": "Fort Erie"
+ },
+ "L2E": {
+  "lat": 43.110234,
+  "lng": -79.0814523,
+  "name": "Niagara Falls"
+ },
+ "L2G": {
+  "lat": 43.0729536,
+  "lng": -79.09274839999999,
+  "name": "Niagara Falls"
+ },
+ "L2H": {
+  "lat": 43.0953927,
+  "lng": -79.12662879999999,
+  "name": "Niagara Falls"
+ },
+ "L2J": {
+  "lat": 43.1315785,
+  "lng": -79.10404319999999,
+  "name": "Niagara Falls"
+ },
+ "L2M": {
+  "lat": 43.1998378,
+  "lng": -79.2169174,
+  "name": "St. Catharines"
+ },
+ "L2N": {
+  "lat": 43.1934736,
+  "lng": -79.2507534,
+  "name": "St. Catharines"
+ },
+ "L2P": {
+  "lat": 43.1508732,
+  "lng": -79.20563609999999,
+  "name": "St. Catharines"
+ },
+ "L2R": {
+  "lat": 43.1455733,
+  "lng": -79.30148450000002,
+  "name": "St. Catharines"
+ },
+ "L2S": {
+  "lat": 43.13705390000001,
+  "lng": -79.2620294,
+  "name": "St. Catharines"
+ },
+ "L2T": {
+  "lat": 43.1338476,
+  "lng": -79.2281975,
+  "name": "St. Catharines"
+ },
+ "L2V": {
+  "lat": 43.1135996,
+  "lng": -79.2169174,
+  "name": "Thorold"
+ },
+ "L2W": {
+  "lat": 43.17113060000001,
+  "lng": -79.28034989999999,
+  "name": "St. Catharines"
+ },
+ "L3B": {
+  "lat": 42.9812998,
+  "lng": -79.23947609999999,
+  "name": "Welland"
+ },
+ "L3C": {
+  "lat": 42.9941159,
+  "lng": -79.273304,
+  "name": "Welland"
+ },
+ "L3K": {
+  "lat": 42.896821,
+  "lng": -79.2620294,
+  "name": "Port Colborne"
+ },
+ "L3M": {
+  "lat": 43.1931166,
+  "lng": -79.5547244,
+  "name": "Grimsby"
+ },
+ "L3P": {
+  "lat": 43.8792741,
+  "lng": -79.2620294,
+  "name": "Unionville"
+ },
+ "L3R": {
+  "lat": 43.85519550000001,
+  "lng": -79.3071196,
+  "name": "Markham"
+ },
+ "L3S": {
+  "lat": 43.8509327,
+  "lng": -79.2620294,
+  "name": "Markham"
+ },
+ "L3T": {
+  "lat": 43.8205895,
+  "lng": -79.391605,
+  "name": "Thornhill"
+ },
+ "L3V": {
+  "lat": 44.60770249999999,
+  "lng": -79.4294664,
+  "name": "Orillia"
+ },
+ "L3X": {
+  "lat": 44.0428916,
+  "lng": -79.49850909999999,
+  "name": "Newmarket"
+ },
+ "L3Y": {
+  "lat": 44.0533612,
+  "lng": -79.4591378,
+  "name": "Newmarket"
+ },
+ "L3Z": {
+  "lat": 44.114995,
+  "lng": -79.56596329999999,
+  "name": "Bradford"
+ },
+ "L4A": {
+  "lat": 43.9741113,
+  "lng": -79.24229559999999,
+  "name": "Whitchurch-Stouffville"
+ },
+ "L4B": {
+  "lat": 43.8584081,
+  "lng": -79.391605,
+  "name": "Richmond Hill"
+ },
+ "L4C": {
+  "lat": 43.8815107,
+  "lng": -79.4366324,
+  "name": "Richmond Hill"
+ },
+ "L4E": {
+  "lat": 43.9381619,
+  "lng": -79.4366324,
+  "name": "Gormley"
+ },
+ "L4G": {
+  "lat": 43.9947471,
+  "lng": -79.4366324,
+  "name": "Aurora"
+ },
+ "L4H": {
+  "lat": 43.8256731,
+  "lng": -79.5996716,
+  "name": "Woodbridge"
+ },
+ "L4J": {
+  "lat": 43.8079675,
+  "lng": -79.4591378,
+  "name": "Thornhill"
+ },
+ "L4K": {
+  "lat": 43.8121409,
+  "lng": -79.5041322,
+  "name": "Concord"
+ },
+ "L4L": {
+  "lat": 43.799435,
+  "lng": -79.5715822,
+  "name": "Woodbridge"
+ },
+ "L4M": {
+  "lat": 44.4117642,
+  "lng": -79.6838874,
+  "name": "Barrie"
+ },
+ "L4N": {
+  "lat": 44.3680579,
+  "lng": -79.7175517,
+  "name": "Barrie"
+ },
+ "L4P": {
+  "lat": 44.2298189,
+  "lng": -79.4619506,
+  "name": "Keswick"
+ },
+ "L4R": {
+  "lat": 44.7515479,
+  "lng": -79.87794989999999,
+  "name": "Midland"
+ },
+ "L4S": {
+  "lat": 43.902498,
+  "lng": -79.40849279999999,
+  "name": "Richmond Hill"
+ },
+ "L4T": {
+  "lat": 43.7161148,
+  "lng": -79.64459649999999,
+  "name": "Mississauga"
+ },
+ "L4V": {
+  "lat": 43.6950923,
+  "lng": -79.62213679999999,
+  "name": "Mississauga"
+ },
+ "L4W": {
+  "lat": 43.6476344,
+  "lng": -79.62213679999999,
+  "name": "Mississauga"
+ },
+ "L4X": {
+  "lat": 43.6150187,
+  "lng": -79.5772008,
+  "name": "Mississauga"
+ },
+ "L4Y": {
+  "lat": 43.6075782,
+  "lng": -79.5996716,
+  "name": "Mississauga"
+ },
+ "L4Z": {
+  "lat": 43.6222137,
+  "lng": -79.6558242,
+  "name": "Mississauga"
+ },
+ "L5A": {
+  "lat": 43.5895967,
+  "lng": -79.6109049,
+  "name": "Mississauga"
+ },
+ "L5B": {
+  "lat": 43.58214299999999,
+  "lng": -79.6333674,
+  "name": "Mississauga"
+ },
+ "L5C": {
+  "lat": 43.5641466,
+  "lng": -79.64459649999999,
+  "name": "Mississauga"
+ },
+ "L5E": {
+  "lat": 43.5854729,
+  "lng": -79.56596329999999,
+  "name": "Mississauga"
+ },
+ "L5G": {
+  "lat": 43.5674879,
+  "lng": -79.5772008,
+  "name": "Mississauga"
+ },
+ "L5H": {
+  "lat": 43.5420383,
+  "lng": -79.6109049,
+  "name": "Mississauga"
+ },
+ "L5J": {
+  "lat": 43.5060127,
+  "lng": -79.6333674,
+  "name": "Mississauga"
+ },
+ "L5K": {
+  "lat": 43.5254923,
+  "lng": -79.66424409999999,
+  "name": "Mississauga"
+ },
+ "L5L": {
+  "lat": 43.5439375,
+  "lng": -79.6838874,
+  "name": "Mississauga"
+ },
+ "L5M": {
+  "lat": 43.5617742,
+  "lng": -79.72316119999999,
+  "name": "Mississauga"
+ },
+ "L5N": {
+  "lat": 43.5880906,
+  "lng": -79.7512033,
+  "name": "Mississauga"
+ },
+ "L5P": {
+  "lat": 43.68351879999999,
+  "lng": -79.612309,
+  "name": "Mississauga"
+ },
+ "L5R": {
+  "lat": 43.6147554,
+  "lng": -79.6782755,
+  "name": "Mississauga"
+ },
+ "L5S": {
+  "lat": 43.6897036,
+  "lng": -79.6670506,
+  "name": "Mississauga"
+ },
+ "L5T": {
+  "lat": 43.6517334,
+  "lng": -79.6670506,
+  "name": "Mississauga"
+ },
+ "L5V": {
+  "lat": 43.5967648,
+  "lng": -79.689499,
+  "name": "Mississauga"
+ },
+ "L5W": {
+  "lat": 43.63681589999999,
+  "lng": -79.7119419,
+  "name": "Mississauga"
+ },
+ "L6A": {
+  "lat": 43.8688806,
+  "lng": -79.5041322,
+  "name": "Maple"
+ },
+ "L6B": {
+  "lat": 43.8687116,
+  "lng": -79.2253776,
+  "name": "Markham"
+ },
+ "L6C": {
+  "lat": 43.8783343,
+  "lng": -79.352188,
+  "name": "Markham"
+ },
+ "L6E": {
+  "lat": 43.899227,
+  "lng": -79.273304,
+  "name": "Markham"
+ },
+ "L6G": {
+  "lat": 43.8457704,
+  "lng": -79.33247329999999,
+  "name": "Markham"
+ },
+ "L6H": {
+  "lat": 43.4888384,
+  "lng": -79.70633169999999,
+  "name": "Oakville"
+ },
+ "L6J": {
+  "lat": 43.4794825,
+  "lng": -79.6558242,
+  "name": "Oakville"
+ },
+ "L6K": {
+  "lat": 43.4348777,
+  "lng": -79.689499,
+  "name": "Oakville"
+ },
+ "L6L": {
+  "lat": 43.3954965,
+  "lng": -79.7287703,
+  "name": "Oakville"
+ },
+ "L6M": {
+  "lat": 43.4377177,
+  "lng": -79.77363059999999,
+  "name": "Oakville"
+ },
+ "L6P": {
+  "lat": 43.7928068,
+  "lng": -79.70633169999999,
+  "name": "Brampton"
+ },
+ "L6R": {
+  "lat": 43.7557544,
+  "lng": -79.7680243,
+  "name": "Brampton"
+ },
+ "L6S": {
+  "lat": 43.737989,
+  "lng": -79.7287703,
+  "name": "Brampton"
+ },
+ "L6T": {
+  "lat": 43.7149522,
+  "lng": -79.6838874,
+  "name": "Brampton"
+ },
+ "L6V": {
+  "lat": 43.7083413,
+  "lng": -79.7680243,
+  "name": "Brampton"
+ },
+ "L6W": {
+  "lat": 43.6810716,
+  "lng": -79.7287703,
+  "name": "Brampton"
+ },
+ "L6X": {
+  "lat": 43.6639094,
+  "lng": -79.8016569,
+  "name": "Brampton"
+ },
+ "L6Y": {
+  "lat": 43.647141,
+  "lng": -79.77363059999999,
+  "name": "Brampton"
+ },
+ "L6Z": {
+  "lat": 43.7293315,
+  "lng": -79.7904475,
+  "name": "Brampton"
+ },
+ "L7A": {
+  "lat": 43.691162,
+  "lng": -79.84087869999999,
+  "name": "Brampton"
+ },
+ "L7B": {
+  "lat": 43.9328727,
+  "lng": -79.5322424,
+  "name": "King City"
+ },
+ "L7C": {
+  "lat": 43.7523189,
+  "lng": -79.8352767,
+  "name": "Caledon East"
+ },
+ "L7E": {
+  "lat": 43.87577450000001,
+  "lng": -79.7343791,
+  "name": "Caledon"
+ },
+ "L7G": {
+  "lat": 43.64442469999999,
+  "lng": -79.9024779,
+  "name": "Georgetown"
+ },
+ "L7J": {
+  "lat": 43.63465420000001,
+  "lng": -80.0339312,
+  "name": "Acton"
+ },
+ "L7K": {
+  "lat": 43.8635666,
+  "lng": -79.9947956,
+  "name": "Caledon"
+ },
+ "L7L": {
+  "lat": 43.3804487,
+  "lng": -79.77363059999999,
+  "name": "Burlington"
+ },
+ "L7M": {
+  "lat": 43.3791997,
+  "lng": -79.8128649,
+  "name": "Burlington"
+ },
+ "L7N": {
+  "lat": 43.3475161,
+  "lng": -79.77923659999999,
+  "name": "Burlington"
+ },
+ "L7P": {
+  "lat": 43.32586999999999,
+  "lng": -79.85768279999999,
+  "name": "Burlington"
+ },
+ "L7R": {
+  "lat": 43.3399741,
+  "lng": -79.8016569,
+  "name": "Burlington"
+ },
+ "L7S": {
+  "lat": 43.32399830000001,
+  "lng": -79.810063,
+  "name": "Burlington"
+ },
+ "L7T": {
+  "lat": 43.3143039,
+  "lng": -79.8352767,
+  "name": "Burlington"
+ },
+ "L8B": {
+  "lat": 43.3325083,
+  "lng": -79.9864071,
+  "name": "Hamilton"
+ },
+ "L8E": {
+  "lat": 43.2192947,
+  "lng": -79.6838874,
+  "name": "Hamilton"
+ },
+ "L8G": {
+  "lat": 43.2211048,
+  "lng": -79.7568107,
+  "name": "Stoney Creek"
+ },
+ "L8H": {
+  "lat": 43.2528662,
+  "lng": -79.7904475,
+  "name": "Hamilton"
+ },
+ "L8J": {
+  "lat": 43.1850304,
+  "lng": -79.7287703,
+  "name": "Stoney Creek"
+ },
+ "L8K": {
+  "lat": 43.22514,
+  "lng": -79.8016569,
+  "name": "Hamilton"
+ },
+ "L8L": {
+  "lat": 43.2578885,
+  "lng": -79.84648039999999,
+  "name": "Hamilton"
+ },
+ "L8M": {
+  "lat": 43.2451669,
+  "lng": -79.8380778,
+  "name": "Hamilton"
+ },
+ "L8N": {
+  "lat": 43.252457,
+  "lng": -79.8660836,
+  "name": "Hamilton"
+ },
+ "L8P": {
+  "lat": 43.2523077,
+  "lng": -79.8912813,
+  "name": "Hamilton"
+ },
+ "L8R": {
+  "lat": 43.2630311,
+  "lng": -79.8772834,
+  "name": "Hamilton"
+ },
+ "L8S": {
+  "lat": 43.255291,
+  "lng": -79.9248669,
+  "name": "Hamilton"
+ },
+ "L8T": {
+  "lat": 43.2175687,
+  "lng": -79.8240715,
+  "name": "Hamilton"
+ },
+ "L8V": {
+  "lat": 43.2291551,
+  "lng": -79.84648039999999,
+  "name": "Hamilton"
+ },
+ "L8W": {
+  "lat": 43.19511139999999,
+  "lng": -79.84087869999999,
+  "name": "Hamilton"
+ },
+ "L9A": {
+  "lat": 43.2311551,
+  "lng": -79.8688837,
+  "name": "Hamilton"
+ },
+ "L9B": {
+  "lat": 43.2044001,
+  "lng": -79.8912813,
+  "name": "Hamilton"
+ },
+ "L9C": {
+  "lat": 43.2341458,
+  "lng": -79.9024779,
+  "name": "Hamilton"
+ },
+ "L9G": {
+  "lat": 43.2229006,
+  "lng": -79.99199949999999,
+  "name": "Ancaster"
+ },
+ "L9H": {
+  "lat": 43.2678392,
+  "lng": -79.9584397,
+  "name": "Hamilton"
+ },
+ "L9J": {
+  "lat": 44.3244029,
+  "lng": -79.70072110000001,
+  "name": "Barrie"
+ },
+ "L9K": {
+  "lat": 43.225891,
+  "lng": -79.94445259999999,
+  "name": "Hamilton"
+ },
+ "L9L": {
+  "lat": 44.1011091,
+  "lng": -78.948623,
+  "name": "Prince Albert"
+ },
+ "L9M": {
+  "lat": 44.7747226,
+  "lng": -79.92780189999999,
+  "name": "Penetanguishene"
+ },
+ "L9N": {
+  "lat": 44.1087666,
+  "lng": -79.49850909999999,
+  "name": "East Gwillimbury"
+ },
+ "L9P": {
+  "lat": 44.10397469999999,
+  "lng": -79.1238059,
+  "name": "Uxbridge"
+ },
+ "L9R": {
+  "lat": 44.1544641,
+  "lng": -79.87168369999999,
+  "name": "Alliston"
+ },
+ "L9S": {
+  "lat": 44.3183135,
+  "lng": -79.582819,
+  "name": "Innisfil Beach"
+ },
+ "L9T": {
+  "lat": 43.5167511,
+  "lng": -79.85768279999999,
+  "name": "Milton"
+ },
+ "L9V": {
+  "lat": 44.1696035,
+  "lng": -80.23213129999999,
+  "name": "Orangeville"
+ },
+ "L9W": {
+  "lat": 43.9433318,
+  "lng": -80.23213129999999,
+  "name": "Orangeville"
+ },
+ "L9Y": {
+  "lat": 44.4940717,
+  "lng": -80.2990246,
+  "name": "The Blue Mountains"
+ },
+ "L9Z": {
+  "lat": 44.4811789,
+  "lng": -80.0423151,
+  "name": "Wasaga Beach"
+ },
+ "M1B": {
+  "lat": 43.8066863,
+  "lng": -79.1943534,
+  "name": "Scarborough"
+ },
+ "M1C": {
+  "lat": 43.78453510000001,
+  "lng": -79.1604971,
+  "name": "Scarborough"
+ },
+ "M1E": {
+  "lat": 43.7635726,
+  "lng": -79.1887115,
+  "name": "Scarborough"
+ },
+ "M1G": {
+  "lat": 43.7709921,
+  "lng": -79.2169174,
+  "name": "Scarborough"
+ },
+ "M1H": {
+  "lat": 43.773136,
+  "lng": -79.23947609999999,
+  "name": "Scarborough"
+ },
+ "M1J": {
+  "lat": 43.7447342,
+  "lng": -79.23947609999999,
+  "name": "Scarborough"
+ },
+ "M1K": {
+  "lat": 43.7279292,
+  "lng": -79.2620294,
+  "name": "Scarborough"
+ },
+ "M1L": {
+  "lat": 43.7111117,
+  "lng": -79.2845772,
+  "name": "Scarborough"
+ },
+ "M1M": {
+  "lat": 43.716316,
+  "lng": -79.23947609999999,
+  "name": "Scarborough"
+ },
+ "M1N": {
+  "lat": 43.692657,
+  "lng": -79.2648481,
+  "name": "Scarborough"
+ },
+ "M1P": {
+  "lat": 43.7574096,
+  "lng": -79.273304,
+  "name": "Scarborough"
+ },
+ "M1R": {
+  "lat": 43.7500715,
+  "lng": -79.2958491,
+  "name": "Scarborough"
+ },
+ "M1S": {
+  "lat": 43.7942003,
+  "lng": -79.2620294,
+  "name": "Scarborough"
+ },
+ "M1T": {
+  "lat": 43.7816375,
+  "lng": -79.3043021,
+  "name": "Scarborough"
+ },
+ "M1V": {
+  "lat": 43.8152522,
+  "lng": -79.2845772,
+  "name": "Scarborough"
+ },
+ "M1W": {
+  "lat": 43.7995252,
+  "lng": -79.3183887,
+  "name": "Scarborough"
+ },
+ "M1X": {
+  "lat": 43.8361247,
+  "lng": -79.20563609999999,
+  "name": "Scarborough"
+ },
+ "M2H": {
+  "lat": 43.8037622,
+  "lng": -79.3634517,
+  "name": "North York"
+ },
+ "M2J": {
+  "lat": 43.7785175,
+  "lng": -79.3465557,
+  "name": "North York"
+ },
+ "M2K": {
+  "lat": 43.7869473,
+  "lng": -79.385975,
+  "name": "North York"
+ },
+ "M2L": {
+  "lat": 43.7574902,
+  "lng": -79.37471409999999,
+  "name": "North York"
+ },
+ "M2M": {
+  "lat": 43.789053,
+  "lng": -79.40849279999999,
+  "name": "North York"
+ },
+ "M2N": {
+  "lat": 43.7701199,
+  "lng": -79.40849279999999,
+  "name": "North York"
+ },
+ "M2P": {
+  "lat": 43.7527583,
+  "lng": -79.40004929999999,
+  "name": "North York"
+ },
+ "M2R": {
+  "lat": 43.7827364,
+  "lng": -79.4422593,
+  "name": "North York"
+ },
+ "M3A": {
+  "lat": 43.7532586,
+  "lng": -79.3296565,
+  "name": "North York"
+ },
+ "M3B": {
+  "lat": 43.7459058,
+  "lng": -79.352188,
+  "name": "North York"
+ },
+ "M3C": {
+  "lat": 43.7258997,
+  "lng": -79.34092299999999,
+  "name": "North York"
+ },
+ "M3H": {
+  "lat": 43.7543283,
+  "lng": -79.4422593,
+  "name": "North York"
+ },
+ "M3J": {
+  "lat": 43.7679803,
+  "lng": -79.4872619,
+  "name": "North York"
+ },
+ "M3K": {
+  "lat": 43.7374732,
+  "lng": -79.4647633,
+  "name": "North York"
+ },
+ "M3L": {
+  "lat": 43.7390146,
+  "lng": -79.5069436,
+  "name": "North York"
+ },
+ "M3M": {
+  "lat": 43.7284964,
+  "lng": -79.4956974,
+  "name": "North York"
+ },
+ "M3N": {
+  "lat": 43.7616313,
+  "lng": -79.5209994,
+  "name": "North York"
+ },
+ "M4A": {
+  "lat": 43.72588229999999,
+  "lng": -79.3155716,
+  "name": "Scarborough"
+ },
+ "M4B": {
+  "lat": 43.7063972,
+  "lng": -79.30993699999999,
+  "name": "East York"
+ },
+ "M4C": {
+  "lat": 43.6953439,
+  "lng": -79.3183887,
+  "name": "East York"
+ },
+ "M4E": {
+  "lat": 43.6763574,
+  "lng": -79.2930312,
+  "name": "Scarborough"
+ },
+ "M4G": {
+  "lat": 43.7090604,
+  "lng": -79.3634517,
+  "name": "East York"
+ },
+ "M4H": {
+  "lat": 43.7053689,
+  "lng": -79.3493719,
+  "name": "East York"
+ },
+ "M4J": {
+  "lat": 43.685347,
+  "lng": -79.3381065,
+  "name": "Toronto"
+ },
+ "M4K": {
+  "lat": 43.6795571,
+  "lng": -79.352188,
+  "name": "Toronto"
+ },
+ "M4L": {
+  "lat": 43.6689985,
+  "lng": -79.3155716,
+  "name": "Toronto"
+ },
+ "M4M": {
+  "lat": 43.6595255,
+  "lng": -79.34092299999999,
+  "name": "Toronto"
+ },
+ "M4N": {
+  "lat": 43.7280205,
+  "lng": -79.3887901,
+  "name": "Toronto"
+ },
+ "M4P": {
+  "lat": 43.7127511,
+  "lng": -79.3901975,
+  "name": "Toronto"
+ },
+ "M4R": {
+  "lat": 43.7153834,
+  "lng": -79.4056784,
+  "name": "Toronto"
+ },
+ "M4S": {
+  "lat": 43.7043244,
+  "lng": -79.3887901,
+  "name": "Toronto"
+ },
+ "M4T": {
+  "lat": 43.6895743,
+  "lng": -79.3831599,
+  "name": "Toronto"
+ },
+ "M4V": {
+  "lat": 43.6864123,
+  "lng": -79.40004929999999,
+  "name": "Toronto"
+ },
+ "M4W": {
+  "lat": 43.6795626,
+  "lng": -79.3775294,
+  "name": "Toronto"
+ },
+ "M4X": {
+  "lat": 43.667967,
+  "lng": -79.3676753,
+  "name": "Toronto"
+ },
+ "M4Y": {
+  "lat": 43.6658599,
+  "lng": -79.3831599,
+  "name": "Toronto"
+ },
+ "M5A": {
+  "lat": 43.6542599,
+  "lng": -79.36063589999999,
+  "name": "Toronto"
+ },
+ "M5B": {
+  "lat": 43.6571618,
+  "lng": -79.3789371,
+  "name": "Toronto"
+ },
+ "M5C": {
+  "lat": 43.6514939,
+  "lng": -79.3754179,
+  "name": "Toronto"
+ },
+ "M5E": {
+  "lat": 43.6447708,
+  "lng": -79.37330639999999,
+  "name": "Toronto"
+ },
+ "M5G": {
+  "lat": 43.6579524,
+  "lng": -79.3873826,
+  "name": "Toronto"
+ },
+ "M5H": {
+  "lat": 43.65057119999999,
+  "lng": -79.3845675,
+  "name": "Toronto"
+ },
+ "M5J": {
+  "lat": 43.6408157,
+  "lng": -79.3817523,
+  "name": "Toronto"
+ },
+ "M5K": {
+  "lat": 43.6471768,
+  "lng": -79.3815764,
+  "name": "Toronto"
+ },
+ "M5L": {
+  "lat": 43.6481985,
+  "lng": -79.3798169,
+  "name": "Toronto"
+ },
+ "M5M": {
+  "lat": 43.7332825,
+  "lng": -79.4197497,
+  "name": "Toronto"
+ },
+ "M5N": {
+  "lat": 43.7116948,
+  "lng": -79.4169356,
+  "name": "Toronto"
+ },
+ "M5P": {
+  "lat": 43.6969476,
+  "lng": -79.4113072,
+  "name": "York"
+ },
+ "M5R": {
+  "lat": 43.6727097,
+  "lng": -79.4056784,
+  "name": "Toronto"
+ },
+ "M5S": {
+  "lat": 43.6626956,
+  "lng": -79.40004929999999,
+  "name": "Toronto"
+ },
+ "M5T": {
+  "lat": 43.6532057,
+  "lng": -79.40004929999999,
+  "name": "Toronto"
+ },
+ "M5V": {
+  "lat": 43.6289467,
+  "lng": -79.3944199,
+  "name": "Toronto"
+ },
+ "M5W": {
+  "lat": 43.6464352,
+  "lng": -79.37484599999999,
+  "name": "Toronto"
+ },
+ "M5X": {
+  "lat": 43.6484292,
+  "lng": -79.3822802,
+  "name": "Toronto"
+ },
+ "M6A": {
+  "lat": 43.718518,
+  "lng": -79.4647633,
+  "name": "Toronto"
+ },
+ "M6B": {
+  "lat": 43.709577,
+  "lng": -79.4450726,
+  "name": "North York"
+ },
+ "M6C": {
+  "lat": 43.6937813,
+  "lng": -79.4281914,
+  "name": "Toronto"
+ },
+ "M6E": {
+  "lat": 43.68902560000001,
+  "lng": -79.453512,
+  "name": "Toronto"
+ },
+ "M6G": {
+  "lat": 43.669542,
+  "lng": -79.4225637,
+  "name": "Toronto"
+ },
+ "M6H": {
+  "lat": 43.6690051,
+  "lng": -79.4422593,
+  "name": "Toronto"
+ },
+ "M6J": {
+  "lat": 43.6479267,
+  "lng": -79.4197497,
+  "name": "Toronto"
+ },
+ "M6K": {
+  "lat": 43.6368472,
+  "lng": -79.4281914,
+  "name": "Toronto"
+ },
+ "M6L": {
+  "lat": 43.7137562,
+  "lng": -79.49007379999999,
+  "name": "North York"
+ },
+ "M6M": {
+  "lat": 43.6911158,
+  "lng": -79.47601329999999,
+  "name": "Toronto"
+ },
+ "M6N": {
+  "lat": 43.6731853,
+  "lng": -79.4872619,
+  "name": "Toronto"
+ },
+ "M6P": {
+  "lat": 43.6616083,
+  "lng": -79.4647633,
+  "name": "Toronto"
+ },
+ "M6R": {
+  "lat": 43.6489597,
+  "lng": -79.45632499999999,
+  "name": "Toronto"
+ },
+ "M6S": {
+  "lat": 43.6515706,
+  "lng": -79.4844499,
+  "name": "York"
+ },
+ "M7A": {
+  "lat": 43.6623015,
+  "lng": -79.3894938,
+  "name": "Toronto"
+ },
+ "M7R": {
+  "lat": 43.6369656,
+  "lng": -79.615819,
+  "name": "Mississauga"
+ },
+ "M7Y": {
+  "lat": 43.6627439,
+  "lng": -79.321558,
+  "name": "Toronto"
+ },
+ "M8V": {
+  "lat": 43.6056466,
+  "lng": -79.5013207,
+  "name": "Etobicoke"
+ },
+ "M8W": {
+  "lat": 43.6024137,
+  "lng": -79.5434841,
+  "name": "Etobicoke"
+ },
+ "M8X": {
+  "lat": 43.6536536,
+  "lng": -79.5069436,
+  "name": "Etobicoke"
+ },
+ "M8Y": {
+  "lat": 43.6362579,
+  "lng": -79.49850909999999,
+  "name": "Etobicoke"
+ },
+ "M8Z": {
+  "lat": 43.6288408,
+  "lng": -79.5209994,
+  "name": "Etobicoke"
+ },
+ "M9A": {
+  "lat": 43.6678556,
+  "lng": -79.5322424,
+  "name": "Etobicoke"
+ },
+ "M9B": {
+  "lat": 43.65094320000001,
+  "lng": -79.5547244,
+  "name": "Etobicoke"
+ },
+ "M9C": {
+  "lat": 43.6435152,
+  "lng": -79.5772008,
+  "name": "Etobicoke"
+ },
+ "M9L": {
+  "lat": 43.7563033,
+  "lng": -79.56596329999999,
+  "name": "North York"
+ },
+ "M9M": {
+  "lat": 43.7247659,
+  "lng": -79.5322424,
+  "name": "Toronto"
+ },
+ "M9N": {
+  "lat": 43.706876,
+  "lng": -79.5181884,
+  "name": "York"
+ },
+ "M9P": {
+  "lat": 43.696319,
+  "lng": -79.5322424,
+  "name": "Etobicoke"
+ },
+ "M9R": {
+  "lat": 43.6889054,
+  "lng": -79.5547244,
+  "name": "Etobicoke"
+ },
+ "M9V": {
+  "lat": 43.7394164,
+  "lng": -79.58843689999999,
+  "name": "Etobicoke"
+ },
+ "M9W": {
+  "lat": 43.7067483,
+  "lng": -79.59405439999999,
+  "name": "Etobicoke"
+ },
+ "N0A": {
+  "lat": 42.9697488,
+  "lng": -80.0087746,
+  "name": "West Haldimand County"
+ },
+ "N0B": {
+  "lat": 43.647619,
+  "lng": -80.32131059999999,
+  "name": "Wellington County & Rural Waterloo Region"
+ },
+ "N0C": {
+  "lat": 44.2674672,
+  "lng": -80.49938569999999,
+  "name": "Grey County"
+ },
+ "N0E": {
+  "lat": 42.88858159999999,
+  "lng": -80.4103957,
+  "name": "Brant and Norfolk Counties"
+ },
+ "N0G": {
+  "lat": 43.9748703,
+  "lng": -81.0754657,
+  "name": "Southern Bruce and Huron Counties"
+ },
+ "N0H": {
+  "lat": 44.5764094,
+  "lng": -81.0754657,
+  "name": "Bruce Peninsula"
+ },
+ "N0J": {
+  "lat": 42.9951479,
+  "lng": -80.7657804,
+  "name": "Oxford County"
+ },
+ "N0K": {
+  "lat": 43.4839965,
+  "lng": -81.1196075,
+  "name": "Perth County"
+ },
+ "N0L": {
+  "lat": 42.7273913,
+  "lng": -81.295925,
+  "name": "Elgin County"
+ },
+ "N0M": {
+  "lat": 43.2393738,
+  "lng": -81.42789839999999,
+  "name": "Middlesex County"
+ },
+ "N0N": {
+  "lat": 42.9397941,
+  "lng": -82.08429009999999,
+  "name": "Lambton County"
+ },
+ "N0P": {
+  "lat": 42.4852993,
+  "lng": -82.25832969999999,
+  "name": "Kent County"
+ },
+ "N0R": {
+  "lat": 42.1380794,
+  "lng": -82.95015579999999,
+  "name": "Essex County"
+ },
+ "N1A": {
+  "lat": 42.9078435,
+  "lng": -79.61371299999999,
+  "name": "Dunnville"
+ },
+ "N1C": {
+  "lat": 43.491899,
+  "lng": -80.22655449999999,
+  "name": "Guelph"
+ },
+ "N1E": {
+  "lat": 43.5690978,
+  "lng": -80.2377078,
+  "name": "Guelph"
+ },
+ "N1G": {
+  "lat": 43.5171743,
+  "lng": -80.2432839,
+  "name": "Guelph"
+ },
+ "N1H": {
+  "lat": 43.54339050000001,
+  "lng": -80.2711588,
+  "name": "Guelph"
+ },
+ "N1K": {
+  "lat": 43.52313940000001,
+  "lng": -80.2850929,
+  "name": "Guelph"
+ },
+ "N1L": {
+  "lat": 43.5149952,
+  "lng": -80.1902963,
+  "name": "Guelph"
+ },
+ "N1M": {
+  "lat": 43.71198039999999,
+  "lng": -80.3797834,
+  "name": "Fergus"
+ },
+ "N1P": {
+  "lat": 43.3335531,
+  "lng": -80.30181069999999,
+  "name": "Cambridge"
+ },
+ "N1R": {
+  "lat": 43.3744425,
+  "lng": -80.30459669999999,
+  "name": "Cambridge"
+ },
+ "N1S": {
+  "lat": 43.3572147,
+  "lng": -80.3268812,
+  "name": "Cambridge"
+ },
+ "N1T": {
+  "lat": 43.4021669,
+  "lng": -80.29345219999999,
+  "name": "Cambridge"
+ },
+ "N2A": {
+  "lat": 43.4421581,
+  "lng": -80.4270885,
+  "name": "Kitchener"
+ },
+ "N2B": {
+  "lat": 43.4631268,
+  "lng": -80.44934049999999,
+  "name": "Kitchener"
+ },
+ "N2C": {
+  "lat": 43.4153698,
+  "lng": -80.44934049999999,
+  "name": "Kitchener"
+ },
+ "N2E": {
+  "lat": 43.4104696,
+  "lng": -80.5049445,
+  "name": "Kitchener"
+ },
+ "N2G": {
+  "lat": 43.44467239999999,
+  "lng": -80.4854873,
+  "name": "Kitchener"
+ },
+ "N2H": {
+  "lat": 43.456377,
+  "lng": -80.4827074,
+  "name": "Kitchener"
+ },
+ "N2J": {
+  "lat": 43.4782577,
+  "lng": -80.51606079999999,
+  "name": "Waterloo"
+ },
+ "N2K": {
+  "lat": 43.4945571,
+  "lng": -80.4827074,
+  "name": "Waterloo"
+ },
+ "N2L": {
+  "lat": 43.47148749999999,
+  "lng": -80.54940069999999,
+  "name": "Waterloo"
+ },
+ "N2M": {
+  "lat": 43.44006270000001,
+  "lng": -80.51606079999999,
+  "name": "Kitchener"
+ },
+ "N2N": {
+  "lat": 43.4228058,
+  "lng": -80.5382889,
+  "name": "Kitchener"
+ },
+ "N2P": {
+  "lat": 43.3848224,
+  "lng": -80.4270885,
+  "name": "Kitchener"
+ },
+ "N2R": {
+  "lat": 43.3851754,
+  "lng": -80.4882672,
+  "name": "Kitchener"
+ },
+ "N2T": {
+  "lat": 43.4542343,
+  "lng": -80.57161990000002,
+  "name": "Waterloo"
+ },
+ "N2V": {
+  "lat": 43.4854945,
+  "lng": -80.5743969,
+  "name": "Waterloo"
+ },
+ "N2Z": {
+  "lat": 44.172896,
+  "lng": -81.6309078,
+  "name": "Kincardine"
+ },
+ "N3A": {
+  "lat": 43.3760936,
+  "lng": -80.6964905,
+  "name": "New Hamburg"
+ },
+ "N3B": {
+  "lat": 43.5963661,
+  "lng": -80.5605111,
+  "name": "Elmira"
+ },
+ "N3C": {
+  "lat": 43.4222258,
+  "lng": -80.30459669999999,
+  "name": "Cambridge"
+ },
+ "N3E": {
+  "lat": 43.4176705,
+  "lng": -80.3352364,
+  "name": "Cambridge"
+ },
+ "N3H": {
+  "lat": 43.3973533,
+  "lng": -80.34915989999999,
+  "name": "Cambridge"
+ },
+ "N3L": {
+  "lat": 43.2069716,
+  "lng": -80.3909164,
+  "name": "Paris"
+ },
+ "N3P": {
+  "lat": 43.1857684,
+  "lng": -80.22655449999999,
+  "name": "Brantford"
+ },
+ "N3R": {
+  "lat": 43.1747205,
+  "lng": -80.2655846,
+  "name": "Brantford"
+ },
+ "N3S": {
+  "lat": 43.1483286,
+  "lng": -80.2377078,
+  "name": "Brantford"
+ },
+ "N3T": {
+  "lat": 43.1564817,
+  "lng": -80.1651854,
+  "name": "Brantford"
+ },
+ "N3V": {
+  "lat": 43.1754159,
+  "lng": -80.30181069999999,
+  "name": "Brantford"
+ },
+ "N3W": {
+  "lat": 43.0685131,
+  "lng": -79.9556424,
+  "name": "Caledonia"
+ },
+ "N3Y": {
+  "lat": 42.8383305,
+  "lng": -80.30181069999999,
+  "name": "Simcoe"
+ },
+ "N4B": {
+  "lat": 42.8494629,
+  "lng": -80.491047,
+  "name": "Delhi"
+ },
+ "N4G": {
+  "lat": 42.8669541,
+  "lng": -80.7325287,
+  "name": "Tillsonburg"
+ },
+ "N4K": {
+  "lat": 44.5680371,
+  "lng": -80.9401268,
+  "name": "Owen Sound"
+ },
+ "N4L": {
+  "lat": 44.5982269,
+  "lng": -80.59383299999999,
+  "name": "Meaford"
+ },
+ "N4N": {
+  "lat": 44.14989749999999,
+  "lng": -81.0202533,
+  "name": "Hanover"
+ },
+ "N4S": {
+  "lat": 43.1334081,
+  "lng": -80.7491563,
+  "name": "Woodstock"
+ },
+ "N4T": {
+  "lat": 43.153459,
+  "lng": -80.72975710000001,
+  "name": "Woodstock"
+ },
+ "N4V": {
+  "lat": 43.1145494,
+  "lng": -80.7242136,
+  "name": "Woodstock"
+ },
+ "N4W": {
+  "lat": 43.7351455,
+  "lng": -80.9511835,
+  "name": "Listowel"
+ },
+ "N4X": {
+  "lat": 43.2580699,
+  "lng": -81.1389118,
+  "name": "St. Marys"
+ },
+ "N4Z": {
+  "lat": 43.35402010000001,
+  "lng": -81.0174917,
+  "name": "Stratford"
+ },
+ "N5A": {
+  "lat": 43.3675005,
+  "lng": -80.9760556,
+  "name": "Stratford"
+ },
+ "N5C": {
+  "lat": 43.0360636,
+  "lng": -80.8848199,
+  "name": "Ingersoll"
+ },
+ "N5H": {
+  "lat": 42.770385,
+  "lng": -80.9760556,
+  "name": "Aylmer"
+ },
+ "N5L": {
+  "lat": 42.6647776,
+  "lng": -81.2229672,
+  "name": "Port Stanley"
+ },
+ "N5P": {
+  "lat": 42.7890007,
+  "lng": -81.1830178,
+  "name": "St Thomas"
+ },
+ "N5R": {
+  "lat": 42.7665598,
+  "lng": -81.1747498,
+  "name": "St Thomas"
+ },
+ "N5V": {
+  "lat": 43.0162126,
+  "lng": -81.1526976,
+  "name": "London"
+ },
+ "N5W": {
+  "lat": 42.9845838,
+  "lng": -81.18026189999999,
+  "name": "London"
+ },
+ "N5X": {
+  "lat": 43.046705,
+  "lng": -81.2353612,
+  "name": "London"
+ },
+ "N5Y": {
+  "lat": 43.0169302,
+  "lng": -81.22434439999999,
+  "name": "London"
+ },
+ "N5Z": {
+  "lat": 42.967833,
+  "lng": -81.2133262,
+  "name": "London"
+ },
+ "N6A": {
+  "lat": 42.9975524,
+  "lng": -81.2546366,
+  "name": "London"
+ },
+ "N6B": {
+  "lat": 42.9818077,
+  "lng": -81.2381151,
+  "name": "London"
+ },
+ "N6C": {
+  "lat": 42.9598744,
+  "lng": -81.2353612,
+  "name": "London"
+ },
+ "N6E": {
+  "lat": 42.920388,
+  "lng": -81.22434439999999,
+  "name": "London"
+ },
+ "N6G": {
+  "lat": 43.0140325,
+  "lng": -81.31243409999999,
+  "name": "London"
+ },
+ "N6H": {
+  "lat": 42.9964098,
+  "lng": -81.3344408,
+  "name": "London"
+ },
+ "N6J": {
+  "lat": 42.9535959,
+  "lng": -81.27941229999999,
+  "name": "London"
+ },
+ "N6K": {
+  "lat": 42.9542158,
+  "lng": -81.3509416,
+  "name": "London"
+ },
+ "N6L": {
+  "lat": 42.8684828,
+  "lng": -81.2408689,
+  "name": "London"
+ },
+ "N6M": {
+  "lat": 42.956601,
+  "lng": -81.1306391,
+  "name": "London"
+ },
+ "N6N": {
+  "lat": 42.9003527,
+  "lng": -81.1526976,
+  "name": "London"
+ },
+ "N6P": {
+  "lat": 42.9033896,
+  "lng": -81.3179364,
+  "name": "London"
+ },
+ "N7A": {
+  "lat": 43.77333520000001,
+  "lng": -81.6692532,
+  "name": "Goderich"
+ },
+ "N7G": {
+  "lat": 42.9501472,
+  "lng": -81.6199484,
+  "name": "Strathroy"
+ },
+ "N7L": {
+  "lat": 42.4177516,
+  "lng": -82.19855179999999,
+  "name": "Chatham"
+ },
+ "N7M": {
+  "lat": 42.3876829,
+  "lng": -82.1876776,
+  "name": "Chatham"
+ },
+ "N7S": {
+  "lat": 42.9873227,
+  "lng": -82.3560389,
+  "name": "Sarnia"
+ },
+ "N7T": {
+  "lat": 42.9515312,
+  "lng": -82.3994214,
+  "name": "Sarnia"
+ },
+ "N7V": {
+  "lat": 42.9946912,
+  "lng": -82.39399999999999,
+  "name": "Sarnia"
+ },
+ "N7W": {
+  "lat": 42.9702698,
+  "lng": -82.318057,
+  "name": "Sarnia"
+ },
+ "N7X": {
+  "lat": 43.0037409,
+  "lng": -82.31262939999999,
+  "name": "Sarnia"
+ },
+ "N8A": {
+  "lat": 42.5982382,
+  "lng": -82.4156829,
+  "name": "Wallaceburg"
+ },
+ "N8H": {
+  "lat": 42.0467434,
+  "lng": -82.5943072,
+  "name": "Leamington"
+ },
+ "N8M": {
+  "lat": 42.1720084,
+  "lng": -82.8236678,
+  "name": "Essex"
+ },
+ "N8N": {
+  "lat": 42.2780514,
+  "lng": -82.8317486,
+  "name": "Tecumseh"
+ },
+ "N8P": {
+  "lat": 42.3271946,
+  "lng": -82.9125036,
+  "name": "Tecumseh"
+ },
+ "N8R": {
+  "lat": 42.3075917,
+  "lng": -82.9125036,
+  "name": "Windsor"
+ },
+ "N8S": {
+  "lat": 42.32918770000001,
+  "lng": -82.9447782,
+  "name": "Windsor"
+ },
+ "N8T": {
+  "lat": 42.30958469999999,
+  "lng": -82.9447782,
+  "name": "Windsor"
+ },
+ "N8V": {
+  "lat": 42.2687314,
+  "lng": -82.95822129999999,
+  "name": "Windsor"
+ },
+ "N8W": {
+  "lat": 42.2821492,
+  "lng": -82.97703709999999,
+  "name": "Windsor"
+ },
+ "N8X": {
+  "lat": 42.294585,
+  "lng": -83.02002449999999,
+  "name": "Windsor"
+ },
+ "N8Y": {
+  "lat": 42.3220287,
+  "lng": -82.98778659999999,
+  "name": "Windsor"
+ },
+ "N9A": {
+  "lat": 42.3148498,
+  "lng": -83.030767,
+  "name": "Windsor"
+ },
+ "N9B": {
+  "lat": 42.2965441,
+  "lng": -83.05224679999999,
+  "name": "Windsor"
+ },
+ "N9C": {
+  "lat": 42.2782265,
+  "lng": -83.0737195,
+  "name": "Windsor"
+ },
+ "N9E": {
+  "lat": 42.2658096,
+  "lng": -83.030767,
+  "name": "Windsor"
+ },
+ "N9G": {
+  "lat": 42.2435578,
+  "lng": -82.98778659999999,
+  "name": "Windsor"
+ },
+ "N9H": {
+  "lat": 42.2311275,
+  "lng": -83.025396,
+  "name": "LaSalle"
+ },
+ "N9J": {
+  "lat": 42.214093,
+  "lng": -83.0683519,
+  "name": "LaSalle"
+ },
+ "N9K": {
+  "lat": 42.2931658,
+  "lng": -82.8775218,
+  "name": "Tecumseh"
+ },
+ "N9V": {
+  "lat": 42.103278,
+  "lng": -83.1059154,
+  "name": "Amherstburg"
+ },
+ "N9Y": {
+  "lat": 42.0413019,
+  "lng": -82.7401087,
+  "name": "Kingsville"
+ },
+ "P0A": {
+  "lat": 45.8377924,
+  "lng": -79.0636421,
+  "name": "Parry Sound - Almaguin Highlands"
+ },
+ "P0B": {
+  "lat": 45.1667728,
+  "lng": -79.2246387,
+  "name": "Muskoka"
+ },
+ "P0C": {
+  "lat": 45.1241526,
+  "lng": -79.7852276,
+  "name": "Muskoka West"
+ },
+ "P0E": {
+  "lat": 44.9168269,
+  "lng": -79.5784874,
+  "name": "Honey Harbour"
+ },
+ "P0G": {
+  "lat": 45.5609326,
+  "lng": -80.22092549999999,
+  "name": "Parry Sound North Shore"
+ },
+ "P0H": {
+  "lat": 46.59042590000001,
+  "lng": -79.6625224,
+  "name": "Nipissing"
+ },
+ "P0J": {
+  "lat": 47.4365516,
+  "lng": -80.3540859,
+  "name": "Timiskaming District"
+ },
+ "P0K": {
+  "lat": 48.4539965,
+  "lng": -80.1031598,
+  "name": "Timiskaming North"
+ },
+ "P0L": {
+  "lat": 51.43323669999999,
+  "lng": -82.3384062,
+  "name": "Cochrane District"
+ },
+ "P0M": {
+  "lat": 47.6911387,
+  "lng": -82.7212583,
+  "name": "Algoma, Sudbury District and Rural Greater Sudbury"
+ },
+ "P0N": {
+  "lat": 48.63737949999999,
+  "lng": -81.371589,
+  "name": "Timmins Region"
+ },
+ "P0P": {
+  "lat": 45.9176387,
+  "lng": -82.3900591,
+  "name": "Manitoulin"
+ },
+ "P0R": {
+  "lat": 46.4583647,
+  "lng": -83.03020440000002,
+  "name": "Algoma District"
+ },
+ "P0S": {
+  "lat": 47.7762571,
+  "lng": -84.2147323,
+  "name": "Algoma District"
+ },
+ "P0T": {
+  "lat": 49.5046032,
+  "lng": -87.67021659999999,
+  "name": "Lake Superior North Shore"
+ },
+ "P0V": {
+  "lat": 53.3878692,
+  "lng": -90.8095809,
+  "name": "Ear Falls"
+ },
+ "P0W": {
+  "lat": 48.92380989999999,
+  "lng": -92.9168143,
+  "name": "Rainy River Region"
+ },
+ "P0X": {
+  "lat": 49.8689264,
+  "lng": -93.96836119999999,
+  "name": "Kenora Region"
+ },
+ "P0Y": {
+  "lat": 49.9521553,
+  "lng": -95.0030475,
+  "name": "Ingolf"
+ },
+ "P1A": {
+  "lat": 46.272758,
+  "lng": -79.4298653,
+  "name": "North Bay"
+ },
+ "P1B": {
+  "lat": 46.3239841,
+  "lng": -79.45978889999999,
+  "name": "North Bay"
+ },
+ "P1C": {
+  "lat": 46.3384496,
+  "lng": -79.432921,
+  "name": "North Bay"
+ },
+ "P1H": {
+  "lat": 45.32522910000001,
+  "lng": -79.22104809999999,
+  "name": "Huntsville"
+ },
+ "P1L": {
+  "lat": 45.0383006,
+  "lng": -79.31492399999999,
+  "name": "Beaumaris"
+ },
+ "P1P": {
+  "lat": 44.9312216,
+  "lng": -79.3788601,
+  "name": "Gravenhurst"
+ },
+ "P2A": {
+  "lat": 45.3483509,
+  "lng": -80.0175734,
+  "name": "Parry Sound"
+ },
+ "P2B": {
+  "lat": 46.3643201,
+  "lng": -79.9306577,
+  "name": "Sturgeon Falls"
+ },
+ "P2N": {
+  "lat": 48.14061210000001,
+  "lng": -80.0274414,
+  "name": "Kirkland Lake"
+ },
+ "P3A": {
+  "lat": 46.5198595,
+  "lng": -80.94371160000001,
+  "name": "Sudbury"
+ },
+ "P3B": {
+  "lat": 46.50093529999999,
+  "lng": -80.9497507,
+  "name": "Sudbury"
+ },
+ "P3C": {
+  "lat": 46.49609969999999,
+  "lng": -81.0111163,
+  "name": "Sudbury"
+ },
+ "P3E": {
+  "lat": 46.4668021,
+  "lng": -81.0084463,
+  "name": "Greater Sudbury"
+ },
+ "P3G": {
+  "lat": 46.4460513,
+  "lng": -80.9911357,
+  "name": "Sudbury"
+ },
+ "P3L": {
+  "lat": 46.5551817,
+  "lng": -80.8694044,
+  "name": "Garson"
+ },
+ "P3N": {
+  "lat": 46.6125418,
+  "lng": -81.0101559,
+  "name": "Val Caron"
+ },
+ "P3P": {
+  "lat": 46.64863440000001,
+  "lng": -80.9746752,
+  "name": "Hanmer"
+ },
+ "P3Y": {
+  "lat": 46.4166156,
+  "lng": -81.1404831,
+  "name": "Lively"
+ },
+ "P4N": {
+  "lat": 48.4785674,
+  "lng": -81.33814509999999,
+  "name": "Timmins"
+ },
+ "P4P": {
+  "lat": 48.4980698,
+  "lng": -81.34634679999999,
+  "name": "Timmins"
+ },
+ "P4R": {
+  "lat": 48.4737423,
+  "lng": -81.3742757,
+  "name": "Timmins"
+ },
+ "P5A": {
+  "lat": 46.3735498,
+  "lng": -82.6778901,
+  "name": "Elliot Lake"
+ },
+ "P5E": {
+  "lat": 46.2460026,
+  "lng": -81.79603709999999,
+  "name": "Espanola"
+ },
+ "P5N": {
+  "lat": 49.41120429999999,
+  "lng": -82.40448239999999,
+  "name": "Kapuskasing"
+ },
+ "P6A": {
+  "lat": 46.5127855,
+  "lng": -84.2703035,
+  "name": "Garden River"
+ },
+ "P6B": {
+  "lat": 46.5341251,
+  "lng": -84.3108129,
+  "name": "Sault Ste. Marie"
+ },
+ "P6C": {
+  "lat": 46.5374119,
+  "lng": -84.37728500000001,
+  "name": "Sault Ste. Marie"
+ },
+ "P7A": {
+  "lat": 48.4658307,
+  "lng": -89.1817054,
+  "name": "Thunder Bay"
+ },
+ "P7B": {
+  "lat": 48.4263142,
+  "lng": -89.2470669,
+  "name": "Thunder Bay"
+ },
+ "P7C": {
+  "lat": 48.3915489,
+  "lng": -89.27468689999999,
+  "name": "Thunder Bay"
+ },
+ "P7E": {
+  "lat": 48.37159500000001,
+  "lng": -89.2751955,
+  "name": "Thunder Bay"
+ },
+ "P7G": {
+  "lat": 48.45686569999999,
+  "lng": -89.34252389999999,
+  "name": "Thunder Bay"
+ },
+ "P7J": {
+  "lat": 48.2972452,
+  "lng": -89.3462026,
+  "name": "Thunder Bay"
+ },
+ "P7K": {
+  "lat": 48.367082,
+  "lng": -89.35524559999999,
+  "name": "Thunder Bay"
+ },
+ "P7L": {
+  "lat": 48.1735351,
+  "lng": -89.4810715,
+  "name": "Neebing"
+ },
+ "P8N": {
+  "lat": 49.7900843,
+  "lng": -92.8080217,
+  "name": "Dryden"
+ },
+ "P8T": {
+  "lat": 50.1007601,
+  "lng": -91.90675449999999,
+  "name": "Sioux Lookout"
+ },
+ "P9A": {
+  "lat": 48.6141929,
+  "lng": -93.3897732,
+  "name": "Fort Frances"
+ },
+ "P9N": {
+  "lat": 49.79915949999999,
+  "lng": -94.47680109999999,
+  "name": "Kenora"
+ }
+}
