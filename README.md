@@ -12,6 +12,7 @@ of competitions, socials, classes and camps gathered from 54 gyms and the Ontari
 ```
 source bin/ex-env.sh
 mix setup
-mix catalogue.build
+mix catalogue.seed                  # venues + unpublished skeletons
+mix run priv/repo/examples.exs      # the three agreed example listings
 PORT=4200 mix phx.server
 ```
