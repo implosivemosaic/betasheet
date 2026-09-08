@@ -10,36 +10,50 @@ defmodule ClimbOntarioWeb.ListingComponents do
     ~H"""
     <a
       href={~p"/e/#{ClimbOntario.Catalogue.Listing.slug(@listing)}"}
-      class="card-lift block rounded-box bg-base-100 border border-base-300 p-4 shadow-sm"
+      class="card-lift group relative block overflow-hidden rounded-box bg-base-100 border border-base-300 p-4 shadow-sm"
     >
-      <div class="flex items-center justify-between gap-2 text-xs">
-        <.kind_badge listing={@listing} />
-        <span :if={soon = Format.soon(@listing, @today)} class="badge badge-sm badge-secondary">{soon}</span>
-      </div>
-      <h3 class="mt-1.5 text-lg font-semibold leading-snug text-balance">{@listing.title}</h3>
-      <p class="mt-0.5 text-sm text-base-content/70">
-        {Format.venue_line(@listing.venue)}<span :if={d = Format.distance(@listing.distance_km)}> · {d}</span>
-      </p>
-      <p class="mt-2 text-sm flex items-start gap-1.5">
-        <.icon name="hero-calendar-days" class="size-4 mt-0.5 shrink-0 text-primary" />
-        <span>
-          <span class="font-medium">{Format.when_line(@listing, @today)}</span>
-          <span
-            :if={@listing.schedule_note && @listing.schedule_kind in ~w(recurring course)}
-            class="text-base-content/70"
-          > · {@listing.schedule_note}</span>
-        </span>
-      </p>
-      <p :if={@listing.summary != ""} class="mt-2 text-sm text-base-content/80 line-clamp-2">
-        {@listing.summary}
-      </p>
-      <div class="mt-3 flex flex-wrap items-center gap-1.5 text-xs">
-        <span :if={@listing.ages} class="tag">{@listing.ages}</span>
-        <span :for={a <- @listing.audience -- ["youth", "adult"]} class="tag">{Format.audience_label(
-          a
-        )}</span>
-        <span :if={p = Format.price(@listing)} class="tag tag-price">{p}</span>
-        <span :if={@listing.confidence == "tentative"} class="tag tag-muted">Tentative</span>
+      <span class={["blob", "blob-#{@listing.kind}"]} aria-hidden="true"></span>
+      <div class="relative flex gap-3">
+        <div :if={@listing.start_date && @listing.schedule_kind != "recurring"} class="datebox">
+          <span class="datebox-day">{Format.day(@listing.start_date)}</span>
+          <span class="datebox-month">{Format.month(@listing.start_date)}</span>
+        </div>
+        <div
+          :if={!(@listing.start_date && @listing.schedule_kind != "recurring")}
+          class="datebox datebox-soft"
+        >
+          <.icon name="hero-arrow-path" class="size-5" />
+        </div>
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center justify-between gap-2 text-xs">
+            <.kind_badge listing={@listing} />
+            <span :if={soon = Format.soon(@listing, @today)} class="badge badge-sm badge-primary">{soon}</span>
+          </div>
+          <h3 class="mt-1.5 text-lg font-bold leading-snug tracking-tight text-balance">
+            {@listing.title}
+          </h3>
+          <p class="mt-0.5 text-sm text-base-content/70">
+            {Format.venue_line(@listing.venue)}<span :if={d = Format.distance(@listing.distance_km)}> · {d}</span>
+          </p>
+          <p class="mt-1.5 text-sm">
+            <span class="font-medium">{Format.when_line(@listing, @today)}</span>
+            <span
+              :if={@listing.schedule_note && @listing.schedule_kind in ~w(recurring course)}
+              class="text-base-content/70"
+            > · {@listing.schedule_note}</span>
+          </p>
+          <p :if={@listing.summary != ""} class="mt-2 text-sm text-base-content/80 line-clamp-2">
+            {@listing.summary}
+          </p>
+          <div class="mt-3 flex flex-wrap items-center gap-1.5 text-xs">
+            <span :if={@listing.ages} class="tag">{@listing.ages}</span>
+            <span :for={a <- @listing.audience -- ["youth", "adult"]} class="tag">{Format.audience_label(
+              a
+            )}</span>
+            <span :if={p = Format.price(@listing)} class="tag tag-price">{p}</span>
+            <span :if={@listing.confidence == "tentative"} class="tag tag-muted">Tentative</span>
+          </div>
+        </div>
       </div>
     </a>
     """
@@ -63,6 +77,7 @@ defmodule ClimbOntarioWeb.ListingComponents do
   attr :patch, :string, required: true
   attr :active, :boolean, default: false
   attr :icon, :string, default: nil
+  attr :kind, :string, default: nil, doc: "colour the chip with this kind's hold colour"
   slot :inner_block, required: true
 
   def chip(assigns) do
@@ -70,10 +85,11 @@ defmodule ClimbOntarioWeb.ListingComponents do
     <.link
       patch={@patch}
       replace
-      class={["chip", @active && "chip-active"]}
+      class={["chip", @kind && "chip-#{@kind}", @active && "chip-active"]}
       aria-pressed={to_string(@active)}
     >
-      <.icon :if={@icon} name={@icon} class="size-4" />
+      <span :if={@kind} class={["hold", "hold-#{@kind}"]} aria-hidden="true"></span>
+      <.icon :if={@icon && !@kind} name={@icon} class="size-4" />
       {render_slot(@inner_block)}
     </.link>
     """
@@ -90,8 +106,13 @@ defmodule ClimbOntarioWeb.ListingComponents do
     ~H"""
     <div class="mt-4">
       <div class="flex flex-wrap items-center gap-2">
-        <a href={@listing.link} target="_blank" rel="noopener" class="btn btn-primary rounded-field">
-          {Format.link_label(@listing.link_kind)} ↗
+        <a
+          href={@listing.link}
+          target="_blank"
+          rel="noopener"
+          class="cta btn btn-primary btn-lg rounded-field"
+        >
+          {Format.link_label(@listing.link_kind)} <span class="arrow">↗</span>
         </a>
         <button
           type="button"

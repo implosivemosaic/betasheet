@@ -51,9 +51,12 @@ defmodule ClimbOntarioWeb.DiscoverLive do
     ~H"""
     <Layouts.app flash={@flash}>
       <section class="pt-3 sm:pt-8">
-        <h1 class="text-2xl sm:text-4xl font-bold tracking-tight text-balance">
-          What's on in Ontario climbing?
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-balance leading-[1.05]">
+          What's on in Ontario <span class="squiggle">climbing</span>?
         </h1>
+        <p class="mt-2 text-sm sm:text-base text-base-content/70">
+          Comps, socials, classes and camps, near you.
+        </p>
 
         <form phx-submit="search" class="mt-5 flex gap-2" role="search">
           <label class="input input-lg flex-1 items-center gap-2 rounded-field pr-1">
@@ -81,7 +84,7 @@ defmodule ClimbOntarioWeb.DiscoverLive do
               <.icon name="hero-viewfinder-circle" class="size-5" />
             </button>
           </label>
-          <button type="submit" class="btn btn-lg btn-primary rounded-field">Go</button>
+          <button type="submit" class="btn btn-lg btn-primary rounded-field px-5">Go</button>
         </form>
 
         <p :if={@near_error} class="mt-2 text-sm text-error">
@@ -110,7 +113,7 @@ defmodule ClimbOntarioWeb.DiscoverLive do
             :for={k <- Listing.kinds()}
             patch={path(Query.toggle_kind(@query, k))}
             active={k in @query.kinds}
-            icon={kind_icon(k)}
+            kind={k}
           >
             {Format.kind_label(k)}
           </.chip>

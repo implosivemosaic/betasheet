@@ -1,4 +1,4 @@
-/* Climb Ontario — one small visual system: warm chalk base, spruce primary, ember accent. */
+/* Climb Ontario — chalk and holds: warm chalk base, ink text, one hold colour per kind. */
 @import "tailwindcss" source(none);
 @import "phoenix-colocated/climb_ontario/colocated.css";
 @source "../css";
@@ -17,15 +17,15 @@
   default: true;
   prefersdark: false;
   color-scheme: "light";
-  --color-base-100: oklch(98.5% 0.008 85);
-  --color-base-200: oklch(95.5% 0.012 85);
-  --color-base-300: oklch(90% 0.015 85);
-  --color-base-content: oklch(24% 0.02 60);
-  --color-primary: oklch(42% 0.10 165);
-  --color-primary-content: oklch(98% 0.01 165);
-  --color-secondary: oklch(66% 0.17 45);
-  --color-secondary-content: oklch(99% 0.01 45);
-  --color-accent: oklch(80% 0.14 85);
+  --color-base-100: oklch(99% 0.006 85);
+  --color-base-200: oklch(96% 0.014 80);
+  --color-base-300: oklch(90% 0.018 80);
+  --color-base-content: oklch(22% 0.02 60);
+  --color-primary: oklch(24% 0.02 60);
+  --color-primary-content: oklch(98.5% 0.008 85);
+  --color-secondary: oklch(68% 0.19 32);
+  --color-secondary-content: oklch(20% 0.05 32);
+  --color-accent: oklch(86% 0.17 90);
   --color-accent-content: oklch(28% 0.05 85);
   --color-neutral: oklch(30% 0.02 60);
   --color-neutral-content: oklch(97% 0.01 85);
@@ -38,8 +38,8 @@
   --color-error: oklch(58% 0.2 25);
   --color-error-content: oklch(98% 0.01 25);
   --radius-selector: 2rem;
-  --radius-field: 0.9rem;
-  --radius-box: 1.1rem;
+  --radius-field: 1rem;
+  --radius-box: 1.35rem;
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
   --border: 1px;
@@ -56,10 +56,10 @@
   --color-base-200: oklch(20% 0.014 250);
   --color-base-300: oklch(30% 0.015 250);
   --color-base-content: oklch(95% 0.01 85);
-  --color-primary: oklch(72% 0.12 165);
-  --color-primary-content: oklch(18% 0.03 165);
-  --color-secondary: oklch(74% 0.16 45);
-  --color-secondary-content: oklch(20% 0.05 45);
+  --color-primary: oklch(95% 0.01 85);
+  --color-primary-content: oklch(20% 0.015 250);
+  --color-secondary: oklch(74% 0.17 32);
+  --color-secondary-content: oklch(20% 0.05 32);
   --color-accent: oklch(82% 0.14 85);
   --color-accent-content: oklch(25% 0.05 85);
   --color-neutral: oklch(35% 0.02 250);
@@ -73,13 +73,29 @@
   --color-error: oklch(70% 0.18 25);
   --color-error-content: oklch(18% 0.03 25);
   --radius-selector: 2rem;
-  --radius-field: 0.9rem;
-  --radius-box: 1.1rem;
+  --radius-field: 1rem;
+  --radius-box: 1.35rem;
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
   --border: 1px;
   --depth: 0;
   --noise: 0;
+}
+
+/* Hold colours: one per kind, used for badges, chips, card blobs and the header cluster. */
+[data-theme="chalk"], :root {
+  --kind-competition: oklch(72% 0.18 32);
+  --kind-social: oklch(74% 0.13 305);
+  --kind-class: oklch(82% 0.17 130);
+  --kind-camp: oklch(86% 0.16 88);
+  --ink: oklch(22% 0.02 60);
+}
+[data-theme="granite"] {
+  --kind-competition: oklch(76% 0.17 32);
+  --kind-social: oklch(78% 0.12 305);
+  --kind-class: oklch(84% 0.16 130);
+  --kind-camp: oklch(88% 0.15 88);
+  --ink: oklch(20% 0.015 250);
 }
 
 @layer base {
@@ -89,26 +105,65 @@
 }
 
 @layer components {
-  /* the little climbing hold in the wordmark */
-  .hold { @apply inline-block size-4 rounded-[45%_55%_50%_50%/55%_45%_55%_45%] bg-secondary; transition: transform 300ms cubic-bezier(.34,1.56,.64,1); }
-  .wordmark:hover .hold { transform: rotate(-20deg) scale(1.15); }
+  /* holds: irregular rounded shapes, one per kind */
+  .hold { display: inline-block; width: 1rem; height: 1rem; border-radius: 45% 55% 50% 50% / 55% 45% 55% 45%; transition: transform 320ms cubic-bezier(.34,1.56,.64,1); }
+  .hold-competition { background: var(--kind-competition); }
+  .hold-social { background: var(--kind-social); border-radius: 55% 45% 50% 50% / 45% 55% 45% 55%; }
+  .hold-class { background: var(--kind-class); border-radius: 50% 50% 40% 60% / 60% 40% 60% 40%; }
+  .hold-camp { background: var(--kind-camp); }
+  .holds { display: inline-flex; align-items: flex-end; gap: 0.15rem; }
+  .holds .hold:nth-child(2) { width: 0.8rem; height: 0.8rem; }
+  .holds .hold:nth-child(3) { width: 0.65rem; height: 0.65rem; }
+  .wordmark:hover .hold:nth-child(1) { transform: rotate(-18deg) translateY(-2px); }
+  .wordmark:hover .hold:nth-child(2) { transform: rotate(14deg) translateY(-4px); transition-delay: 40ms; }
+  .wordmark:hover .hold:nth-child(3) { transform: rotate(-10deg) translateY(-6px); transition-delay: 80ms; }
 
-  .chip { @apply inline-flex shrink-0 items-center gap-1.5 rounded-selector border border-base-300 bg-base-100 px-3 py-1.5 text-sm font-medium whitespace-nowrap select-none; transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease; }
-  .chip:hover { @apply border-primary/50; }
-  .chip:active { transform: scale(0.96); }
+  /* the wavy marker under the key word in the headline */
+  .squiggle { text-decoration: underline wavy var(--kind-competition); text-decoration-thickness: 3px; text-underline-offset: 5px; }
+
+  .chip { @apply inline-flex shrink-0 items-center gap-1.5 rounded-selector border border-base-300 bg-base-100 px-2.5 py-1.5 text-sm font-medium whitespace-nowrap select-none; transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease; }
+  .chip:hover { @apply border-base-content/40; }
+  .chip:active { transform: scale(0.94); }
   .chip-active { @apply bg-primary text-primary-content border-primary; }
+  .chip .hold { width: 0.6rem; height: 0.6rem; }
+  .chip-competition.chip-active { background: var(--kind-competition); color: var(--ink); border-color: transparent; }
+  .chip-social.chip-active { background: var(--kind-social); color: var(--ink); border-color: transparent; }
+  .chip-class.chip-active { background: var(--kind-class); color: var(--ink); border-color: transparent; }
+  .chip-camp.chip-active { background: var(--kind-camp); color: var(--ink); border-color: transparent; }
+  .chip-active .hold { background: var(--ink); opacity: .55; }
 
   .tag { @apply inline-flex items-center rounded-selector bg-base-200 px-2 py-0.5 text-xs text-base-content/80; }
-  .tag-price { @apply bg-accent/40 text-accent-content; }
+  .tag-price { @apply bg-accent/50 text-accent-content font-medium; }
   .tag-muted { @apply bg-base-300 text-base-content/70; }
 
-  .badge.kind-competition { @apply bg-secondary/15 text-secondary border-secondary/30; }
-  .badge.kind-social { @apply bg-primary/12 text-primary border-primary/30; }
-  .badge.kind-class { @apply bg-info/12 text-info border-info/30; }
-  .badge.kind-camp { @apply bg-accent/40 text-accent-content border-accent; }
+  /* kind badge: solid hold colour, ink text */
+  .badge.kind-competition, .badge.kind-social, .badge.kind-class, .badge.kind-camp { color: var(--ink); border: 0; }
+  .badge.kind-competition { background: var(--kind-competition); }
+  .badge.kind-social { background: var(--kind-social); }
+  .badge.kind-class { background: var(--kind-class); }
+  .badge.kind-camp { background: var(--kind-camp); }
+
+  /* a soft hold blob tucked behind a card corner or a page title */
+  .blob { position: absolute; top: -2rem; right: -2rem; width: 7rem; height: 7rem; opacity: .45; border-radius: 45% 55% 50% 50% / 55% 45% 55% 45%; pointer-events: none; transition: transform 500ms cubic-bezier(.34,1.56,.64,1); }
+  .blob-lg { top: -3rem; right: -3rem; width: 12rem; height: 12rem; opacity: .5; }
+  .blob-competition { background: var(--kind-competition); }
+  .blob-social { background: var(--kind-social); border-radius: 55% 45% 50% 50% / 45% 55% 45% 55%; }
+  .blob-class { background: var(--kind-class); border-radius: 50% 50% 40% 60% / 60% 40% 60% 40%; }
+  .blob-camp { background: var(--kind-camp); }
+  .group:hover .blob { transform: rotate(-14deg) scale(1.12); }
+
+  /* date block on cards */
+  .datebox { @apply flex-none self-start w-13 rounded-field bg-base-200 text-center py-1.5 leading-none; }
+  .datebox-day { @apply block text-xl font-bold tracking-tight; }
+  .datebox-month { @apply block mt-0.5 text-[10px] font-semibold uppercase tracking-wider text-base-content/60; }
+  .datebox-soft { @apply text-base-content/50 flex items-center justify-center h-13; }
+
+  /* the outbound step */
+  .cta .arrow { display: inline-block; transition: transform 200ms cubic-bezier(.34,1.56,.64,1); }
+  .cta:hover .arrow { transform: translate(3px, -3px); }
 
   .card-lift { transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease; }
-  .card-lift:hover { transform: translateY(-2px); @apply shadow-md border-base-content/15; }
+  .card-lift:hover { transform: translateY(-3px); @apply shadow-lg border-base-content/20; }
   .card-lift:active { transform: scale(0.99); }
 
   .no-scrollbar { scrollbar-width: none; }
@@ -127,7 +182,7 @@
 @keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.08); } 100% { transform: scale(1); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .fade-up > *, .pop, .hold, .chip, .card-lift { animation: none !important; transition: none !important; transform: none !important; }
+  .fade-up > *, .pop, .hold, .chip, .card-lift, .blob, .cta .arrow { animation: none !important; transition: none !important; transform: none !important; }
   html { scroll-behavior: auto; }
 }
 

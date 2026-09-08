@@ -12,10 +12,15 @@ defmodule ClimbOntarioWeb.Layouts do
     <div class="min-h-dvh flex flex-col">
       <header class="px-4 sm:px-6 py-3">
         <div class="mx-auto max-w-3xl flex items-center justify-between">
-          <a href="/" class="wordmark flex items-center gap-2 text-lg font-bold tracking-tight">
-            <span class="hold" aria-hidden="true"></span> Climb Ontario
+          <a href="/" class="wordmark flex items-center gap-2 text-lg font-extrabold tracking-tight">
+            <span class="holds" aria-hidden="true">
+              <span class="hold hold-competition"></span>
+              <span class="hold hold-social"></span>
+              <span class="hold hold-class"></span>
+            </span>
+            Climb Ontario
           </a>
-          <span class="hidden sm:inline text-xs text-base-content/60">Competitions · Socials · Classes · Camps</span>
+          <span class="hidden sm:inline text-xs text-base-content/60">Comps · Socials · Classes · Camps</span>
         </div>
       </header>
       <main class="flex-1 px-4 sm:px-6 pb-16">

@@ -23,7 +23,7 @@ defmodule ClimbOntarioWeb.DiscoverLiveTest do
 
   test "home shows upcoming listings without a location", %{conn: conn, comp: comp} do
     {:ok, view, html} = live(conn, ~p"/")
-    assert html =~ "on in Ontario climbing?"
+    assert html =~ "on in Ontario"
     assert html =~ comp.title
     assert has_element?(view, "a[href='/e/#{ClimbOntario.Catalogue.Listing.slug(comp)}']")
   end
@@ -34,7 +34,7 @@ defmodule ClimbOntarioWeb.DiscoverLiveTest do
     assert_patch(view, "/?near=Aurora")
     assert render(view) =~ "Within 40 km of"
 
-    view |> element("a.chip", "Competitions") |> render_click()
+    view |> element("a.chip", "Comps") |> render_click()
     assert query(assert_patch(view)) == %{"near" => "Aurora", "kind" => "competition"}
     html = render(view)
     assert html =~ comp.title

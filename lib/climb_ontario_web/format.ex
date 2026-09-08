@@ -11,6 +11,9 @@ defmodule ClimbOntarioWeb.Format do
 
   def date_with_year(%Date{} = d), do: date(d) <> ", #{d.year}"
 
+  def day(%Date{day: d}), do: Integer.to_string(d)
+  def month(%Date{} = d), do: Calendar.strftime(d, "%b")
+
   def time(nil), do: nil
 
   def time(%Time{hour: h, minute: m}) do
@@ -87,9 +90,9 @@ defmodule ClimbOntarioWeb.Format do
   def distance(km) when km < 10, do: "#{Float.round(km, 1)} km"
   def distance(km), do: "#{round(km)} km"
 
-  def kind_label("competition"), do: "Competitions"
-  def kind_label("social"), do: "Socials & meetups"
-  def kind_label("class"), do: "Classes & clinics"
+  def kind_label("competition"), do: "Comps"
+  def kind_label("social"), do: "Socials"
+  def kind_label("class"), do: "Classes"
   def kind_label("camp"), do: "Camps"
 
   def audience_label("youth"), do: "Kids & youth"
@@ -100,9 +103,9 @@ defmodule ClimbOntarioWeb.Format do
   def audience_label("queer"), do: "Queer"
 
   def when_label("all"), do: "Anytime"
-  def when_label("weekend"), do: "This weekend"
-  def when_label("week"), do: "Next 7 days"
-  def when_label("month"), do: "This month"
+  def when_label("weekend"), do: "Weekend"
+  def when_label("week"), do: "7 days"
+  def when_label("month"), do: "Month"
 
   def checked(%Date{} = d), do: date_with_year(d)
 end

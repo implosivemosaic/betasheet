@@ -1,6 +1,7 @@
 <Layouts.app flash={@flash}>
-  <article class="pt-3 sm:pt-8">
-    <a href="/" class="text-sm link link-hover text-base-content/70">← All listings</a>
+  <article class="relative overflow-x-clip pt-3 sm:pt-8">
+    <span class={["blob blob-lg", "blob-#{@listing.kind}"]} aria-hidden="true"></span>
+    <a href="/" class="relative text-sm link link-hover text-base-content/70">← All listings</a>
 
     <div :if={past?(@listing, @today)} class="mt-4 rounded-box bg-base-200 p-3 text-sm">
       This has already happened. <a href="/" class="link">See what's coming up.</a>
@@ -10,7 +11,7 @@
       <.kind_badge listing={@listing} />
       <span :if={@listing.confidence == "tentative"} class="tag tag-muted">Tentative</span>
     </div>
-    <h1 class="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-balance">
+    <h1 class="relative mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight text-balance leading-[1.05]">
       {@listing.title}
     </h1>
     <p class="mt-1 text-base-content/70">
