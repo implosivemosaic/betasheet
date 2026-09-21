@@ -1,0 +1,31 @@
+# Allowlist only runtime/build source; databases, evidence, caches and secrets
+# never enter the build context, even when new files appear at repository root.
+**
+!mix.exs
+!mix.lock
+!Dockerfile
+!.dockerignore
+!config/
+!config/config.exs
+!config/prod.exs
+!config/runtime.exs
+!lib/
+!lib/**
+!assets/
+!assets/**
+assets/node_modules/**
+assets/bake/node_modules/**
+!priv/
+!priv/geo/
+!priv/geo/gyms.json
+!priv/geo/ontario_fsa.json
+!priv/geo/ontario_places.json
+!priv/repo/
+!priv/repo/migrations/
+!priv/repo/migrations/**
+!priv/static/
+!priv/static/**
+priv/static/assets/**
+priv/static/cache_manifest.json
+!bin/
+!bin/release-start.sh
