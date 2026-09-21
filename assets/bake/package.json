@@ -1,0 +1,8 @@
+{
+  "name": "climber-bake",
+  "private": true,
+  "type": "module",
+  "description": "Offline baking rig: authors the climber's motion in three.js and writes joint positions per frame for the SVG playback in assets/js/climber.js. Never shipped to the browser.",
+  "scripts": { "bake": "node bake.mjs && node rocks.mjs" },
+  "devDependencies": { "three": "^0.170.0" }
+}

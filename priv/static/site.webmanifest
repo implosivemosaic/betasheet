@@ -1,0 +1,14 @@
+{
+  "name": "Beta Sheet",
+  "short_name": "Beta Sheet",
+  "description": "Climbing competitions, socials, classes and camps across Ontario, near you.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f4ee",
+  "theme_color": "#f7f4ee",
+  "icons": [
+    {"src": "/images/apple-touch-icon.png", "sizes": "180x180", "type": "image/png"},
+    {"src": "/images/icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "/images/favicon.svg", "sizes": "any", "type": "image/svg+xml"}
+  ]
+}

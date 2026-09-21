@@ -24,8 +24,34 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import {hooks as colocatedHooks} from "phoenix-colocated/climb_ontario"
 import topbar from "../vendor/topbar"
+import {mountClimber} from "./climber"
 
 const Hooks = {
+  FilterSheets: {
+    mounted() {
+      this.el.addEventListener("click", event => {
+        const range = event.target.closest("[data-range-from]")
+        if (range) {
+          const form = range.closest("form")
+          form.elements.from.value = range.dataset.rangeFrom
+          form.elements.to.value = range.dataset.rangeTo
+        }
+        const opener = event.target.closest("[data-open]")
+        if (opener) {
+          const dialog = document.getElementById(opener.dataset.open)
+          dialog.querySelector("form").reset()
+          this.opener = opener
+          dialog.showModal()
+        }
+        const closer = event.target.closest("[data-close]")
+        if (closer) closer.closest("dialog").close()
+      })
+      this.el.addEventListener("submit", event => event.target.closest("dialog")?.close())
+      this.el.querySelectorAll("dialog").forEach(dialog => {
+        dialog.addEventListener("close", () => this.opener?.focus())
+      })
+    }
+  },
   // "Use my location": ask the browser, hand coordinates to the LiveView, which maps them to a place name.
   Locate: {
     mounted() {
@@ -126,3 +152,5 @@ if (process.env.NODE_ENV === "development") {
   })
 }
 
+mountClimber(document.getElementById("climber"))
+mountClimber(document.getElementById("climber-hero"), {hero: true})
