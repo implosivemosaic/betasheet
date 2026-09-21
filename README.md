@@ -1,9 +1,10 @@
-# Climb Ontario
+# Beta Sheet
 
-What's on in Ontario climbing, near you. A small Phoenix LiveView site over a curated catalogue
-of competitions, socials, classes and camps gathered from 54 gyms and the Ontario Climbing Federation.
+Find your next climb. A small Phoenix LiveView site over a curated catalogue of competitions,
+socials, classes and camps gathered from gyms across Ontario and the Ontario Climbing Federation.
 
-- Tailnet preview: https://dot-keith.taild1c720.ts.net:8445/
+- Live: https://betasheet.ca
+- Data and research (private): https://github.com/implosivemosaic/betasheet-data
 - Docs: `docs/architecture-c1c2.md`, `docs/architecture-c3.md`, `docs/operations.md`, `docs/features.md`
 - Agent notes: `AGENTS.md`
 
