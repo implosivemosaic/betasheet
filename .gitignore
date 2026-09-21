@@ -34,6 +34,7 @@ climb_ontario-*.tar
 # In case you use Node.js/npm, you want to ignore these.
 npm-debug.log
 /assets/node_modules/
+/assets/bake/node_modules/
 
 # Database files
 *.db
@@ -42,3 +43,7 @@ npm-debug.log
 
 # local scratch (screenshots etc.)
 /tmp/
+
+# Database snapshots and conversion lock stay out of git (they live in the betasheet-data repo)
+*.sqlite
+.catalogue-conversion.lock
