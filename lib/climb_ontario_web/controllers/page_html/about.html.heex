@@ -1,0 +1,47 @@
+<Layouts.app flash={@flash}>
+  <article class="relative overflow-x-clip pt-3 sm:pt-8">
+    <.rock kind="social" large />
+    <h1 class="relative text-3xl sm:text-4xl font-extrabold tracking-tight text-balance leading-[1.05]">
+      About Beta Sheet
+    </h1>
+
+    <div class="relative mt-6 max-w-prose space-y-4 text-base leading-relaxed">
+      <p>
+        Beta Sheet is a free guide to what's on in indoor climbing, starting with Ontario: competitions,
+        socials, classes and camps, gathered in one place so you can find your next climb without
+        checking twenty gym websites.
+      </p>
+      <p>
+        It was built in the hope that it helps people find their way into climbing, or deeper into it.
+        If it saves you an evening of tab-hopping, it's doing its job.
+      </p>
+
+      <h2 class="pt-2 text-xs font-semibold uppercase tracking-wide text-base-content/50">Sources</h2>
+      <p>
+        Listings are gathered from gym websites, social posts and the Ontario Climbing Federation, then
+        checked by hand. Every listing links back to the organizer, and that is always the place to
+        confirm dates, prices and availability. Details change, and the organizer's page wins.
+      </p>
+      <p>
+        We don't sell tickets or take bookings, and we don't track you. The site keeps a simple count
+        of page views in its own database, with no cookies and no third-party analytics.
+      </p>
+
+      <h2 class="pt-2 text-xs font-semibold uppercase tracking-wide text-base-content/50">Who made it</h2>
+      <p>
+        Beta Sheet was built by Keith, a climber in Ontario. The little climber on the edge of the
+        page is there for the same reason the site is: because climbing is fun.
+      </p>
+
+      <h2 class="pt-2 text-xs font-semibold uppercase tracking-wide text-base-content/50">Get in touch</h2>
+      <p>
+        Spotted something wrong or missing, or want your gym's events listed?
+        <a class="link" href={"mailto:#{@contact}"}>{@contact}</a>
+      </p>
+
+      <p class="pt-6 text-xs text-base-content/50">
+        Beta is what climbers call the information that gets you up the route. This is the sheet.
+      </p>
+    </div>
+  </article>
+</Layouts.app>

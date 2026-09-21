@@ -13,6 +13,8 @@ defmodule ClimbOntarioWeb.DiscoverLiveTest do
           title: "Women's Night",
           kind: "social",
           schedule_kind: "recurring",
+          recurrence: "weekly",
+          weekday: 5,
           start_date: nil,
           audience: ["women"]
         })
@@ -23,7 +25,7 @@ defmodule ClimbOntarioWeb.DiscoverLiveTest do
 
   test "home shows upcoming listings without a location", %{conn: conn, comp: comp} do
     {:ok, view, html} = live(conn, ~p"/")
-    assert html =~ "on in Ontario"
+    assert html =~ "Find your next"
     assert html =~ comp.title
     assert has_element?(view, "a[href='/e/#{ClimbOntario.Catalogue.Listing.slug(comp)}']")
   end
@@ -32,9 +34,9 @@ defmodule ClimbOntarioWeb.DiscoverLiveTest do
     {:ok, view, _} = live(conn, ~p"/")
     view |> form("form[role=search]", %{near: "Aurora"}) |> render_submit()
     assert_patch(view, "/?near=Aurora")
-    assert render(view) =~ "Within 40 km of"
+    assert has_element?(view, "#active-filters", "Aurora · 40 km")
 
-    view |> element("a.chip", "Comps") |> render_click()
+    view |> form("#filter-form-kind", %{"values" => ["competition"]}) |> render_submit()
     assert query(assert_patch(view)) == %{"near" => "Aurora", "kind" => "competition"}
     html = render(view)
     assert html =~ comp.title

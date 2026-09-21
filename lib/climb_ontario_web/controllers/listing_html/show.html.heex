@@ -1,6 +1,6 @@
 <Layouts.app flash={@flash}>
   <article class="relative overflow-x-clip pt-3 sm:pt-8">
-    <span class={["blob blob-lg", "blob-#{@listing.kind}"]} aria-hidden="true"></span>
+    <.rock kind={@listing.kind} large />
 
     <div class="relative flex items-center justify-between">
       <a href="/" data-back class="text-sm link link-hover text-base-content/70">← All listings</a>
@@ -14,11 +14,28 @@
     <div class="relative mt-4 flex flex-wrap items-center gap-2">
       <.kind_badge listing={@listing} />
       <span :if={@listing.confidence == "tentative"} class="tag tag-muted">Tentative</span>
+      <a :if={bundled?(@listing)} href="#classes" class="series-position text-sm font-bold link link-hover">
+        {length(@listing.cohorts)} classes
+      </a>
     </div>
+    <details :if={pos = series_position(@listing, @today)} class="relative mt-3 text-sm">
+      <summary
+        class="series-position inline-flex cursor-pointer list-none items-center gap-1 font-bold"
+        aria-label={"Session #{pos.index} of about #{pos.total}"}
+      >
+        Session {pos.index} of ~{pos.total}
+        <.icon name="hero-information-circle" class="size-4" />
+      </summary>
+      <p class="mt-1 text-base-content/70">
+        We estimate {pos.total} sessions based on our search. Always check with the gym to verify.
+      </p>
+    </details>
     <h1 class="relative mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight text-balance leading-[1.05]">
       {@listing.title}
     </h1>
-    <p class="relative mt-3 text-base leading-relaxed">{@listing.summary}</p>
+    <p :if={summary = Format.summary(@listing)} class="relative mt-3 text-base leading-relaxed">
+      {summary}
+    </p>
 
     <dl class="mt-6 grid grid-cols-[auto_1fr] gap-x-5 gap-y-4">
       <dt class="pt-0.5 text-xs font-semibold uppercase tracking-wide text-base-content/50">
@@ -34,6 +51,38 @@
         >
           {line}
         </span>
+        <details :if={not bundled?(@listing) and (@listing.occurrences != [] or @listing.cohorts != [])} class="mt-2 text-sm">
+          <summary class="cursor-pointer link">
+            Known schedule ({length(@listing.occurrences)} dated)
+          </summary>
+          <ol class="mt-2 divide-y divide-base-300/70 border-t border-base-300/70">
+            <li
+              :for={{row, i} <- Format.session_rows(@listing, @today) |> Enum.with_index(1)}
+              data-session-state={row.state}
+              class={[
+                "py-2 flex items-baseline gap-2",
+                row.state == :past && "text-base-content/50",
+                row.state == :next && "font-medium",
+                row.state in [:future, :unknown] && "text-base-content/70"
+              ]}
+            >
+              <span class="w-5 shrink-0 text-xs text-base-content/40">{i}.</span>
+              <div class="min-w-0 flex-1">
+                <span :if={row.state == :next} class="block text-xs font-semibold text-primary">
+                  Next
+                </span>
+                <span>{row.text}</span>
+                <a
+                  :if={ClimbOntarioWeb.SessionCalendar.exportable?(row.occurrence)}
+                  href={~p"/e/#{@listing.id}/sessions/#{row.occurrence.id}/calendar.ics"}
+                  class="block w-fit py-1 text-xs link link-hover"
+                  aria-label={"Add to calendar: #{row.text}"}
+                  download
+                >Just this date ↓</a>
+              </div>
+            </li>
+          </ol>
+        </details>
       </dd>
       <dt class="pt-0.5 text-xs font-semibold uppercase tracking-wide text-base-content/50">
         Where
@@ -63,15 +112,106 @@
       </dd>
     </dl>
 
+    <section :if={bundled?(@listing)} id="classes" class="mt-6">
+      <h2 class="text-xs font-semibold uppercase tracking-wide text-base-content/50">Classes</h2>
+      <ul class="mt-3 divide-y divide-base-300/70 border-t border-base-300/70">
+        <li :for={c <- classes(@listing, @today)} class="py-3">
+          <h3 class="font-semibold">{c.label}</h3>
+          <p class="text-sm text-base-content/70">{c.pattern}</p>
+          <p :if={c.next} class="mt-0.5 text-sm">
+            <span class="text-xs font-semibold text-primary">Next</span> {Format.date_with_year(c.next.date)}
+          </p>
+          <details :if={c.rows != []} class="mt-1 text-sm">
+            <summary class="cursor-pointer link">All {length(c.rows)} dates</summary>
+            <ol class="mt-2 divide-y divide-base-300/70 border-t border-base-300/70">
+              <li
+                :for={{row, i} <- Enum.with_index(c.rows, 1)}
+                data-session-state={row.state}
+                class={[
+                  "py-2 flex items-baseline gap-2",
+                  row.state == :past && "text-base-content/50",
+                  row.state == :next && "font-medium",
+                  row.state == :future && "text-base-content/70"
+                ]}
+              >
+                <span class="w-5 shrink-0 text-xs text-base-content/40">{i}.</span>
+                <div class="min-w-0 flex-1">
+                  <span>{row.text}</span>
+                  <a
+                    :if={ClimbOntarioWeb.SessionCalendar.exportable?(row.occurrence)}
+                    href={~p"/e/#{@listing.id}/sessions/#{row.occurrence.id}/calendar.ics"}
+                    class="block w-fit py-1 text-xs link link-hover"
+                    aria-label={"Add to calendar: #{c.name} #{row.text}"}
+                    download
+                  >Just this date ↓</a>
+                </div>
+              </li>
+            </ol>
+          </details>
+          <div :if={c.exportable} class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+            <span class="text-xs text-base-content/60">Calendar</span>
+            <a
+              href={google_calendar_url(@listing, c.name)}
+              target="_blank"
+              rel="noopener"
+              class="link link-hover"
+              aria-label={"Add #{c.name} to Google Calendar"}
+            >Google ↗</a>
+            <a
+              href={calendar_ics_path(@listing, c.name)}
+              class="link link-hover"
+              aria-label={"Add #{c.name} to Apple or Outlook calendar"}
+            >Apple / Outlook</a>
+            <a
+              href={calendar_subscribe_url(@listing, c.name)}
+              class="link link-hover text-base-content/60"
+              aria-label={"Subscribe to #{c.name} so dates update automatically"}
+              title="Subscribe: dates update in your calendar if the schedule changes"
+            >Subscribe</a>
+          </div>
+        </li>
+      </ul>
+    </section>
+
     <div :if={@listing.caveat} class="mt-5 flex gap-2 rounded-box bg-warning/15 p-3 text-sm">
       <.icon name="hero-exclamation-triangle" class="size-5 shrink-0 text-warning" />
       <span>{@listing.caveat}</span>
     </div>
 
+    <section :if={not bundled?(@listing) and calendar_groups(@listing) != []} class="mt-5 rounded-box border border-base-300 p-4">
+      <h2 class="text-sm font-semibold">Add to your calendar</h2>
+      <p class="mt-1 text-xs text-base-content/60">
+        Every confirmed session at once. Google opens prefilled; Apple and Outlook open the file straight into your calendar.
+      </p>
+      <ul class="mt-3 space-y-2">
+        <li :for={cohort <- calendar_groups(@listing)} class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+          <span :if={cohort} class="w-full sm:w-auto font-medium">{cohort}</span>
+          <a
+            href={google_calendar_url(@listing, cohort)}
+            target="_blank"
+            rel="noopener"
+            class="link link-hover"
+            aria-label={"Add #{cohort || @listing.title} to Google Calendar"}
+          >Google Calendar ↗</a>
+          <a
+            href={calendar_ics_path(@listing, cohort)}
+            class="link link-hover"
+            aria-label={"Add #{cohort || @listing.title} to Apple or Outlook calendar"}
+          >Apple / Outlook</a>
+          <a
+            href={calendar_subscribe_url(@listing, cohort)}
+            class="link link-hover text-base-content/60"
+            aria-label={"Subscribe to #{cohort || @listing.title} so dates update automatically"}
+            title="Subscribe: dates update in your calendar if the schedule changes"
+          >Subscribe</a>
+        </li>
+      </ul>
+    </section>
+
     <.organizer_cta listing={@listing} />
 
-    <p class="mt-10 text-xs text-base-content/50">
-      Last updated: {Format.updated(@listing.checked_on)}
+    <p :if={@listing.catalogue_updated_on} class="mt-10 text-xs text-base-content/50">
+      Last updated: {Format.updated(@listing.catalogue_updated_on)}
     </p>
   </article>
 </Layouts.app>

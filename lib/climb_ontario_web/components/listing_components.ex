@@ -7,54 +7,136 @@ defmodule ClimbOntarioWeb.ListingComponents do
   attr :today, Date, required: true
 
   def listing_card(assigns) do
+    date = Format.card_date(assigns.listing, assigns.today)
+
+    session = Format.card_session(assigns.listing, date)
+
+    place =
+      if session,
+        do: ClimbOntario.Catalogue.Listing.location(assigns.listing, session),
+        else: ClimbOntario.Catalogue.Listing.display_location(assigns.listing)
+
+    gym =
+      if match?(%ClimbOntario.Catalogue.Venue{}, place), do: place, else: assigns.listing.venue
+
+    assigns =
+      assign(assigns,
+        card_date: date,
+        session: session,
+        place: place,
+        gym: gym,
+        series: assigns.listing.schedule_kind in ~w(course recurring),
+        classes:
+          if(ClimbOntarioWeb.ClassSchedule.bundled?(assigns.listing),
+            do: length(assigns.listing.cohorts)
+          ),
+        position:
+          if(ClimbOntarioWeb.ClassSchedule.bundled?(assigns.listing),
+            do: nil,
+            else: ClimbOntario.Catalogue.Series.position(assigns.listing, session)
+          )
+      )
+
     ~H"""
-    <a
-      href={~p"/e/#{ClimbOntario.Catalogue.Listing.slug(@listing)}"}
-      class="card-lift group relative block overflow-hidden rounded-box bg-base-100 border border-base-300 p-4 shadow-sm"
-    >
-      <span class={["blob", "blob-#{@listing.kind}"]} aria-hidden="true"></span>
-      <div class="relative flex gap-3">
-        <div :if={@listing.start_date && @listing.schedule_kind != "recurring"} class="datebox">
-          <span class="datebox-day">{Format.day(@listing.start_date)}</span>
-          <span class="datebox-month">{Format.month(@listing.start_date)}</span>
-        </div>
-        <div
-          :if={!(@listing.start_date && @listing.schedule_kind != "recurring")}
-          class="datebox datebox-soft"
-        >
-          <.icon name="hero-arrow-path" class="size-5" />
-        </div>
-        <div class="min-w-0 flex-1">
-          <div class="flex items-center justify-between gap-2 text-xs">
+    <article class={["card-lift listing-card relative rounded-box", @series && "series-card"]}>
+      <span :if={@series} class="sr-only">Series</span>
+      <div class="relative overflow-hidden rounded-box bg-base-100 border border-base-300 p-4 shadow-sm">
+        <.rock kind={@listing.kind} />
+        <div class="relative">
+          <div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
+            <time
+              :if={@card_date}
+              class="dateline font-bold"
+              datetime={Date.to_iso8601(@card_date)}
+              data-date={Date.to_iso8601(@card_date)}
+              aria-label={Format.date_with_year(@card_date)}
+            >{Format.date(@card_date)}</time>
+            <span :if={!@card_date} class="dateline font-bold text-base-content/50" aria-label="Dates not confirmed">
+              Dates TBA
+            </span>
             <.kind_badge listing={@listing} />
-            <span :if={soon = Format.soon(@listing, @today)} class="badge badge-sm badge-primary">{soon}</span>
+            <span :if={@classes} class="series-position text-xs font-bold">{@classes} classes</span>
+            <span :if={!@classes && !@position && Format.series_label(@listing)} class="series-position text-xs font-bold">
+              {Format.series_label(@listing)}
+            </span>
+            <details :if={@position} class="series-position text-xs open:basis-full">
+              <summary
+                class="inline-flex cursor-pointer list-none items-center gap-1 font-bold"
+                aria-label={"Session #{@position.index} of about #{@position.total}"}
+              >
+                {@position.index} of ~{@position.total}
+                <.icon name="hero-information-circle" class="size-3.5" />
+              </summary>
+              <p class="mt-1 font-normal text-base-content/70">
+                We estimate {@position.total} sessions based on our search. Always check with the gym to verify.
+              </p>
+            </details>
           </div>
-          <h3 class="mt-1.5 text-lg font-bold leading-snug tracking-tight text-balance">
-            {@listing.title}
+          <h3 class="mt-2 text-lg font-bold leading-snug tracking-tight">
+            <a href={~p"/e/#{ClimbOntario.Catalogue.Listing.slug(@listing)}"} class="link link-hover">{@listing.title}</a>
           </h3>
-          <p class="mt-0.5 text-sm text-base-content/70">
-            {Format.venue_line(@listing.venue)}<span :if={d = Format.distance(@listing.distance_km)}> · {d}</span>
+          <p :if={summary = Format.summary(@listing)} class="mt-1 text-sm text-base-content/70 line-clamp-2">
+            {summary}
           </p>
-          <p class="mt-1.5 text-sm">
-            <span class="font-medium">{Format.when_line(@listing, @today)}</span>
-            <span
-              :if={@listing.schedule_note && @listing.schedule_kind in ~w(recurring course)}
-              class="text-base-content/70"
-            > · {@listing.schedule_note}</span>
+          <p :if={@session && @session.cohort} class="mt-1 text-xs text-base-content/70">
+            {if @classes, do: ClimbOntarioWeb.ClassSchedule.label(@listing, @session.cohort), else: @session.cohort}
           </p>
-          <p :if={@listing.summary != ""} class="mt-2 text-sm text-base-content/80 line-clamp-2">
-            {@listing.summary}
+          <p :if={@place != @gym} class="mt-2 text-sm text-base-content/70">
+            {Format.venue_line(@place)}
           </p>
-          <div class="mt-3 flex flex-wrap items-center gap-1.5 text-xs">
-            <span :if={@listing.ages} class="tag">{@listing.ages}</span>
-            <span :for={a <- @listing.audience -- ["youth", "adult"]} class="tag">{Format.audience_label(
-              a
-            )}</span>
-            <span :if={@listing.confidence == "tentative"} class="tag tag-muted">Tentative</span>
+          <div class="mt-2 text-sm text-base-content/70">
+            <span :if={@place != @gym}>By </span>
+            <a
+              :if={website = Format.gym_website(@gym)}
+              href={website}
+              target="_blank"
+              rel="noopener"
+              class="link link-hover"
+            >{Format.venue_line(@gym)}</a>
+            <span :if={!Format.gym_website(@gym)}>{Format.venue_line(@gym)}</span>
+            <a
+              :if={map = Format.map_url(@place)}
+              href={map}
+              target="_blank"
+              rel="noopener"
+              class="mt-1 block w-fit py-1 link link-hover"
+              aria-label={"Map of #{@place.name}"}
+            >Map ↗</a>
           </div>
         </div>
       </div>
-    </a>
+    </article>
+    """
+  end
+
+  # The holds tucked behind card corners: baked low-poly rocks (assets/bake/rocks.mjs),
+  # one per kind, drawn in currentColor so CSS gives each its colour.
+  @rocks Map.new(~w(competition social class camp), fn kind ->
+           path = Path.join(__DIR__, "rocks/#{kind}.svg")
+           Module.put_attribute(__MODULE__, :external_resource, path)
+           inner = path |> File.read!() |> String.replace(~r/\A<svg[^>]*>|<\/svg>\s*\z/, "")
+           {kind, inner}
+         end)
+
+  @doc "Defines every rock once per page; cards and pages then reference them by id."
+  def rock_defs(assigns) do
+    assigns = assign(assigns, rocks: Enum.map(@rocks, fn {k, inner} -> {k, Phoenix.HTML.raw(inner)} end))
+
+    ~H"""
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <symbol :for={{kind, inner} <- @rocks} id={"rock-#{kind}"} viewBox="0 0 100 100" shape-rendering="crispEdges">
+        {inner}
+      </symbol>
+    </svg>
+    """
+  end
+
+  attr :kind, :string, required: true
+  attr :large, :boolean, default: false
+
+  def rock(assigns) do
+    ~H"""
+    <svg class={["blob", "blob-#{@kind}", @large && "blob-lg"]} aria-hidden="true"><use href={"#rock-#{@kind}"} /></svg>
     """
   end
 
@@ -63,7 +145,7 @@ defmodule ClimbOntarioWeb.ListingComponents do
   def kind_badge(assigns) do
     ~H"""
     <span class={["badge badge-sm font-medium", "kind-#{@listing.kind}"]}>
-      <.icon name={kind_icon(@listing.kind)} class="size-3.5" /> {@listing.label}
+      <.icon name={kind_icon(@listing.kind)} class="size-3.5" /> {Format.badge(@listing)}
     </span>
     """
   end

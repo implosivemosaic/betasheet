@@ -11,6 +11,12 @@ config :climb_ontario,
   ecto_repos: [ClimbOntario.Repo],
   generators: [timestamp_type: :utc_datetime]
 
+# Interest capture is private-preview only; production remains disabled.
+config :climb_ontario, :preview_interest, config_env() == :test
+# Public contact address, shown on the About page and in the footer. Set CONTACT_EMAIL in production.
+config :climb_ontario, :contact_email, "hello@climbontario.example"
+config :phoenix, :filter_parameters, ["password", "email", "interest"]
+
 # Configure the endpoint
 config :climb_ontario, ClimbOntarioWeb.Endpoint,
   url: [host: "localhost"],

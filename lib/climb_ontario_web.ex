@@ -17,7 +17,7 @@ defmodule ClimbOntarioWeb do
   those modules here.
   """
 
-  def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)
+  def static_paths, do: ~w(assets fonts images favicon.ico robots.txt site.webmanifest)
 
   def router do
     quote do
@@ -48,7 +48,8 @@ defmodule ClimbOntarioWeb do
 
   def live_view do
     quote do
-      use Phoenix.LiveView
+      # Discovery accepts private preview interest; suppress LiveView event parameters.
+      use Phoenix.LiveView, log: false
 
       unquote(html_helpers())
     end

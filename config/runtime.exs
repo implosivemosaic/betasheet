@@ -39,6 +39,8 @@ if config_env() == :dev do
 end
 
 if config_env() == :prod do
+  if contact = System.get_env("CONTACT_EMAIL"), do: config(:climb_ontario, :contact_email, contact)
+
   database_path =
     System.get_env("DATABASE_PATH") ||
       raise """

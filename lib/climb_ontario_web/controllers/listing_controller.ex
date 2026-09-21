@@ -24,6 +24,7 @@ defmodule ClimbOntarioWeb.ListingController do
       _ ->
         conn
         |> put_status(:not_found)
+        |> put_root_layout(html: false)
         |> put_view(html: ClimbOntarioWeb.ErrorHTML)
         |> render(:"404")
     end
