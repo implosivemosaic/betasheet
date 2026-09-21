@@ -6,6 +6,9 @@ defmodule ClimbOntario.Geo do
 
   @fsa_path Application.app_dir(:climb_ontario, "priv/geo/ontario_fsa.json")
   @places_path Application.app_dir(:climb_ontario, "priv/geo/ontario_places.json")
+  @gyms_path Application.app_dir(:climb_ontario, "priv/geo/gyms.json")
+  @external_resource @gyms_path
+  @gyms @gyms_path |> File.read!() |> Jason.decode!() |> Map.new(&{&1["gym_id"], &1})
   @external_resource @fsa_path
   @external_resource @places_path
 
@@ -19,7 +22,10 @@ defmodule ClimbOntario.Geo do
   @doc "All place names, for typeahead."
   def place_names, do: @place_names
 
-  @doc "Resolve free text to a point. Postal codes win, then exact place, then prefix."
+  @doc "Reviewed provider/precision metadata for a gym, keyed by research gym ID."
+  def gym_metadata(source_gym_id), do: @gyms[source_gym_id]
+
+  @doc "Resolve postal codes or exact normalized place names; never guess another place."
   @spec resolve(String.t() | nil) :: {:ok, point()} | :error
   def resolve(nil), do: :error
 
@@ -30,7 +36,6 @@ defmodule ClimbOntario.Geo do
       key == "" -> :error
       fsa = fsa_match(key) -> {:ok, fsa}
       place = @place_index[key] -> {:ok, point(place)}
-      place = prefix_match(key) -> {:ok, point(place)}
       true -> :error
     end
   end
@@ -55,24 +60,11 @@ defmodule ClimbOntario.Geo do
   end
 
   defp fsa_match(key) do
-    with [fsa] <- Regex.run(~r/^[klmnp]\d[a-z]/, key),
+    with [fsa] <- Regex.run(~r/^[klmnp]\d[a-z](?=\s*\d[a-z]\d$|$)/, key),
          %{} = hit <- @fsa[String.upcase(fsa)] do
       %{lat: hit["lat"], lng: hit["lng"], label: hit["name"]}
     else
       _ -> nil
-    end
-  end
-
-  defp prefix_match(key) when byte_size(key) < 3, do: nil
-
-  defp prefix_match(key) do
-    @place_index
-    |> Enum.filter(fn {k, _} -> String.starts_with?(k, key) end)
-    |> Enum.sort_by(fn {k, _} -> byte_size(k) end)
-    |> List.first()
-    |> case do
-      {_, place} -> place
-      nil -> nil
     end
   end
 
