@@ -10,7 +10,14 @@ end
 put!.(
   %{
     id: 17, venue_id: ClimbOntario.Repo.get_by!(ClimbOntario.Catalogue.Venue, source_gym_id: 30).id,
-    title: "Brawl in the Fall 2026", kind: "competition", label: "Competition",
+    title: "Brawl in the Fall 2026", kind: "competition", ocf: false,
+    cohorts: ["Qualifier wave 1", "Qualifier wave 2", "Finals"], timezone: "America/Toronto",
+    bundled_by: "format",
+    classes: [
+      %{name: "Qualifier wave 1", format: "Scramble qualifier, wave 1"},
+      %{name: "Qualifier wave 2", format: "Scramble qualifier, wave 2"},
+      %{name: "Finals", format: "World-cup-style finals"}
+    ],
     summary: "Bouldering competition with scramble qualifiers in two waves and world-cup-style finals. Cash and raffle prizes, food, beer and a DJ.",
     schedule_kind: "one_off", start_date: ~D[2026-10-17], start_time: ~T[09:00:00],
     schedule_note: "Qualifiers 9 am-12 pm or 12:30-3:30 pm; finals 6 pm",
@@ -19,7 +26,11 @@ put!.(
     sources: ["https://grandriverrocks.com/waterloo/brawl-in-the-fall/", "https://www.instagram.com/grr_wat/p/Dcwf54XJRf1/"],
     checked_on: ~D[2026-09-06], published: true
   },
-  []
+  [
+    %{date: ~D[2026-10-17], cohort: "Qualifier wave 1", start_time: ~T[09:00:00], end_time: ~T[12:00:00]},
+    %{date: ~D[2026-10-17], cohort: "Qualifier wave 2", start_time: ~T[12:30:00], end_time: ~T[15:30:00]},
+    %{date: ~D[2026-10-17], cohort: "Finals", start_time: ~T[18:00:00]}
+  ]
 )
 
 # Recurring meetup: Women's Bouldering Night, True North (research event 28)
@@ -29,7 +40,7 @@ put!.(
     title: "Women's Bouldering Night", kind: "social", label: "Meetup",
     summary: "Monthly women's bouldering night with a reserved bouldering area and coaching tips from instructors. All skill levels welcome.",
     schedule_kind: "recurring", start_time: ~T[19:00:00], end_time: ~T[21:00:00],
-    schedule_note: "Last Friday of the month, 7-9 pm",
+    recurrence: "monthly", weekday: 5, month_week: -1, timezone: "America/Toronto",
     audience: ["women"], link: "https://climber.hellocapitan.com/truenorthclimbing/schedule/events/157/", link_kind: "registration",
     confidence: "confirmed",
     sources: ["https://climber.hellocapitan.com/truenorthclimbing/schedule/events/157/", "https://www.instagram.com/truenorthclimbing/p/DU38v21jtaQ/"],
@@ -43,9 +54,11 @@ put!.(
   %{
     id: 209, venue_id: ClimbOntario.Repo.get_by!(ClimbOntario.Catalogue.Venue, source_gym_id: 38).id,
     title: "Pebbles — Fall 2026", kind: "class", label: "Kids program",
+    complete_cohorts: ["__unnamed__"], # Reviewed complete six-session sequence below.
     summary: "Movement, play and climbing for ages 2-5 with one participating adult per child. Six two-hour classes.",
     schedule_kind: "course", start_date: ~D[2026-09-13], end_date: ~D[2026-10-18],
-    start_time: ~T[08:00:00], end_time: ~T[10:00:00], schedule_note: "Six Sundays",
+    start_time: ~T[08:00:00], end_time: ~T[10:00:00],
+    recurrence: "weekly", weekday: 7, timezone: "America/Toronto",
     audience: ["youth", "family"], ages: "Ages 2-5",
     link: "https://app.rockgympro.com/b/?bo=07fe4ef7bd87434a90ae44e654c9e3ee", link_kind: "registration",
     confidence: "confirmed",

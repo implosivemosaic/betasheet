@@ -38,11 +38,14 @@ defmodule ClimbOntario.Fixtures do
       confidence: "confirmed",
       link: "https://ocf.example/e",
       link_kind: "event",
+      sources: ["https://ocf.example/e"],
       checked_on: ~D[2026-09-07],
       published: true
     }
 
-    {:ok, listing} = Import.put_listing(Map.merge(base, attrs), dates)
+    attrs = Map.merge(base, attrs)
+    attrs = if attrs.kind == "competition", do: Map.put_new(attrs, :ocf, false), else: attrs
+    {:ok, listing} = Import.put_listing(attrs, dates)
     Repo.preload(listing, [:venue, :occurrences])
   end
 end

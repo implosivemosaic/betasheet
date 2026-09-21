@@ -10,34 +10,40 @@ defmodule ClimbOntario.Catalogue do
 
   @doc "Returns %{dated: [listing], ongoing: [listing], total: n}."
   def search(%Query{} = q) do
-    window = window(q.when, q.today)
+    window = {max_date(q.from || q.today, q.today), q.to}
 
     listings =
-      Repo.all(from l in Listing, where: l.published, preload: [:venue, :occurrences])
-      |> Enum.reject(&over?(&1, q.today))
-      |> Enum.map(&with_distance(&1, q.near))
+      Repo.all(from l in Listing, where: l.published, preload: [:venue, occurrences: :venue])
+      |> Enum.reject(&(&1.schedule_kind == "unscheduled" or over?(&1, q.today)))
+      |> Enum.filter(&ClimbOntario.Catalogue.Keyword.matches?(&1, q.keyword))
+      |> Enum.map(&match_schedule(&1, q, window))
       |> Enum.filter(&within?(&1, q))
       |> Enum.filter(&kind?(&1, q.kinds))
       |> Enum.filter(&audience?(&1, q.audience))
 
     dated =
       listings
-      |> Enum.filter(&dated_match?(&1, window, q.today))
-      |> Enum.sort_by(&sort_key(&1, window, q.today), &date_tuple_lte/2)
+      |> Enum.filter(&(&1.discovery_date != nil))
+      |> Enum.sort_by(&sort_key(&1, q.today), &date_tuple_lte/2)
 
     ongoing =
       listings
-      |> Enum.filter(&ongoing_match?(&1, window, q))
+      |> Enum.filter(
+        &(&1.schedule_kind == "recurring" and &1.discovery_date == nil and
+            not Query.dated_filter?(q) and
+            not Enum.any?(&1.occurrences, fn o -> Date.compare(o.date, q.today) != :lt end))
+      )
       |> Enum.sort_by(&{&1.schedule_kind != "recurring", &1.distance_km || 0.0, &1.title})
 
-    dated = if q.kinds == [] and q.near == nil, do: interleave_kinds(dated), else: dated
     %{dated: dated, ongoing: ongoing, total: length(dated) + length(ongoing)}
   end
 
   @doc "A published listing by research id, with venue. Drafts are invisible."
   def get_listing(id) when is_integer(id) do
     Repo.one(
-      from l in Listing, where: l.id == ^id and l.published, preload: [:venue, :occurrences]
+      from l in Listing,
+        where: l.id == ^id and l.published,
+        preload: [:venue, occurrences: :venue]
     )
   end
 
@@ -62,28 +68,88 @@ defmodule ClimbOntario.Catalogue do
   defp over?(%{end_date: %Date{} = e}, today), do: Date.compare(e, today) == :lt
   defp over?(_, _), do: false
 
-  # A date filter matches only a date we can stand behind: the event's own dates, or a
-  # confirmed occurrence. Courses with no confirmed class dates match Anytime only.
-  defp dated_match?(%{schedule_kind: k} = l, {from, to}, _today)
-       when k in ~w(one_off multi_day) do
-    overlaps?(l.start_date, l.end_date || l.start_date, from, to)
+  # Date and distance predicates apply to the same session before selecting its date.
+  defp match_schedule(l, q, {from, to}) do
+    sessions =
+      Enum.filter(l.occurrences, fn o ->
+        overlaps?(o.date, o.date, from, to) and weekday?(o.date, q.days) and
+          place_within?(Listing.location(l, o), q)
+      end)
+
+    selected = Enum.min_by(sessions, &ClimbOntario.Catalogue.Occurrence.sort_key/1, fn -> nil end)
+    next = if selected, do: selected.date
+
+    fallback =
+      if l.occurrences == [] and place_within?(Listing.location(l), q) do
+        cond do
+          l.schedule_kind in ~w(one_off multi_day) ->
+            interval_date(l.start_date, l.end_date || l.start_date, from, to, q.days)
+
+          l.schedule_kind == "course" and not Query.dated_filter?(q) ->
+            max_date(l.start_date, from)
+
+          true ->
+            nil
+        end
+      end
+
+    # Preserve Anytime's term-bound fallback for courses without upcoming sessions.
+    fallback =
+      fallback ||
+        if(
+          l.schedule_kind == "course" and not Query.dated_filter?(q) and q.near == nil and
+            not Enum.any?(l.occurrences, &(Date.compare(&1.date, from) != :lt)),
+          do: max_date(l.start_date, from)
+        )
+
+    places =
+      if sessions != [],
+        do: Enum.map(sessions, &Listing.location(l, &1)),
+        else: [Listing.location(l)]
+
+    distance =
+      places
+      |> Enum.map(&distance(&1, q.near))
+      |> Enum.reject(&is_nil/1)
+      |> Enum.min(fn -> nil end)
+
+    %{
+      l
+      | discovery_date: next || fallback,
+        distance_km: distance,
+        discovery_occurrence_id: selected && selected.id
+    }
   end
 
-  defp dated_match?(%{schedule_kind: "course"} = l, {from, nil}, _today),
-    do: Date.compare(l.end_date, from) != :lt
+  defp weekday?(_, []), do: true
+  defp weekday?(d, days), do: Date.day_of_week(d) in days
 
-  defp dated_match?(%{schedule_kind: "course"} = l, window, _), do: occurrence_in?(l, window)
-  defp dated_match?(%{schedule_kind: "recurring"}, {_, nil}, _), do: false
-  defp dated_match?(%{schedule_kind: "recurring"} = l, window, _), do: occurrence_in?(l, window)
-  defp dated_match?(_, _, _), do: false
+  defp interval_date(s, e, from, to, days) do
+    first = max_date(s, from)
+    # At most seven arithmetic candidates, irrespective of interval length.
+    offset =
+      if days == [],
+        do: 0,
+        else: Enum.min(Enum.map(days, &Integer.mod(&1 - Date.day_of_week(first), 7)))
 
-  # Ongoing = recurring things under Anytime (they have no matched date), plus unscheduled on request.
-  defp ongoing_match?(%{schedule_kind: "recurring"}, {_, nil}, _q), do: true
-  defp ongoing_match?(%{schedule_kind: "unscheduled"}, {_, nil}, q), do: q.unscheduled
-  defp ongoing_match?(_, _, _), do: false
+    candidate = Date.add(first, offset)
 
-  defp occurrence_in?(l, {from, to}),
-    do: Enum.any?(l.occurrences, &overlaps?(&1.date, &1.date, from, to))
+    if Date.compare(candidate, e) != :gt and (is_nil(to) or Date.compare(candidate, to) != :gt),
+      do: candidate
+  end
+
+  defp distance(_, nil), do: nil
+
+  defp distance(%{lat: lat, lng: lng}, near) when is_number(lat) and is_number(lng),
+    do: Geo.distance_km(near.lat, near.lng, lat, lng)
+
+  defp distance(_, _), do: nil
+  defp place_within?(_, %{near: nil}), do: true
+
+  defp place_within?(place, q) do
+    d = distance(place, q.near)
+    not is_nil(d) and d <= q.radius_km
+  end
 
   defp overlaps?(s, e, from, to) do
     Date.compare(e, from) != :lt and (is_nil(to) or Date.compare(s, to) != :gt)
@@ -91,16 +157,23 @@ defmodule ClimbOntario.Catalogue do
 
   # Sort by the first relevant date: next confirmed occurrence in the window, else start date;
   # things already under way sort as today, after anything that actually starts today.
-  defp sort_key(l, {from, to}, today) do
+  @doc "Next confirmed date in the discovery window, otherwise the known event/term bound."
+  def relevant_date(l, {from, to}) do
     next_occ =
       l.occurrences
       |> Enum.map(& &1.date)
       |> Enum.filter(&overlaps?(&1, &1, from, to))
       |> Enum.min(Date, fn -> nil end)
 
+    next_occ ||
+      if(l.schedule_kind in ~w(one_off multi_day course) and l.start_date,
+        do: max_date(l.start_date, from)
+      )
+  end
+
+  defp sort_key(l, today) do
     in_progress = l.schedule_kind == "course" and Date.compare(l.start_date, today) == :lt
-    effective = next_occ || if(in_progress, do: today, else: l.start_date)
-    {effective, {in_progress, l.distance_km || 0.0, l.title}}
+    {l.discovery_date, {in_progress, l.distance_km || 0.0, l.title}}
   end
 
   defp date_tuple_lte({d1, r1}, {d2, r2}) do
@@ -111,42 +184,12 @@ defmodule ClimbOntario.Catalogue do
     end
   end
 
-  # Province-wide with no kind chosen, youth courses would bury everything else. Rotate through
-  # kinds so the first screen shows the soonest competition, social, class and camp in turn.
-  defp interleave_kinds(dated) do
-    groups = Enum.group_by(dated, & &1.kind)
-    dated |> Enum.map(& &1.kind) |> Enum.uniq() |> Enum.map(&groups[&1]) |> rotate([])
-  end
-
-  defp rotate([], acc), do: Enum.reverse(acc)
-
-  defp rotate(lists, acc) do
-    {heads, tails} = lists |> Enum.map(fn [h | t] -> {h, t} end) |> Enum.unzip()
-    rotate(Enum.reject(tails, &(&1 == [])), Enum.reverse(heads) ++ acc)
-  end
-
-  # Offsite events use their own coordinates; without any, they have no distance and stay out
-  # of radius searches rather than borrowing the host gym's location.
-  defp with_distance(l, nil), do: l
-
-  defp with_distance(l, %{lat: lat, lng: lng}) do
-    case location(l) do
-      {vlat, vlng} -> %{l | distance_km: Geo.distance_km(lat, lng, vlat, vlng)}
-      nil -> l
-    end
-  end
-
-  defp location(%{offsite_name: name, offsite_lat: lat, offsite_lng: lng}) when is_binary(name),
-    do: if(lat && lng, do: {lat, lng}, else: nil)
-
-  defp location(%{venue: %{lat: lat, lng: lng}}), do: if(lat && lng, do: {lat, lng}, else: nil)
-
   defp within?(_l, %{near: nil}), do: true
   defp within?(%{distance_km: nil}, _q), do: false
   defp within?(%{distance_km: d}, %{radius_km: r}), do: d <= r
 
   defp kind?(_l, []), do: true
-  defp kind?(l, kinds), do: l.kind in kinds
+  defp kind?(l, kinds), do: Listing.discovery_kind(l) in kinds
 
   defp audience?(_l, []), do: true
   defp audience?(l, tags), do: Enum.any?(tags, &(&1 in l.audience))
