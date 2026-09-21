@@ -1,0 +1,3 @@
+alias ClimbOntario.Catalogue.Import
+{:ok, l} = Import.put_listing(%{id: 169, venue_id: 44, title: "Athlete Development Program — Junior and Senior", kind: "class", timezone: "America/Toronto", location_kind: "venue", summary: "Structured youth athlete-development programme for intermediate and advanced climbers.", schedule_kind: "unscheduled", recurrence: nil, weekday: nil, audience: ["youth"], ages: "Junior under 12; Senior 13+", link: "https://www.rockandrope.com/youth", link_kind: "event", sources: ["https://www.rockandrope.com/youth"], checked_on: ~D[2026-09-06], confidence: "check", published: false}, :preserve)
+IO.puts("repaired #{l.id}: #{length(l.occurrences)} occurrences")
