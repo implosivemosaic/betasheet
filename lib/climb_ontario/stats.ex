@@ -14,6 +14,9 @@ defmodule ClimbOntario.Stats do
   @bots ~r/bot|crawl|spider|slurp|preview|fetch|monitor|headless|facebookexternalhit|whatsapp|telegram|curl|wget|python-requests/i
 
   @doc "Record a view. Never raises; failures are logged and dropped."
+  # Fly's health check calls /healthz every 30 seconds; it is not a visit.
+  def track(%{path: "/healthz" <> _}), do: :skipped
+
   def track(%{path: path} = view) when is_binary(path) do
     if bot?(view[:user_agent]) do
       :skipped
