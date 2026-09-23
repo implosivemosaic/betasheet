@@ -1,5 +1,7 @@
 # Beta Sheet — agent notes
 
+- Eligibility is recorded whole. If the organizer says "12+ or members of a competitive team", `ages` says both; never shorten an "or" to its first clause.
+
 Mobile-first discovery site for Ontario climbing: competitions, socials, classes & clinics, camps.
 Phoenix 1.8 + LiveView, SQLite via Ecto. Canonical app: `/data/workspace/climb-ontario-visual`. Read `docs/` first; `docs/operations.md` defines the exact import contract and backup-before-migration activation.
 

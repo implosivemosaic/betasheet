@@ -88,9 +88,26 @@
         Where
       </dt>
       <dd>
-        <span class="block font-medium">{place_name(@listing)}</span>
+        <span class="block font-medium">
+          <a
+            :if={site = place_website(@listing)}
+            href={site}
+            target="_blank"
+            rel="noopener"
+            class="link link-hover"
+          >{place_name(@listing)}</a>
+          <span :if={!place_website(@listing)}>{place_name(@listing)}</span>
+        </span>
         <span :if={by = organized_by(@listing)} class="block text-base-content/70">
-          Organized by {by}
+          Organized by
+          <a
+            :if={site = Format.gym_website(@listing.venue)}
+            href={site}
+            target="_blank"
+            rel="noopener"
+            class="link link-hover"
+          >{by}</a>
+          <span :if={!Format.gym_website(@listing.venue)}>{by}</span>
         </span>
         <span class="block text-base-content/70">
           {address(@listing)}

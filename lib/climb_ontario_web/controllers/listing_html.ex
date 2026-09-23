@@ -7,6 +7,14 @@ defmodule ClimbOntarioWeb.ListingHTML do
   embed_templates "listing_html/*"
 
   def place_name(l), do: Listing.display_location(l).name
+
+  @doc "The gym's website when the event is at a gym we know; offsite places have none."
+  def place_website(l) do
+    case Listing.display_location(l) do
+      %ClimbOntario.Catalogue.Venue{} = venue -> Format.gym_website(venue)
+      _ -> nil
+    end
+  end
   def organized_by(l), do: if(Listing.display_location(l) == l.venue, do: nil, else: l.venue.name)
 
   def calendar_groups(l), do: ClimbOntarioWeb.ListingCalendar.groups(l)

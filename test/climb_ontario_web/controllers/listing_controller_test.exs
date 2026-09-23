@@ -169,4 +169,9 @@ defmodule ClimbOntarioWeb.ListingControllerTest do
     assert conn |> recycle() |> get("/e/999999-nope") |> html_response(404)
     assert conn |> recycle() |> get("/e/nope") |> html_response(404)
   end
+
+  test "the Where block links the gym's website, like the card", %{conn: conn, listing: l} do
+    html = conn |> get(~p"/e/#{Listing.slug(l)}") |> html_response(200)
+    assert html =~ ~s(href="https://reach.example" target="_blank" rel="noopener" class="link link-hover">Reach Indoor Climbing</a>)
+  end
 end
