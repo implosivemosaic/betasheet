@@ -3,7 +3,8 @@ defmodule ClimbOntarioWeb.ListingCalendar do
   A whole listing's confirmed sessions as one calendar, two ways: an .ics
   with one event per session (Apple, Outlook, subscriptions), and a prefilled
   Google Calendar link that carries a repeat rule when the sessions are regular.
-  Nothing is inferred: only sessions with a confirmed date, time and zone appear.
+  Nothing is inferred: sessions with a confirmed time appear at that time, and
+  sessions with only a confirmed date appear as all-day events.
   """
   alias ClimbOntario.Catalogue.Listing
   alias ClimbOntarioWeb.SessionCalendar
@@ -53,7 +54,9 @@ defmodule ClimbOntarioWeb.ListingCalendar do
 
       [first | _] = sessions ->
         {:ok, start, finish} = SessionCalendar.local_instants(first)
-        finish = finish || DateTime.add(start, 3600, :second, Tzdata.TimeZoneDatabase)
+
+        finish =
+          finish || DateTime.add(start, 3600, :second, Tzdata.TimeZoneDatabase)
         place = Listing.location(listing, first)
         title = Enum.join(Enum.reject([listing.title, cohort], &is_nil/1), " · ")
 
@@ -78,7 +81,7 @@ defmodule ClimbOntarioWeb.ListingCalendar do
             {"action", "TEMPLATE"},
             {"text", title},
             {"dates", "#{local(start)}/#{local(finish)}"},
-            {"ctz", first.timezone},
+            first.timezone && {"ctz", first.timezone},
             {"location", location},
             {"details", details},
             rule && {"recur", "RRULE:" <> rule}
@@ -111,5 +114,6 @@ defmodule ClimbOntarioWeb.ListingCalendar do
     end
   end
 
+  defp local(%Date{} = d), do: Calendar.strftime(d, "%Y%m%d")
   defp local(dt), do: Calendar.strftime(dt, "%Y%m%dT%H%M%S")
 end

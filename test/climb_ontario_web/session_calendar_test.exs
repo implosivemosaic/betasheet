@@ -73,7 +73,6 @@ defmodule ClimbOntarioWeb.SessionCalendarTest do
 
   test "unknown, invalid, ambiguous and nonexistent wall times never export a guessed instant" do
     for changes <- [
-          %{start_time: nil},
           %{timezone: nil},
           %{timezone: "Unknown/Zone"},
           %{date: ~D[2026-11-01], start_time: ~T[01:30:00], end_time: nil},
@@ -85,5 +84,17 @@ defmodule ClimbOntarioWeb.SessionCalendarTest do
     end
 
     refute SessionCalendar.exportable?(nil)
+  end
+
+  test "a session with a date but no time exports as an all-day event, even without a timezone" do
+    s = struct(session(), %{start_time: nil, end_time: nil, timezone: nil})
+    assert SessionCalendar.exportable?(s)
+    assert SessionCalendar.all_day?(s)
+    refute SessionCalendar.all_day?(session())
+    {:ok, ics} = SessionCalendar.render(listing(), s, @page, @now)
+    p = properties(ics)
+    assert p["DTSTART;VALUE=DATE"] == "20260920"
+    assert p["DTEND;VALUE=DATE"] == "20260921"
+    refute Map.has_key?(p, "DTSTART")
   end
 end

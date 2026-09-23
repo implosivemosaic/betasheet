@@ -63,15 +63,26 @@ defmodule ClimbOntarioWeb.ListingCalendarTest do
       )
 
     assert ListingCalendar.groups(l) == ["Kids", "Teens"]
-    assert length(ListingCalendar.sessions(l, "Teens")) == 1
+    # Teens: one timed session and one date-only session; both export, the second all-day.
+    assert length(ListingCalendar.sessions(l, "Teens")) == 2
     assert ListingCalendar.google_url(l, "Kids", @page) =~ "RRULE%3AFREQ%3DWEEKLY%3BCOUNT%3D2"
     assert ListingCalendar.google_url(l, "Kids", @page) =~ "Pebbles+%E2%80%94+Fall+%C2%B7+Kids"
+    refute ListingCalendar.google_url(l, "Teens", @page) =~ "RRULE"
     {:ok, ics} = ListingCalendar.render(l, "Teens", @page, ~U[2026-09-01 00:00:00Z])
-    assert length(Regex.scan(~r/BEGIN:VEVENT/, ics)) == 1
+    assert length(Regex.scan(~r/BEGIN:VEVENT/, ics)) == 2
+    assert ics =~ "DTSTART:20260914T130000Z"
+    assert ics =~ "DTSTART;VALUE=DATE:20260921"
 
-    bare = course([%{date: ~D[2026-09-13]}])
-    assert ListingCalendar.groups(bare) == []
-    assert ListingCalendar.google_url(bare, nil, @page) == nil
+    # Only a date on file: still exportable, as an all-day event.
+    bare = course([%{date: ~D[2026-09-13], timezone: nil}, %{date: ~D[2026-09-20], timezone: nil}])
+    assert ListingCalendar.groups(bare) == [nil]
+    q = ListingCalendar.google_url(bare, nil, @page) |> URI.parse() |> Map.get(:query) |> URI.decode_query()
+    assert q["dates"] == "20260913/20260914"
+    refute Map.has_key?(q, "ctz")
+    assert q["recur"] == "RRULE:FREQ=WEEKLY;COUNT=2"
+    {:ok, ics} = ListingCalendar.render(bare, nil, @page, ~U[2026-09-01 00:00:00Z])
+    assert ics =~ "DTSTART;VALUE=DATE:20260913"
+    assert ics =~ "DTEND;VALUE=DATE:20260921"
   end
 
   test "the listing .ics route serves inline and the event page offers all three links" do

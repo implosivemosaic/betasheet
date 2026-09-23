@@ -1,5 +1,9 @@
 defmodule ClimbOntarioWeb.SessionCalendar do
-  @moduledoc "One confirmed session as RFC 5545 text. No inferred times, duration or recurrence."
+  @moduledoc """
+  One confirmed session as RFC 5545 text. No inferred times, duration or
+  recurrence: a session with a confirmed time exports at that instant; a session
+  with only a date exports as an all-day event.
+  """
   alias ClimbOntario.Catalogue.Listing
 
   def exportable?(session), do: match?({:ok, _, _}, instants(session))
@@ -24,8 +28,8 @@ defmodule ClimbOntarioWeb.SessionCalendar do
          "BEGIN:VEVENT",
          "UID:listing-#{listing.id}-session-#{session.id}@climb-ontario",
          "DTSTAMP:#{stamp(now)}",
-         "DTSTART:#{stamp(start)}",
-         if(finish, do: "DTEND:#{stamp(finish)}"),
+         dt("DTSTART", start),
+         finish && dt("DTEND", finish),
          "SUMMARY:#{escape(title)}",
          "LOCATION:#{escape(location)}",
          "DESCRIPTION:#{escape("Original event: #{listing.link}\nBeta Sheet: #{page_url}")}",
@@ -53,7 +57,10 @@ defmodule ClimbOntarioWeb.SessionCalendar do
     |> Kernel.<>("\r\n")
   end
 
-  @doc "Local start and end (or nil) of a session as DateTimes in its own zone, when confirmed."
+  @doc """
+  Local start and end (or nil) of a session in its own zone, when confirmed:
+  DateTimes for a timed session, Dates for an all-day one.
+  """
   def local_instants(%{date: %Date{}, start_time: %Time{}, timezone: tz} = s)
       when is_binary(tz) do
     with {:ok, start, finish} <- instants(s) do
@@ -62,7 +69,16 @@ defmodule ClimbOntarioWeb.SessionCalendar do
     end
   end
 
+  def local_instants(%{date: %Date{}, start_time: nil} = s), do: instants(s)
   def local_instants(_), do: :error
+
+  @doc "True when the session has a date but no confirmed time, so it exports as all-day."
+  def all_day?(%{date: %Date{}, start_time: nil}), do: true
+  def all_day?(_), do: false
+
+  # No time on file: an all-day event on the date (DTEND is the exclusive next day).
+  defp instants(%{date: %Date{} = date, start_time: nil}),
+    do: {:ok, date, Date.add(date, 1)}
 
   defp instants(%{date: %Date{} = date, start_time: %Time{} = time, timezone: tz} = s)
        when is_binary(tz) do
@@ -88,6 +104,9 @@ defmodule ClimbOntarioWeb.SessionCalendar do
       _ -> :error
     end
   end
+
+  defp dt(name, %Date{} = d), do: "#{name};VALUE=DATE:#{Calendar.strftime(d, "%Y%m%d")}"
+  defp dt(name, %DateTime{} = t), do: "#{name}:#{stamp(t)}"
 
   defp stamp(dt), do: dt |> DateTime.shift_zone!("Etc/UTC") |> Calendar.strftime("%Y%m%dT%H%M%SZ")
 

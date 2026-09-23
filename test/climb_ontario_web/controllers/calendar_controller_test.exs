@@ -9,7 +9,7 @@ defmodule ClimbOntarioWeb.CalendarControllerTest do
     %{listing: l, session: hd(l.occurrences), venue: v}
   end
 
-  test "download is an attachment with safe headers, and detail links only known timed sessions",
+  test "download is an attachment with safe headers; date-only sessions export all-day",
        %{conn: conn, listing: l, session: s, venue: v} do
     response =
       conn
@@ -32,11 +32,14 @@ defmodule ClimbOntarioWeb.CalendarControllerTest do
     assert html =~ "/e/#{l.id}/sessions/#{s.id}/calendar.ics"
     unknown = listing!(v, %{timezone: nil, start_time: nil}, [~D[2026-12-12]])
     html = conn |> get("/e/#{Listing.slug(unknown)}") |> html_response(200)
-    refute html =~ "calendar.ics"
-    refute html =~ "Add to calendar"
+    assert html =~ "/e/#{unknown.id}/calendar.ics"
+    assert html =~ "Add to your calendar"
+    response = conn |> recycle() |> get("/e/#{unknown.id}/sessions/#{hd(unknown.occurrences).id}/calendar.ics")
+    assert response.status == 200
+    assert response.resp_body =~ "DTSTART;VALUE=DATE:20261212"
   end
 
-  test "unpublished, foreign sessions, unknown times and malicious identifiers return 404", %{
+  test "unpublished, foreign sessions, timed sessions without a zone and malicious identifiers return 404", %{
     conn: conn,
     listing: l,
     session: s,
@@ -47,13 +50,11 @@ defmodule ClimbOntarioWeb.CalendarControllerTest do
         ~D[2026-12-12]
       ])
 
-    unknown = listing!(v, %{}, [~D[2026-12-12]])
     no_zone = listing!(v, %{start_time: ~T[09:00:00]}, [~D[2026-12-12]])
 
     for {lid, sid} <- [
           {draft.id, hd(draft.occurrences).id},
           {l.id, hd(draft.occurrences).id},
-          {unknown.id, hd(unknown.occurrences).id},
           {no_zone.id, hd(no_zone.occurrences).id},
           {l.id, "#{s.id}-evil"},
           {"#{l.id}-evil", s.id},
