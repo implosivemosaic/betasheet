@@ -72,4 +72,4 @@ config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 config :climb_ontario,
        :research_db,
        System.get_env("RESEARCH_DB") ||
-         "/data/workspace/dot-files/knowledge/ontario-gyms/ontario-gyms.sqlite"
+         "/data/workspace/repos/betasheet-data/betasheet/research/ontario-gyms/ontario-gyms.sqlite"
