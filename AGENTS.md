@@ -1,37 +1,66 @@
 # Beta Sheet — agent notes
 
-- Eligibility is recorded whole. If the organizer says "12+ or members of a competitive team", `ages` says both; never shorten an "or" to its first clause.
+Beta Sheet (https://betasheet.ca) is Keith's personal project: a mobile-first guide to indoor climbing
+competitions, socials, classes and camps in Ontario. Discovery only: every listing links to the
+organizer, who handles booking. Phoenix 1.8 + LiveView, SQLite via Ecto, one Fly Machine.
 
-Mobile-first discovery site for Ontario climbing: competitions, socials, classes & clinics, camps.
-Phoenix 1.8 + LiveView, SQLite via Ecto. Canonical app: `/data/workspace/climb-ontario-visual`. Read `docs/` first; `docs/operations.md` defines the exact import contract and backup-before-migration activation.
+## Read in this order
 
-## Running on the Dot box
+1. This file.
+2. `docs/research-rules.md` — what a listing is and how to record one. Every research task follows it.
+3. `docs/weekly-refresh.md` — the weekly run that finds new and changed events, step by step.
+4. `docs/operations.md` — running the app locally, deploying, changing production data, backups.
 
-The host app exports its own Erlang/Phoenix environment. Always source the helper first:
-
-```
-source bin/ex-env.sh        # real OTP on PATH, host env stripped, MIX_ENV=dev
-mix setup                   # deps, db, assets
-mix catalogue.seed          # venues + one UNPUBLISHED skeleton per research event (idempotent)
-PORT=4200 mix phx.server    # 4000 belongs to the host app
-```
-
-Tests: `source bin/ex-env.sh && MIX_ENV=test mix test`.
-
-## Hard rules
-
-- The research database (`RESEARCH_DB`, default under `/data/workspace/dot-files/knowledge/ontario-gyms/`) is read-only input. Never write to it from this repo.
-- The app database is the destination format. Listing/occurrence changesets plus additive migration define the spec; enums have CHECK constraints. Named cohorts share one listing (two or more make a bundle, which records `bundled_by` and per-class `classes`; see docs/operations.md), occurrences hold confirmed local times and actual venues. Code never parses prose to guess kind, audience or schedule. Price, rules and booking conditions are not in the schema; they stay on the organizer's page.
-- Curated rows are written through `Catalogue.Import.put_listing/2` (one transaction for listing and confirmed sessions). Omitted sessions preserve; explicit `[]` clears. Code owns badges/schedule/location lines; legacy prose fields are not UI inputs. Researchers do the judgment; the app validates and loads.
-- `published` is false until every judgment column is filled. Search and event pages read published rows only.
-- `listings.id` is the research event id and leads every public URL. Old slugs redirect.
-- No accounts, calendar sync or registration availability tracking. Dedicated Fly HTTPS test deployment is authorized; see `docs/operations.md` for exact app/Machine/volume IDs. Limited public testing with the reviewed OpenCage bundle is authorized. Actual account entitlement is unknown; public production/promotion requires resolving the documented plan/provenance limits. See `/location-data` and the deployment report linked from operations.
+`docs/features.md` and `docs/architecture-*.md` describe the app itself.
 
 ## Where things live
 
-- `lib/climb_ontario/catalogue/`: `listing.ex` (schema + changeset, the spec), `occurrence.ex` (confirmed dates), `import.ex` (validating write path), `seed.ex` (one-time skeletons from research), `research_source.ex` (read-only adapter), `query.ex` (URL filters).
-- `priv/repo/examples.exs`: the three hand-converted examples agreed in the room; `mix run priv/repo/examples.exs`.
-- `priv/catalogue/editorial/*.json`: earlier agent-written summaries, kept as reference for converters. Not loaded by the app.
-- `lib/climb_ontario/geo.ex` bundled place/postal lookups, no network.
-- `lib/climb_ontario_web/live/discover_live.ex` the discovery screen; `controllers/listing_controller.ex` the permanent event page.
-- Tests sit beside the code they cover under `test/`, mirroring `lib/`.
+| What | Where |
+|---|---|
+| Code (public) | `/data/workspace/repos/climb-ontario`, github.com/implosivemosaic/betasheet |
+| Data and research (private) | `/data/workspace/repos/betasheet-data`, github.com/implosivemosaic/betasheet-data, folder `betasheet/` |
+| Source list | `betasheet-data/betasheet/sources.json` |
+| Weekly runs | `betasheet-data/betasheet/runs/<date>/` |
+| Production database snapshots | `betasheet-data/betasheet/snapshots/` |
+| Production | Fly app `climb-ontario-keith`, Machine `874227b0321039`, database `/data/catalogue.db` |
+| Research tools | `research/` in this repo |
+| September research archive | `betasheet-data/betasheet/research/ontario-gyms/` (read-only history) |
+
+## Hard rules
+
+- Production is the source of truth for listings. Change it only through `Catalogue.Import.put_listing/2`,
+  after a fresh snapshot (`bin/pull-prod-db.sh`), and never by copying a database over it.
+- Nothing goes live without Keith's approval. Research proposes; Keith approves; then it is applied.
+- Never invent facts. A date, time, age, place or class comes from a page you actually read, with a quote.
+  Unknown stays empty.
+- Keith's desktop browser (`lego browser`) is for Instagram and Facebook only, because it is logged in.
+  Everything else is read from this box.
+- Secrets never go in a room, a commit or a file in git. The Fly token comes from
+  `betasheet-data/betasheet/ops/fly-token.sh`.
+
+## Git
+
+- Author and committer are Keith: `Keith Hassen <61853129+implosivemosaic@users.noreply.github.com>`.
+  Both repos have this in their local config; check before committing.
+- One-line commit messages under 100 characters, no prefixes like `feat:`. Commit straight to `main`.
+
+## Running on the Dot box
+
+The box's own Phoenix app leaks environment into shells, so run mix in a clean environment:
+
+```
+cd /data/workspace/repos/climb-ontario
+env -i PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin HOME=/root TERM=dumb \
+  MIX_ENV=test LANG=C.UTF-8 ELIXIR_ERL_OPTIONS=+fnu mix test
+```
+
+Port 4000 belongs to the box; use `PORT=4200` for a local server. `bin/ex-env.sh` does the same
+cleanup when sourced into an interactive shell.
+
+## Known box quirks
+
+- If `flyctl` says "You must be authenticated" with a token that works, a hung local agent is
+  swallowing calls: `flyctl agent stop`, then pass the token with `-t`.
+- `flyctl machine exec` splits its command on spaces. Send Elixir base64-encoded inside `~S|…|`,
+  as `research/apply.sh` and `bin/pull-prod-db.sh` do.
+- When replacing a local SQLite file, delete its `-wal` and `-shm` files too, or old rows come back.

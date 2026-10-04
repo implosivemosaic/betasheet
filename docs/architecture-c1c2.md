@@ -1,6 +1,6 @@
 # Architecture: context and containers
 
-The existing visual app at `/data/workspace/climb-ontario-visual` is the one canonical destination. Import/migration contract: `operations.md`.
+The app in this repository (`/data/workspace/repos/climb-ontario` on the Dot box) is the one canonical destination. Import/migration contract: `operations.md`.
 
 ## C1 — System context
 
