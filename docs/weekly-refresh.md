@@ -67,7 +67,17 @@ and changed ones it saves the text, and a diff against last week. An error is us
 blocked page: note it, and fix the source list in step 6.
 
 Booking widgets and some gym sites draw their schedules with scripts, so the plain read can miss dates.
-When a changed page looks empty of schedule, read it with `agent-browser` on this box instead.
+
+- **Rock Gym Pro** (`app.rockgympro.com`): `fetch` adds the page's calendar under `== dates ==`, so new
+  dates change the fingerprint. To read one offering: `research/rgp.py <url-or-bo-code>` prints its
+  description and every date with its start time. End times aren't in that data; open the page in
+  `agent-browser` for those.
+- **Anything else** that looks empty of schedule (Redpoint, Capitan, other widgets): read it with
+  `agent-browser` on this box. Use one named agent-browser session of your own
+  (`--session <your-name>`), and one page at a time in it.
+
+Keep scratch files in your own directory under `/data/workspace/tmp/`, never bare `/tmp`: it is shared,
+and it is wiped when the box restarts.
 
 ## 3. Check a part's Instagram and Facebook through Keith's browser
 

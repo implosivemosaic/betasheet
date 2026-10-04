@@ -22,6 +22,8 @@ DATA defaults to ../betasheet-data/betasheet next to this repo; the run is the n
 import urllib.error
 import argparse, concurrent.futures, datetime, difflib, hashlib, html, json, os, re, sys, urllib.request
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import rgp  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -110,7 +112,14 @@ def fetch_text(source):
         req = urllib.request.Request(source["url"], headers={"User-Agent": ua})
         try:
             with urllib.request.urlopen(req, timeout=25) as r:
-                return readable(r.read().decode(r.headers.get_content_charset() or "utf-8", "replace"))
+                raw = r.read().decode(r.headers.get_content_charset() or "utf-8", "replace")
+                text = readable(raw)
+                if "rockgympro" in source["url"]:
+                    # The calendar is drawn by script; put its dates in the text so they're fingerprinted.
+                    lines = rgp.date_lines(raw)
+                    if lines:
+                        text += "== dates ==\n" + "\n".join(lines) + "\n"
+                return text
         except urllib.error.HTTPError as e:
             if e.code != 403 or ua == BROWSER_UA:
                 raise
