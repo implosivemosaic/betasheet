@@ -53,8 +53,8 @@ python3 research/run.py parts       # the parts, their gyms and how many sources
 ```
 
 Every researcher checks for duplicates against this same dev copy. If several researchers work at once,
-give each a set of parts; a part belongs to one researcher only. Instagram and Facebook all go through
-Keith's one browser, so give those to a single researcher.
+give each a set of parts; a part belongs to one researcher only, including its Instagram and Facebook.
+The browser helper's lock lets them share Keith's one browser.
 
 ## 2. Check a part's websites and booking pages
 
@@ -71,20 +71,26 @@ When a changed page looks empty of schedule, read it with `agent-browser` on thi
 
 ## 3. Check a part's Instagram and Facebook through Keith's browser
 
-These need Keith's desktop to be on (`lego outpost list` shows it online). For each of the part's
-`browser` sources:
+These need Keith's desktop browser (`lego outpost list` shows it online). Connect once per session with
+`lego browser connect --port 9013`. Then for each of the part's `browser` sources:
 
 ```
-lego browser <url>  > /tmp/<source-id>.txt
+research/browser_read.sh <url>  > /tmp/<source-id>.txt
 python3 research/run.py record <part> <source-id> /tmp/<source-id>.txt
 ```
 
-`record` fingerprints the text, and for Instagram lists `new_posts`: post IDs not seen before. Open only
-those posts. Ignore stories; they are gone within a day. Never like, follow, message or change anything
-in Keith's accounts.
+`browser_read.sh` waits for the page to load, prints its text and the post links it shows, and holds a
+lock, so several researchers can share the one browser safely. A plain `lego browser <url>` misses
+Instagram posts, which load after the page; always use the helper. It uses the research tab (4 by
+default); never navigate Keith's own tabs.
 
-If the desktop is offline, finish everything else and list the unchecked accounts in the report. The
-next run picks them up. `python3 research/run.py status` shows each part's progress.
+`record` fingerprints the text, and for Instagram lists `new_posts`: post IDs not seen before. Open
+each new post with `research/browser_read.sh <post-url> 3` and read the caption. On a first run every
+post is new; read the ones from the last three months. Ignore stories; they are gone within a day.
+Never like, follow, message or change anything in Keith's accounts.
+
+If the desktop is offline, finish everything else and list the unchecked accounts in the part's notes.
+The next run picks them up. `python3 research/run.py status` shows each part's progress.
 
 ## 4. Find what's new or changed
 
@@ -124,6 +130,16 @@ Each part's proposals go in `gyms/<part>/proposals.json`:
 - `action`: `new`, or `update` with the listing's `id`. An update sends only the fields that change.
   `sessions` replaces all of the listing's sessions; leave it out to keep them.
 - New listings get their ID when applied, and are published once approved.
+
+When the part is finished, write `gyms/<part>/notes.md` for Keith, short and in plain words:
+
+- what was checked, and anything that couldn't be (dead links, offline browser);
+- each proposal on one line: ref, title, new or update, what changed, and the evidence in a few words;
+- possible duplicates you held back, and anything uncertain;
+- source changes.
+
+Then `python3 research/run.py done <part>`. That marks it ready for Keith's review. Keith reviews parts as
+they finish and may ask for changes; fix them in the same part's files.
 
 ## 6. Keep the source list honest
 

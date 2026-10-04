@@ -11,6 +11,7 @@ Each part writes only into its own folder, runs/<date>/gyms/<part>/, so agents n
   research/run.py parts                   list the parts, their gyms and source counts
   research/run.py fetch PART [PART...]    read a part's "box" sources; fingerprint; save changed text
   research/run.py record PART SOURCE FILE same, for a "browser" source whose text you saved
+  research/run.py done PART            mark a part finished and ready for Keith's review
   research/run.py status                  what each part has checked so far
   research/run.py merge                   new sources.json + run proposals + duplicate check
   research/run.py dev                     local dev database = newest production snapshot
@@ -167,7 +168,23 @@ def cmd_status(a):
         counts = {}
         for st in done.values():
             counts[st] = counts.get(st, 0) + 1
-        print(f"{part}\t{len(ids & done.keys())}/{len(ids)} checked\t{json.dumps(counts)}\tproposals {props}")
+        state = "DONE" if (rd / "gyms" / part / "done.json").exists() else "open"
+        print(f"{part}\t{state}\t{len(ids & done.keys())}/{len(ids)} checked\t{json.dumps(counts)}\tproposals {props}")
+
+def cmd_done(a):
+    """Mark a part finished: every source checked, proposals and notes written. Ready for review."""
+    rd = run_dir(a.run)
+    folder = rd / "gyms" / a.part
+    if not folder.exists():
+        sys.exit(f"unknown part {a.part}")
+    if not (folder / "notes.md").exists():
+        sys.exit(f"write {folder / 'notes.md'} first (see docs/weekly-refresh.md, step 5)")
+    want = {s["id"] for s in sources() if s["active"] and part_of(s) == a.part}
+    done = {r["id"] for r in read_json(folder / "checks.json", [])}
+    missing = sorted(want - done)
+    write_json(folder / "done.json", {"at": datetime.datetime.now().isoformat(timespec="minutes"),
+                                      "unchecked": missing})
+    print(f"{a.part} done; unchecked: {len(missing)}" + (f" ({', '.join(missing)})" if missing else ""))
 
 def cmd_merge(a):
     """Last week's list + every part's checks and source changes -> the new sources.json.
@@ -250,6 +267,7 @@ p = sub.add_parser("parts"); p.set_defaults(f=cmd_parts)
 p = sub.add_parser("fetch"); p.add_argument("parts", nargs="+"); p.set_defaults(f=cmd_fetch)
 p = sub.add_parser("record"); p.add_argument("part"); p.add_argument("source"); p.add_argument("file"); p.set_defaults(f=cmd_record)
 p = sub.add_parser("status"); p.set_defaults(f=cmd_status)
+p = sub.add_parser("done"); p.add_argument("part"); p.set_defaults(f=cmd_done)
 p = sub.add_parser("merge"); p.set_defaults(f=cmd_merge)
 p = sub.add_parser("dev"); p.set_defaults(f=cmd_dev)
 a = ap.parse_args(); a.f(a)
