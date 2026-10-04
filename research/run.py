@@ -19,6 +19,7 @@ Each part writes only into its own folder, runs/<date>/gyms/<part>/, so agents n
 DATA defaults to ../betasheet-data/betasheet next to this repo; the run is the newest folder unless
 --run DATE is given.
 """
+import urllib.error
 import argparse, concurrent.futures, datetime, difflib, hashlib, html, json, os, re, sys, urllib.request
 from pathlib import Path
 
@@ -72,7 +73,9 @@ def check(source, text, rd, part, today):
     basis = text
     if source.get("fetch") == "browser" and "== post links ==" in text:
         # Social pages carry per-visit tracking links; what matters is which posts and events they show.
-        basis = "\n".join(sorted(set(re.findall(r"/(?:p|reel|events)/[\w-]+", text.split("== post links ==", 1)[1]))))
+        posts = sorted(set(re.findall(r"/(?:p|reel|events|posts|permalink)/[\w.-]+", text.split("== post links ==", 1)[1])))
+        # No post links (e.g. a Facebook page): fall back to the text with link query strings removed.
+        basis = "\n".join(posts) if posts else re.sub(r"\?[^\s)\]]*", "", text.split("== post links ==", 1)[0])
     fp = hashlib.sha256(basis.encode()).hexdigest()[:16]
     rec = {"id": source["id"], "url": source["url"], "type": source["type"], "checked": today, "fingerprint": fp}
     if fp == source.get("fingerprint"):
@@ -100,10 +103,17 @@ def save_checks(rd, part, recs):
     old.update({r["id"]: r for r in recs})
     write_json(path, sorted(old.values(), key=lambda r: r["id"]))
 
+BROWSER_UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36"
+
 def fetch_text(source):
-    req = urllib.request.Request(source["url"], headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=25) as r:
-        return readable(r.read().decode(r.headers.get_content_charset() or "utf-8", "replace"))
+    for ua in (UA, BROWSER_UA):  # some gym sites refuse anything that doesn't look like a browser
+        req = urllib.request.Request(source["url"], headers={"User-Agent": ua})
+        try:
+            with urllib.request.urlopen(req, timeout=25) as r:
+                return readable(r.read().decode(r.headers.get_content_charset() or "utf-8", "replace"))
+        except urllib.error.HTTPError as e:
+            if e.code != 403 or ua == BROWSER_UA:
+                raise
 
 def cmd_start(a):
     name = a.date or datetime.date.today().isoformat()
