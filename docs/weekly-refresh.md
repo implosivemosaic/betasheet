@@ -14,7 +14,7 @@ Paths below are from the code repo, `/data/workspace/repos/climb-ontario`. `DATA
   {"id": "junction-climbing-centre-web-page", "url": "https://www.junctionclimbing.com/youth-programs",
    "type": "web page", "fetch": "box", "gyms": ["Junction Climbing Centre"],
    "last_checked": "2026-10-04", "fingerprint": "9c640f090bf8d52b",
-   "last_copy": "runs/2026-10-04/pages/junction-climbing-centre-web-page.txt",
+   "last_copy": "runs/2026-10-04/gyms/junction-climbing-centre/pages/junction-climbing-centre-web-page.txt",
    "active": true, "origin": "research channel"}
   ```
 
@@ -23,59 +23,68 @@ Paths below are from the code repo, `/data/workspace/repos/climb-ontario`. `DATA
   `seen_posts`, the post IDs already looked at. The fingerprint is a hash of the page's readable text,
   so an unchanged fingerprint means nothing to read.
 
-- **`DATA/runs/<date>/`**: one folder per run, committed when the run is done.
+- **`DATA/runs/<date>/`**: one folder per run, committed when the run is done. The source list above is
+  last week's and stays read-only during the run. Work is split into **parts**: one per gym, plus
+  `shared` for sources several gyms share, like the OCF calendar. Each part writes only into its own
+  folder, so several researchers can work at once without touching the same file.
 
   | File | What |
   |---|---|
-  | `report.md` | what was checked, new, changed, possible duplicates, blocked, source list changes |
-  | `checks.json` | one line per source checked: unchanged, new, changed or error |
-  | `pages/` | readable text of each source that changed, and a `.diff` against last time |
-  | `proposals.json` | the drafts, each with evidence, for Keith to approve |
+  | `gyms/<part>/checks.json` | one line per source checked: unchanged, new, changed or error, with its new fingerprint |
+  | `gyms/<part>/pages/` | readable text of each source that changed, and a `.diff` against last week |
+  | `gyms/<part>/proposals.json` | that part's drafts, each with evidence |
+  | `gyms/<part>/source-changes.json` | sources to add, fix or deactivate (step 6) |
+  | `proposals.json` | all parts' proposals, merged, for Keith to approve |
+  | `duplicates.json` | possible duplicates found at merge |
+  | `report.md` | for Keith |
   | `applied.json` | what was applied, to dev and to prod |
 
 - **Listings in production**, each with its source links in `sources`. Those links carry the IDs that
   recognise an event next time (booking codes, Instagram post IDs, OCF event addresses).
 
-## 1. Start
+## 1. Start (once per run, by whoever coordinates)
 
 ```
 export FLY_API_TOKEN=$(../betasheet-data/betasheet/ops/fly-token.sh)
 bin/pull-prod-db.sh                 # fresh production snapshot into DATA/snapshots
 python3 research/run.py dev         # local dev database = that snapshot
-python3 research/run.py start       # creates DATA/runs/<today>/
+python3 research/run.py start       # creates DATA/runs/<today>/ and a folder per part
+python3 research/run.py parts       # the parts, their gyms and how many sources each has
 ```
 
-## 2. Check the sources this box can read
+Every researcher checks for duplicates against this same dev copy. If several researchers work at once,
+give each a set of parts; a part belongs to one researcher only. Instagram and Facebook all go through
+Keith's one browser, so give those to a single researcher.
+
+## 2. Check a part's websites and booking pages
 
 ```
-python3 research/run.py fetch
+python3 research/run.py fetch <part> [<part> ...]
 ```
 
-This reads every active `box` source, keeps unchanged ones untouched, and saves text plus a diff for new
-and changed ones. Errors are listed in `checks.json`: dead links, blocked pages. Note each one in the
-report, and fix the source list (step 6).
+This reads the part's active `box` sources and records each as unchanged, new, changed or error. For new
+and changed ones it saves the text, and a diff against last week. An error is usually a dead link or a
+blocked page: note it, and fix the source list in step 6.
 
 Booking widgets and some gym sites draw their schedules with scripts, so the plain read can miss dates.
-When a changed page looks empty of schedule, read it with `agent-browser` on this box and save that text.
+When a changed page looks empty of schedule, read it with `agent-browser` on this box instead.
 
-## 3. Check Instagram and Facebook through Keith's browser
+## 3. Check a part's Instagram and Facebook through Keith's browser
 
-These need Keith's desktop to be on (`lego outpost list` shows it online). For each active `browser`
-source:
+These need Keith's desktop to be on (`lego outpost list` shows it online). For each of the part's
+`browser` sources:
 
 ```
 lego browser <url>  > /tmp/<source-id>.txt
-python3 research/run.py record <source-id> /tmp/<source-id>.txt
+python3 research/run.py record <part> <source-id> /tmp/<source-id>.txt
 ```
 
 `record` fingerprints the text, and for Instagram lists `new_posts`: post IDs not seen before. Open only
 those posts. Ignore stories; they are gone within a day. Never like, follow, message or change anything
 in Keith's accounts.
 
-If the desktop is offline, finish the rest of the run and list the unchecked accounts in the report. The
-next run picks them up.
-
-`python3 research/run.py status` shows what is still unchecked.
+If the desktop is offline, finish everything else and list the unchecked accounts in the report. The
+next run picks them up. `python3 research/run.py status` shows each part's progress.
 
 ## 4. Find what's new or changed
 
@@ -93,9 +102,9 @@ shows. For each one:
 
 Past events need nothing: the site hides them by date.
 
-## 5. Write proposals and the report
+## 5. Write proposals
 
-Each proposal in `proposals.json`:
+Each part's proposals go in `gyms/<part>/proposals.json`:
 
 ```json
 {"ref": "junction-winter-crushers", "approved": false, "action": "new",
@@ -111,28 +120,44 @@ Each proposal in `proposals.json`:
               "quote": "Winter 2027 Season: 10 weeks - January 8-March 12"}}
 ```
 
-- `ref`: a short unique name for the proposal.
+- `ref`: a short name, unique within the part. Merging prefixes it with the part.
 - `action`: `new`, or `update` with the listing's `id`. An update sends only the fields that change.
   `sessions` replaces all of the listing's sessions; leave it out to keep them.
 - New listings get their ID when applied, and are published once approved.
 
-`report.md` is for Keith: short, in plain words. Counts of sources checked and changed; each proposal in
-one line (gym, title, what changed, why); possible duplicates; anything blocked or uncertain; source list
-changes. Then send Keith the report and wait. He approves by ref, or asks for changes. Set
-`"approved": true` only on what he approved.
-
 ## 6. Keep the source list honest
 
-During the run, edit `DATA/sources.json` directly:
+Never edit `sources.json` during a run. Record source changes in the part's `source-changes.json`:
 
-- **Add** a page that lists events and isn't watched yet: a gym's link-in-bio page, a new booking list,
-  a new events page. Copy an existing entry, give it a unique `id`, `"origin": "found <date>"`, and
-  empty `fingerprint` and `last_copy`.
-- **Fix** a URL that moved. **Deactivate** (`"active": false`) a page that is gone, with a short `note`.
-  Don't delete entries; history matters.
-- List every source change in the report.
+```json
+{"add": [{"id": "junction-linktree", "url": "https://linktr.ee/junctionclimbing", "type": "web page",
+          "fetch": "box", "gyms": ["Junction Climbing Centre"]}],
+ "update": [{"id": "climb-muskoka-web-page", "url": "https://climbmuskoka.com/youth-programs"}],
+ "deactivate": [{"id": "some-old-page", "note": "404 since October"}]}
+```
 
-## 7. Apply what Keith approved
+- **Add** a page that lists events and isn't watched yet: a link-in-bio page, a new booking list, a new
+  events page. Give it a unique `id`.
+- **Update** a URL that moved. **Deactivate** a page that is gone, with a short note. Nothing is deleted.
+
+## 7. Merge, report, and get approval (coordinator)
+
+When every part is done:
+
+```
+python3 research/run.py merge
+```
+
+This builds the new `sources.json` from last week's list plus every part's checks and source changes,
+gathers every part's proposals into the run's `proposals.json`, and checks each new proposal against
+the catalogue and against the other proposals for possible duplicates (`duplicates.json`).
+
+Then write `report.md` for Keith, short and in plain words: counts of sources checked and changed; each
+proposal in one line (gym, title, what changed, why); possible duplicates; anything blocked or
+uncertain; source list changes. Send it to Keith and wait. He approves by ref, or asks for changes. Set
+`"approved": true` in `proposals.json` only on what he approved.
+
+## 8. Apply what Keith approved
 
 ```
 research/apply.sh dev       # validates against the local copy first
@@ -144,9 +169,9 @@ Both steps record their results in `applied.json`. Re-running after a fix skips 
 If dev reports an error, fix the proposal and run dev again before touching prod. Then spot-check one
 changed listing on https://betasheet.ca.
 
-## 8. Commit the run
+## 9. Commit the run
 
-In `../betasheet-data`: commit the run folder, `sources.json` and the new snapshot together, one line,
+In `../betasheet-data`: commit the run folder, the new `sources.json` and the snapshot together, one line,
 for example `Weekly refresh 2026-10-11: 6 new, 3 updated, 2 sources added`. Push. Code changes, if any,
 go to the code repo separately.
 
