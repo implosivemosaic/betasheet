@@ -69,7 +69,11 @@ def instagram_posts(text):
 def check(source, text, rd, part, today):
     """Compare a source's text with last week's; on change save the text and a diff in the part
     folder. Returns the check record; the source list itself is not touched."""
-    fp = hashlib.sha256(text.encode()).hexdigest()[:16]
+    basis = text
+    if source.get("fetch") == "browser" and "== post links ==" in text:
+        # Social pages carry per-visit tracking links; what matters is which posts and events they show.
+        basis = "\n".join(sorted(set(re.findall(r"/(?:p|reel|events)/[\w-]+", text.split("== post links ==", 1)[1]))))
+    fp = hashlib.sha256(basis.encode()).hexdigest()[:16]
     rec = {"id": source["id"], "url": source["url"], "type": source["type"], "checked": today, "fingerprint": fp}
     if fp == source.get("fingerprint"):
         rec["status"] = "unchanged"
@@ -152,7 +156,10 @@ def cmd_record(a):
     s = next((s for s in sources() if s["id"] == a.source), None) or sys.exit(f"unknown source {a.source}")
     if part_of(s) != a.part:
         sys.exit(f"{a.source} belongs to part {part_of(s)}, not {a.part}")
-    rec = check(s, Path(a.file).read_text(), rd, a.part, today)
+    text = Path(a.file).read_text()
+    if len(text) < 300 or re.match(r"(?i)\s*error", text):
+        sys.exit(f"{a.file} looks like a failed read, not a page; read it again before recording")
+    rec = check(s, text, rd, a.part, today)
     save_checks(rd, a.part, [rec])
     print(json.dumps({k: v for k, v in rec.items() if k != "posts"}))
 
