@@ -47,3 +47,4 @@ npm-debug.log
 # Database snapshots and conversion lock stay out of git (they live in the betasheet-data repo)
 *.sqlite
 .catalogue-conversion.lock
+__pycache__/
