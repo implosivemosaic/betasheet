@@ -86,8 +86,7 @@ When a gym sells one programme as several parallel classes, keep one listing and
 - `sources`: every page you read for it, most specific first. If a booking system, Instagram post, OCF
   page or Eventbrite page has its own address for this event, that address must be in `sources`: it
   carries the ID the weekly refresh uses to recognise the event next time.
-- Pages you discover that list events (a link-in-bio page, a new booking list) belong in `sources.json`
-  too. See the weekly refresh.
+- Pages that turned out useful for finding events go in the part's `pages.json` during the weekly refresh.
 
 ## Before proposing a new listing
 

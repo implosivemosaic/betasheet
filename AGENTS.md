@@ -23,7 +23,7 @@ organizer, who handles booking. Phoenix 1.8 + LiveView, SQLite via Ecto, one Fly
 | Weekly runs | `betasheet-data/betasheet/runs/<date>/` |
 | Production database snapshots | `betasheet-data/betasheet/snapshots/` |
 | Production | Fly app `climb-ontario-keith`, Machine `874227b0321039`, database `/data/catalogue.db` |
-| Research tools | `research/` in this repo |
+| Research bookkeeping | `research/` in this repo |
 | September research archive | `betasheet-data/betasheet/research/ontario-gyms/` (read-only history) |
 
 ## Hard rules
@@ -33,8 +33,8 @@ organizer, who handles booking. Phoenix 1.8 + LiveView, SQLite via Ecto, one Fly
 - Nothing goes live without Keith's approval. Research proposes; Keith approves; then it is applied.
 - Never invent facts. A date, time, age, place or class comes from a page you actually read, with a quote.
   Unknown stays empty.
-- Keith's desktop browser (`lego browser`) is for Instagram and Facebook only, because it is logged in.
-  Everything else is read from this box.
+- Keith's desktop browser (`lego browser`, BrowserClaw) is logged into Instagram and Facebook. Use it
+  freely, in your own tabs, read only: never like, follow, message or change anything.
 - Secrets never go in a room, a commit or a file in git. The Fly token comes from
   `betasheet-data/betasheet/ops/fly-token.sh`.
 
