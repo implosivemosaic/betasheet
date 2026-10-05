@@ -6,6 +6,8 @@ defmodule ClimbOntarioWeb.DiscoverLive do
   alias ClimbOntarioWeb.Format
   import ClimbOntarioWeb.ListingComponents
 
+  @max_saved 10
+
   @impl true
   def mount(_params, _session, socket) do
     {:ok,
@@ -13,6 +15,7 @@ defmodule ClimbOntarioWeb.DiscoverLive do
        interest_enabled: ClimbOntario.Interest.enabled?(),
        interest_form: nil,
        interest_saved: false,
+       saved_searches: [],
        today: Clock.today(),
        place_names: Geo.place_names(),
        page_title: "What's on near you",
@@ -31,7 +34,7 @@ defmodule ClimbOntarioWeb.DiscoverLive do
     %{
       ip:
         headers["fly-client-ip"] ||
-          (if forwarded != "", do: forwarded) ||
+          if(forwarded != "", do: forwarded) ||
           (peer && peer.address |> :inet.ntoa() |> to_string()),
       user_agent: get_connect_info(socket, :user_agent)
     }
@@ -139,6 +142,46 @@ defmodule ClimbOntarioWeb.DiscoverLive do
       {:error, :disabled} ->
         {:noreply, socket}
     end
+  end
+
+  # Saved searches live in the visitor's browser (localStorage, via the SavedSearches hook);
+  # the server only names them and tells the hook what to store.
+  def handle_event("saved_searches_loaded", %{"paths" => paths}, socket) when is_list(paths) do
+    saved = paths |> Enum.filter(&saved_path?/1) |> Enum.uniq() |> Enum.take(@max_saved)
+    {:noreply, assign(socket, saved_searches: saved)}
+  end
+
+  def handle_event("toggle_saved", _, socket) do
+    current = path(socket.assigns.query)
+    saved = socket.assigns.saved_searches
+
+    saved =
+      if current in saved,
+        do: List.delete(saved, current),
+        else: Enum.take([current | saved], @max_saved)
+
+    {:noreply, store_saved(socket, saved)}
+  end
+
+  def handle_event("remove_saved", %{"path" => path}, socket),
+    do: {:noreply, store_saved(socket, List.delete(socket.assigns.saved_searches, path))}
+
+  defp store_saved(socket, saved),
+    do: socket |> assign(saved_searches: saved) |> push_event("saved_searches", %{paths: saved})
+
+  defp saved_path?(p), do: is_binary(p) and String.starts_with?(p, "/?") and byte_size(p) <= 500
+
+  # "Classes · Kids & youth · London": what, who, where; other filters only when nothing else is set.
+  defp saved_label(path) do
+    q = Query.from_params(URI.decode_query(URI.parse(path).query || ""), Clock.today())
+
+    parts =
+      Enum.map(q.kinds, &Format.kind_label/1) ++
+        Enum.map(q.audience, &Format.audience_label/1) ++
+        List.wrap(q.near_text) ++ if(q.keyword, do: ["“#{q.keyword}”"], else: [])
+
+    parts = if parts == [], do: Enum.map(active_filters(q), &elem(&1, 0)), else: parts
+    parts |> Enum.take(3) |> Enum.join(" · ")
   end
 
   # Every filter/location link resets depth; only Load more preserves/increases it.
@@ -261,6 +304,25 @@ defmodule ClimbOntarioWeb.DiscoverLive do
             </select>
           </form>
         </div>
+        <div id="saved-searches-store" phx-hook="SavedSearches" hidden></div>
+        <nav
+          :if={@saved_searches != [] and active_filters(@query) == []}
+          id="saved-searches"
+          aria-label="Your searches"
+          class="mt-3 flex flex-wrap items-center gap-2"
+        >
+          <span class="text-sm text-base-content/70">Your searches</span>
+          <span :for={p <- @saved_searches} class="chip min-h-11 gap-1 pr-1">
+            <.link patch={p}>{saved_label(p)}</.link>
+            <button
+              type="button"
+              phx-click="remove_saved"
+              phx-value-path={p}
+              class="btn btn-ghost btn-xs btn-circle"
+              aria-label={"Forget saved search " <> saved_label(p)}
+            >×</button>
+          </span>
+        </nav>
         <p :if={@near_error} class="mt-2 text-sm text-error">
           We couldn't place “{@query.near_text}”. Try a city or town name, or postal code.
         </p>
@@ -468,6 +530,25 @@ defmodule ClimbOntarioWeb.DiscoverLive do
             class="btn btn-ghost min-h-11"
             aria-label="Clear all filters"
           >Clear all</.link>
+          <span class="ml-auto flex gap-1">
+            <button
+              type="button"
+              id="save-search"
+              phx-click="toggle_saved"
+              aria-pressed={to_string(path(@query) in @saved_searches)}
+              class="btn btn-ghost btn-sm min-h-11 rounded-field sparkle"
+            >
+              <%= if path(@query) in @saved_searches do %>
+                <.icon name="hero-star-solid" class="size-4 text-warning" /> Saved
+              <% else %>
+                <.icon name="hero-star" class="size-4" /> Save
+              <% end %>
+            </button>
+            <.share_button
+              url={ClimbOntarioWeb.Endpoint.url() <> path(@query)}
+              title={"Beta Sheet: " <> saved_label(path(@query))}
+            />
+          </span>
         </div>
       </section>
 

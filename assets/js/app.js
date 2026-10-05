@@ -52,6 +52,17 @@ const Hooks = {
       })
     }
   },
+  // Saved searches stay in this browser: hand them to the LiveView on load, store what it sends back.
+  SavedSearches: {
+    mounted() {
+      let paths = []
+      try { paths = JSON.parse(localStorage.getItem("savedSearches") || "[]") } catch (_) { }
+      if (Array.isArray(paths) && paths.length) this.pushEvent("saved_searches_loaded", {paths})
+      this.handleEvent("saved_searches", ({paths}) => {
+        try { localStorage.setItem("savedSearches", JSON.stringify(paths)) } catch (_) { }
+      })
+    }
+  },
   // "Use my location": ask the browser, hand coordinates to the LiveView, which maps them to a place name.
   Locate: {
     mounted() {
