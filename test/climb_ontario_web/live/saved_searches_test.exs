@@ -19,8 +19,8 @@ defmodule ClimbOntarioWeb.SavedSearchesTest do
   test "saved searches show as named chips when no filter is on, and can be removed", %{
     conn: conn
   } do
+    conn = put_connect_params(conn, %{"saved_searches" => [@search, "javascript:alert(1)"]})
     {:ok, view, _} = live(conn, "/")
-    render_hook(view, "saved_searches_loaded", %{"paths" => [@search, "javascript:alert(1)"]})
 
     assert has_element?(
              view,
@@ -35,7 +35,6 @@ defmodule ClimbOntarioWeb.SavedSearchesTest do
     refute has_element?(view, "#saved-searches")
 
     {:ok, view, _} = live(conn, @search)
-    render_hook(view, "saved_searches_loaded", %{"paths" => [@search]})
     refute has_element?(view, "#saved-searches")
   end
 end

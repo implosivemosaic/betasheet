@@ -52,12 +52,9 @@ const Hooks = {
       })
     }
   },
-  // Saved searches stay in this browser: hand them to the LiveView on load, store what it sends back.
+  // Saved searches stay in this browser; the LiveView sends back what to keep.
   SavedSearches: {
     mounted() {
-      let paths = []
-      try { paths = JSON.parse(localStorage.getItem("savedSearches") || "[]") } catch (_) { }
-      if (Array.isArray(paths) && paths.length) this.pushEvent("saved_searches_loaded", {paths})
       this.handleEvent("saved_searches", ({paths}) => {
         try { localStorage.setItem("savedSearches", JSON.stringify(paths)) } catch (_) { }
       })
@@ -83,7 +80,12 @@ const Hooks = {
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 const liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
-  params: {_csrf_token: csrfToken},
+  // Saved searches travel with every (re)connect, so the server never loses them.
+  params: () => {
+    let saved = []
+    try { saved = JSON.parse(localStorage.getItem("savedSearches") || "[]") } catch (_) { }
+    return {_csrf_token: csrfToken, saved_searches: Array.isArray(saved) ? saved : []}
+  },
   hooks: {...colocatedHooks, ...Hooks},
 })
 

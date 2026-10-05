@@ -15,7 +15,8 @@ defmodule ClimbOntarioWeb.DiscoverLive do
        interest_enabled: ClimbOntario.Interest.enabled?(),
        interest_form: nil,
        interest_saved: false,
-       saved_searches: [],
+       saved_searches:
+         if(connected?(socket), do: saved_paths(get_connect_params(socket)), else: []),
        today: Clock.today(),
        place_names: Geo.place_names(),
        page_title: "What's on near you",
@@ -146,11 +147,6 @@ defmodule ClimbOntarioWeb.DiscoverLive do
 
   # Saved searches live in the visitor's browser (localStorage, via the SavedSearches hook);
   # the server only names them and tells the hook what to store.
-  def handle_event("saved_searches_loaded", %{"paths" => paths}, socket) when is_list(paths) do
-    saved = paths |> Enum.filter(&saved_path?/1) |> Enum.uniq() |> Enum.take(@max_saved)
-    {:noreply, assign(socket, saved_searches: saved)}
-  end
-
   def handle_event("toggle_saved", _, socket) do
     current = path(socket.assigns.query)
     saved = socket.assigns.saved_searches
@@ -168,6 +164,12 @@ defmodule ClimbOntarioWeb.DiscoverLive do
 
   defp store_saved(socket, saved),
     do: socket |> assign(saved_searches: saved) |> push_event("saved_searches", %{paths: saved})
+
+  # Sent with every (re)connect, so a dropped socket never forgets the visitor's list.
+  defp saved_paths(%{"saved_searches" => paths}) when is_list(paths),
+    do: paths |> Enum.filter(&saved_path?/1) |> Enum.uniq() |> Enum.take(@max_saved)
+
+  defp saved_paths(_), do: []
 
   defp saved_path?(p), do: is_binary(p) and String.starts_with?(p, "/?") and byte_size(p) <= 500
 
