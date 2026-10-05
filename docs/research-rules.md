@@ -83,6 +83,10 @@ When a gym sells one programme as several parallel classes, keep one listing and
 
 - `link`: the most specific organizer page for this listing (its booking page or event page), not the
   gym's home page when a better page exists. `link_kind` is `registration`, `event` or `gym`.
+  Link to a page a visitor can open on its own. An embed or widget address (`…/embed`, Rock Gym Pro
+  `/b/widget/…`, Beta `widgets.sendmoregetbeta.com`) goes in `sources`, not `link`. For Rock Gym Pro,
+  link the standalone booking page `https://app.rockgympro.com/b/?bo=<offering ID>`; for other systems,
+  link the gym's page that shows the booking (for example its events or programme page).
 - `sources`: every page you read for it, most specific first. If a booking system, Instagram post, OCF
   page or Eventbrite page has its own address for this event, that address must be in `sources`: it
   carries the ID the weekly refresh uses to recognise the event next time.
