@@ -51,12 +51,19 @@ defmodule ClimbOntarioWeb.ListingComponents do
               data-date={Date.to_iso8601(@card_date)}
               aria-label={Format.date_with_year(@card_date)}
             >{Format.date(@card_date)}</time>
-            <span :if={!@card_date} class="dateline font-bold text-base-content/50" aria-label="Dates not confirmed">
+            <span
+              :if={!@card_date}
+              class="dateline font-bold text-base-content/50"
+              aria-label="Dates not confirmed"
+            >
               Dates TBA
             </span>
             <.kind_badge listing={@listing} />
             <span :if={@classes} class="series-position text-xs font-bold">{@classes} classes</span>
-            <span :if={!@classes && !@position && Format.series_label(@listing)} class="series-position text-xs font-bold">
+            <span
+              :if={!@classes && !@position && Format.series_label(@listing)}
+              class="series-position text-xs font-bold"
+            >
               {Format.series_label(@listing)}
             </span>
             <details :if={@position} class="series-position text-xs open:basis-full">
@@ -75,11 +82,16 @@ defmodule ClimbOntarioWeb.ListingComponents do
           <h3 class="mt-2 text-lg font-bold leading-snug tracking-tight">
             <a href={~p"/e/#{ClimbOntario.Catalogue.Listing.slug(@listing)}"} class="link link-hover">{@listing.title}</a>
           </h3>
-          <p :if={summary = Format.summary(@listing)} class="mt-1 text-sm text-base-content/70 line-clamp-2">
+          <p
+            :if={summary = Format.summary(@listing)}
+            class="mt-1 text-sm text-base-content/70 line-clamp-2"
+          >
             {summary}
           </p>
           <p :if={@session && @session.cohort} class="mt-1 text-xs text-base-content/70">
-            {if @classes, do: ClimbOntarioWeb.ClassSchedule.label(@listing, @session.cohort), else: @session.cohort}
+            {if @classes,
+              do: ClimbOntarioWeb.ClassSchedule.label(@listing, @session.cohort),
+              else: @session.cohort}
           </p>
           <p :if={@place != @gym} class="mt-2 text-sm text-base-content/70">
             {Format.venue_line(@place)}
@@ -120,11 +132,17 @@ defmodule ClimbOntarioWeb.ListingComponents do
 
   @doc "Defines every rock once per page; cards and pages then reference them by id."
   def rock_defs(assigns) do
-    assigns = assign(assigns, rocks: Enum.map(@rocks, fn {k, inner} -> {k, Phoenix.HTML.raw(inner)} end))
+    assigns =
+      assign(assigns, rocks: Enum.map(@rocks, fn {k, inner} -> {k, Phoenix.HTML.raw(inner)} end))
 
     ~H"""
     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-      <symbol :for={{kind, inner} <- @rocks} id={"rock-#{kind}"} viewBox="0 0 100 100" shape-rendering="crispEdges">
+      <symbol
+        :for={{kind, inner} <- @rocks}
+        id={"rock-#{kind}"}
+        viewBox="0 0 100 100"
+        shape-rendering="crispEdges"
+      >
         {inner}
       </symbol>
     </svg>
@@ -207,6 +225,7 @@ defmodule ClimbOntarioWeb.ListingComponents do
   @doc "Shares this page (ours, not the organizer's). Native share sheet on phones, clipboard elsewhere."
   attr :url, :string, required: true
   attr :title, :string, required: true
+  attr :class, :string, default: "btn btn-ghost btn-sm rounded-field"
 
   def share_button(assigns) do
     ~H"""
@@ -215,7 +234,7 @@ defmodule ClimbOntarioWeb.ListingComponents do
       data-share
       data-url={@url}
       data-title={@title}
-      class="btn btn-ghost btn-sm rounded-field"
+      class={@class}
     >
       <.icon name="hero-share" class="size-4" /> <span data-label>Share</span>
     </button>

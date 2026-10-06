@@ -237,6 +237,9 @@ defmodule ClimbOntarioWeb.DiscoverLive do
 
   @impl true
   def render(assigns) do
+    assigns =
+      assign(assigns, :action_class, "btn btn-ghost btn-sm min-h-11 rounded-field gap-1.5")
+
     ~H"""
     <Layouts.app flash={@flash}>
       <section class="pt-3 sm:pt-8">
@@ -244,7 +247,7 @@ defmodule ClimbOntarioWeb.DiscoverLive do
           Find your next <span class="squiggle">climb.</span>
         </h1>
 
-        <form id="keyword-search" phx-change="keyword" phx-submit="keyword" class="mt-3">
+        <form id="keyword-search" phx-change="keyword" phx-submit="keyword" class="mt-5 sm:mt-6">
           <label for="keyword" class="sr-only">What are you looking for?</label>
           <input
             id="keyword"
@@ -257,11 +260,11 @@ defmodule ClimbOntarioWeb.DiscoverLive do
             class="input w-full"
           />
         </form>
-        <h2 id="location-label" class="mt-4 text-sm font-semibold">Location</h2>
-        <div class="flex flex-wrap gap-2 items-end">
+        <h2 id="location-label" class="sr-only">Location</h2>
+        <div class="mt-2 flex flex-wrap gap-2 items-end">
           <form
             phx-submit="search"
-            class="mt-2 flex gap-1 min-w-0 flex-1 basis-44"
+            class="flex gap-1 min-w-0 flex-1 basis-44"
             role="search"
             aria-labelledby="location-label"
           >
@@ -307,24 +310,6 @@ defmodule ClimbOntarioWeb.DiscoverLive do
           </form>
         </div>
         <div id="saved-searches-store" phx-hook="SavedSearches" hidden></div>
-        <nav
-          :if={@saved_searches != [] and active_filters(@query) == []}
-          id="saved-searches"
-          aria-label="Your searches"
-          class="mt-3 flex flex-wrap items-center gap-2"
-        >
-          <span class="text-sm text-base-content/70">Your searches</span>
-          <span :for={p <- @saved_searches} class="chip min-h-11 gap-1 pr-1">
-            <.link patch={p}>{saved_label(p)}</.link>
-            <button
-              type="button"
-              phx-click="remove_saved"
-              phx-value-path={p}
-              class="btn btn-ghost btn-xs btn-circle"
-              aria-label={"Forget saved search " <> saved_label(p)}
-            >×</button>
-          </span>
-        </nav>
         <p :if={@near_error} class="mt-2 text-sm text-error">
           We couldn't place “{@query.near_text}”. Try a city or town name, or postal code.
         </p>
@@ -333,7 +318,7 @@ defmodule ClimbOntarioWeb.DiscoverLive do
       <nav
         id="filter-sheets"
         phx-hook="FilterSheets"
-        class="mt-3 grid grid-cols-3 gap-2"
+        class="mt-2 grid grid-cols-3 gap-2"
         aria-label="Filters"
       >
         <div :for={
@@ -511,6 +496,25 @@ defmodule ClimbOntarioWeb.DiscoverLive do
         </.form>
       </section>
 
+      <nav
+        :if={@saved_searches != [] and active_filters(@query) == []}
+        id="saved-searches"
+        aria-label="Your searches"
+        class="mt-4 flex flex-wrap items-center gap-2"
+      >
+        <span class="text-sm text-base-content/70">Your searches</span>
+        <span :for={p <- @saved_searches} class="chip min-h-11 gap-1 pr-1">
+          <.link patch={p}>{saved_label(p)}</.link>
+          <button
+            type="button"
+            phx-click="remove_saved"
+            phx-value-path={p}
+            class="btn btn-ghost btn-xs btn-circle"
+            aria-label={"Forget saved search " <> saved_label(p)}
+          >×</button>
+        </span>
+      </nav>
+
       <section
         :if={active_filters(@query) != []}
         id="active-filters"
@@ -538,7 +542,8 @@ defmodule ClimbOntarioWeb.DiscoverLive do
               id="save-search"
               phx-click="toggle_saved"
               aria-pressed={to_string(path(@query) in @saved_searches)}
-              class="btn btn-ghost btn-sm min-h-11 rounded-field sparkle"
+              data-chalk
+              class={@action_class}
             >
               <%= if path(@query) in @saved_searches do %>
                 <.icon name="hero-star-solid" class="size-4 text-warning" /> Saved
@@ -549,6 +554,7 @@ defmodule ClimbOntarioWeb.DiscoverLive do
             <.share_button
               url={ClimbOntarioWeb.Endpoint.url() <> path(@query)}
               title={"Beta Sheet: " <> saved_label(path(@query))}
+              class={@action_class}
             />
           </span>
         </div>

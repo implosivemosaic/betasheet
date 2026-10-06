@@ -202,19 +202,17 @@
 }
 
 @keyframes fade-up { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-/* Save search: one soft shimmer when the button first appears, never looping. */
-.sparkle { position: relative; overflow: hidden; }
-.sparkle::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(110deg, transparent 30%, color-mix(in oklab, var(--color-warning) 35%, transparent) 50%, transparent 70%);
-  transform: translateX(-100%); animation: shimmer 1.2s ease-out 0.3s 1;
-}
-@keyframes shimmer { to { transform: translateX(100%); } }
+/* Save search: a puff of chalk from the star, like chalking up. Particles live on <body>, outside LiveView. */
+.chalk { position: fixed; z-index: 50; width: var(--s); height: var(--s); margin: calc(var(--s) / -2); border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, #fff 45%, color-mix(in oklab, var(--color-base-content) 18%, #fff) 100%);
+  animation: chalk 650ms cubic-bezier(.2,.7,.3,1) forwards; }
+@keyframes chalk { 0% { opacity: .95; transform: translate(0, 0) scale(.6); } 100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1.4); } }
 @keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.08); } 100% { transform: scale(1); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .fade-up > *, .pop, .hold, .chip, .card-lift, .blob, .cta .arrow, .sparkle::after { animation: none !important; transition: none !important; transform: none !important; }
+  .fade-up > *, .pop, .hold, .chip, .card-lift, .blob, .cta .arrow { animation: none !important; transition: none !important; transform: none !important; }
   html { scroll-behavior: auto; }
+  .chalk { display: none; }
 }
 
 /* Phoenix LiveView loading states */

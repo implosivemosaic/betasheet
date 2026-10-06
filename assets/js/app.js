@@ -121,6 +121,26 @@ document.addEventListener("click", async e => {
   } catch (_) { window.prompt("Copy this link", url) }
 })
 
+// Saving a search puffs a little chalk from the star (only when saving, not unsaving).
+document.addEventListener("click", e => {
+  const btn = e.target.closest("[data-chalk]")
+  if (!btn || btn.getAttribute("aria-pressed") === "true") return
+  const icon = btn.querySelector("[class*='hero-star']") || btn
+  const r = icon.getBoundingClientRect()
+  for (let i = 0; i < 9; i++) {
+    const a = (i / 9) * Math.PI * 2 + Math.random() * 0.5, d = 14 + Math.random() * 16
+    const p = document.createElement("span")
+    p.className = "chalk"
+    p.style.left = `${r.left + r.width / 2}px`
+    p.style.top = `${r.top + r.height / 2}px`
+    p.style.setProperty("--s", `${4 + Math.random() * 5}px`)
+    p.style.setProperty("--dx", `${Math.cos(a) * d}px`)
+    p.style.setProperty("--dy", `${Math.sin(a) * d - 6}px`)
+    p.addEventListener("animationend", () => p.remove())
+    document.body.appendChild(p)
+  }
+})
+
 // "All listings" returns to the search you came from when there is one.
 document.addEventListener("click", e => {
   const back = e.target.closest("[data-back]")
