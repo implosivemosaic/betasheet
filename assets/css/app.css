@@ -204,8 +204,9 @@
 @keyframes fade-up { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 /* Save search: a puff of chalk from the star, like chalking up. Particles live on <body>, outside LiveView. */
 .chalk { position: fixed; z-index: 50; width: var(--s); height: var(--s); margin: calc(var(--s) / -2); border-radius: 50%; pointer-events: none;
-  background: radial-gradient(circle, #fff 45%, color-mix(in oklab, var(--color-base-content) 18%, #fff) 100%);
-  animation: chalk 650ms cubic-bezier(.2,.7,.3,1) forwards; }
+  background: radial-gradient(circle, #fff 30%, color-mix(in oklab, var(--color-base-content) 40%, #fff) 100%);
+  box-shadow: 0 0 3px color-mix(in oklab, var(--color-base-content) 25%, transparent);
+  animation: chalk 700ms cubic-bezier(.2,.7,.3,1) forwards; }
 @keyframes chalk { 0% { opacity: .95; transform: translate(0, 0) scale(.6); } 100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1.4); } }
 @keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.08); } 100% { transform: scale(1); } }
 

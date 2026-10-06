@@ -127,13 +127,13 @@ document.addEventListener("click", e => {
   if (!btn || btn.getAttribute("aria-pressed") === "true") return
   const icon = btn.querySelector("[class*='hero-star']") || btn
   const r = icon.getBoundingClientRect()
-  for (let i = 0; i < 9; i++) {
-    const a = (i / 9) * Math.PI * 2 + Math.random() * 0.5, d = 14 + Math.random() * 16
+  for (let i = 0; i < 12; i++) {
+    const a = (i / 12) * Math.PI * 2 + Math.random() * 0.5, d = 16 + Math.random() * 18
     const p = document.createElement("span")
     p.className = "chalk"
     p.style.left = `${r.left + r.width / 2}px`
     p.style.top = `${r.top + r.height / 2}px`
-    p.style.setProperty("--s", `${4 + Math.random() * 5}px`)
+    p.style.setProperty("--s", `${5 + Math.random() * 5}px`)
     p.style.setProperty("--dx", `${Math.cos(a) * d}px`)
     p.style.setProperty("--dy", `${Math.sin(a) * d - 6}px`)
     p.addEventListener("animationend", () => p.remove())
