@@ -44,6 +44,32 @@ defmodule ClimbOntarioWeb.ListingControllerTest do
              "Visit organizer&#39;s website"
   end
 
+  test "a sign-up link appears beside the main link only when there is one", %{
+    conn: conn,
+    listing: l
+  } do
+    refute conn |> get(~p"/e/#{Listing.slug(l)}") |> html_response(200) =~
+             "Sign up or get tickets"
+
+    {:ok, l} =
+      ClimbOntario.Catalogue.Import.put_listing(%{
+        id: l.id,
+        signup_link: "https://tickets.example/2"
+      })
+
+    html = conn |> recycle() |> get(~p"/e/#{Listing.slug(l)}") |> html_response(200)
+    assert html =~ ~s(href="https://tickets.example/2")
+    assert html =~ "Sign up or get tickets"
+
+    assert :binary.match(html, "View original event") <
+             :binary.match(html, "Sign up or get tickets")
+
+    assert {:error, cs} =
+             ClimbOntario.Catalogue.Import.put_listing(%{id: l.id, signup_link: "not a url"})
+
+    assert cs.errors[:signup_link]
+  end
+
   test "confirmed sessions are collapsed with shared place and timezone shown once", %{
     conn: conn,
     listing: l

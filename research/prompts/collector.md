@@ -12,6 +12,7 @@ Our catalogue was last refreshed on **{{LAST_REFRESH}}**. For each gym in `{{ASS
 - Socials list newest posts first: stop at the first post dated before {{LAST_REFRESH}} (pinned posts aside).
 - A known listing already dated through the coming weeks needs only a look at its program page; save calendar clicks for new offerings and listings without current dates.
 - A page that looks empty often embeds a booking widget in an iframe: check its HTML for booking links (e.g. rockgympro `bo=` IDs) and open them directly.
+- A post that says "link in bio" or "tickets in bio": open the profile's bio link and capture where it leads (the sign-up or ticket page).
 - Save posters and schedule images as files.
 - About 10 minutes per gym, then move on.
 

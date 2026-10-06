@@ -13,6 +13,7 @@ For each gym in your list, one at a time: turn its saved capture (what's new or 
 - Times and dates only from evidence; unknown times are explicit null. Never generate dates from a weekly pattern.
 - Each entry has evidence: URL, a short exact quote from the raw evidence file, and its path.
 - OCF competitions are handled by the OCF pass (`ocf.md`); leave them alone here. Past events need nothing.
+- If `link` is an announcement and the capture has a separate sign-up or ticket page, put it in `signup_link`.
 - `link` is a page a visitor can open on its own; embed and widget addresses go in `sources` (see `docs/research-rules.md`).
 - Write only in your gyms' run folders. Never touch production.
 

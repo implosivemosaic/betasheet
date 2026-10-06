@@ -195,22 +195,34 @@ defmodule ClimbOntarioWeb.ListingComponents do
   end
 
   @doc """
-  The one outbound step on an event page. Wording lives here, not in records: a record
-  supplies only the destination and whether it is an event page or just the gym's homepage.
+  The outbound step on an event page. Wording lives here, not in records: a record supplies
+  the destination, whether it is an event page or just the gym's homepage, and optionally a
+  separate sign-up page when the main link is the organizer's announcement.
   """
   attr :listing, :map, required: true
 
   def organizer_cta(assigns) do
     ~H"""
     <div class="mt-6">
-      <a
-        href={@listing.link}
-        target="_blank"
-        rel="noopener"
-        class="cta btn btn-primary btn-lg rounded-field w-full sm:w-auto"
-      >
-        {Format.link_label(@listing.link_kind)} <span class="arrow">↗</span>
-      </a>
+      <div class="flex flex-wrap gap-2">
+        <a
+          href={@listing.link}
+          target="_blank"
+          rel="noopener"
+          class="cta btn btn-primary btn-lg rounded-field w-full sm:w-auto"
+        >
+          {Format.link_label(@listing.link_kind)} <span class="arrow">↗</span>
+        </a>
+        <a
+          :if={@listing.signup_link}
+          href={@listing.signup_link}
+          target="_blank"
+          rel="noopener"
+          class="btn btn-outline btn-lg rounded-field w-full sm:w-auto"
+        >
+          Sign up or get tickets <span aria-hidden="true">↗</span>
+        </a>
+      </div>
       <p class="mt-2 text-xs text-base-content/60">
         <%= if @listing.link_kind == "gym" do %>
           We didn't find a page for this event; the organizer's site is the place to ask.

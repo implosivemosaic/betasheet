@@ -87,6 +87,9 @@ When a gym sells one programme as several parallel classes, keep one listing and
   `/b/widget/…`, Beta `widgets.sendmoregetbeta.com`) goes in `sources`, not `link`. For Rock Gym Pro,
   link the standalone booking page `https://app.rockgympro.com/b/?bo=<offering ID>`; for other systems,
   link the gym's page that shows the booking (for example its events or programme page).
+- `signup_link` (optional): when `link` is the organizer's announcement (an Instagram post, a poster
+  page) and a separate page takes sign-ups or tickets, put that page here. The event page shows it as
+  a second button, "Sign up or get tickets". Leave it empty when `link` already is the sign-up page.
 - `sources`: every page you read for it, most specific first. If a booking system, Instagram post, OCF
   page or Eventbrite page has its own address for this event, that address must be in `sources`: it
   carries the ID the weekly refresh uses to recognise the event next time.

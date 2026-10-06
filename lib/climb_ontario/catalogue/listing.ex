@@ -42,6 +42,7 @@ defmodule ClimbOntario.Catalogue.Listing do
     field :ages, :string
     field :link, :string
     field :link_kind, :string
+    field :signup_link, :string
     field :offsite_name, :string
     field :offsite_address, :string
     field :offsite_lat, :float
@@ -69,7 +70,7 @@ defmodule ClimbOntario.Catalogue.Listing do
   def bundled_by, do: @bundled_by
 
   @fields ~w(id venue_id title kind label summary schedule_kind start_date end_date start_time end_time
-             schedule_note audience ages link link_kind offsite_name offsite_address
+             schedule_note audience ages link link_kind signup_link offsite_name offsite_address
              offsite_lat offsite_lng confidence caveat sources checked_on published
              ocf cohorts complete_cohorts bundled_by timezone location_kind offsite_city recurrence weekday month_week)a
 
@@ -96,6 +97,7 @@ defmodule ClimbOntario.Catalogue.Listing do
     |> validate_length(:summary, max: 240)
     |> validate_length(:caveat, max: 160)
     |> validate_url(:link)
+    |> validate_url(:signup_link)
     |> validate_change(:sources, fn :sources, urls ->
       if Enum.all?(urls, &valid_url?/1), do: [], else: [sources: "must contain HTTP(S) URLs"]
     end)
