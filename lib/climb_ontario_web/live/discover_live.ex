@@ -546,9 +546,9 @@ defmodule ClimbOntarioWeb.DiscoverLive do
               class={@action_class}
             >
               <%= if path(@query) in @saved_searches do %>
-                <.icon name="hero-star-solid" class="size-4 text-warning" /> Saved
+                <.icon name="hero-star-solid" class="size-4 text-warning" /> Search saved
               <% else %>
-                <.icon name="hero-star" class="size-4" /> Save
+                <.icon name="hero-star" class="size-4" /> Save search
               <% end %>
             </button>
             <.share_button

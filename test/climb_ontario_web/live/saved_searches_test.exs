@@ -9,11 +9,11 @@ defmodule ClimbOntarioWeb.SavedSearchesTest do
     refute has_element?(view, "#save-search")
 
     {:ok, view, _} = live(conn, @search)
-    assert has_element?(view, "#save-search", "Save")
+    assert has_element?(view, "#save-search", "Save search")
 
     view |> element("#save-search") |> render_click()
     assert_push_event(view, "saved_searches", %{paths: [@search]})
-    assert has_element?(view, "#save-search[aria-pressed='true']", "Saved")
+    assert has_element?(view, "#save-search[aria-pressed='true']", "Search saved")
   end
 
   test "saved searches show as named chips when no filter is on, and can be removed", %{
