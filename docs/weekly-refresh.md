@@ -5,7 +5,7 @@ events and competitions, and changed dates or times), import it into dev, check 
 to production. Best effort: record what the gym publishes and never invent anything. If a gym's own
 information is missing or inconsistent, note it and move on; the gym can contact us.
 
-Paths are from the code repo, `/data/workspace/repos/climb-ontario`. `DATA` is
+Paths are from the code repo, `/data/workspace/repos/betasheet`. `DATA` is
 `../betasheet-data/betasheet`. Agent prompts are in [`research/prompts/`](../research/prompts/README.md);
 listing rules are in [`docs/research-rules.md`](research-rules.md).
 

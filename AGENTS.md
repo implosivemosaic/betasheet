@@ -17,7 +17,7 @@ organizer, who handles booking. Phoenix 1.8 + LiveView, SQLite via Ecto, one Fly
 
 | What | Where |
 |---|---|
-| Code (public) | `/data/workspace/repos/climb-ontario`, github.com/implosivemosaic/betasheet |
+| Code (public) | `/data/workspace/repos/betasheet`, github.com/implosivemosaic/betasheet |
 | Data and research (private) | `/data/workspace/repos/betasheet-data`, github.com/implosivemosaic/betasheet-data, folder `betasheet/` |
 | Source list | `betasheet-data/betasheet/sources.json` |
 | Weekly runs | `betasheet-data/betasheet/runs/<date>/` |
@@ -49,7 +49,7 @@ organizer, who handles booking. Phoenix 1.8 + LiveView, SQLite via Ecto, one Fly
 The box's own Phoenix app leaks environment into shells, so run mix in a clean environment:
 
 ```
-cd /data/workspace/repos/climb-ontario
+cd /data/workspace/repos/betasheet
 env -i PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin HOME=/root TERM=dumb \
   MIX_ENV=test LANG=C.UTF-8 ELIXIR_ERL_OPTIONS=+fnu mix test
 ```
