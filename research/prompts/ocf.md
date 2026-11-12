@@ -1,17 +1,36 @@
 **Goal**
-Make every OCF competition in the catalogue match the Ontario Climbing Federation's season calendar. The calendar is the authority for dates, host gym and title. Best effort, nothing invented.
+Check OCF discovery and event details once centrally for all gyms. Find new competitions AND changes
+to known upcoming events. Follow `docs/weekly-refresh.md` and `docs/research-rules.md`.
 
 **Inputs**
-- The calendar: open https://www.climbontario.ca/events with `agent-browser` and save its full text, plus each event page you rely on (an event page gives the host gym's street address; use it whenever the calendar says only a brand such as "Hub Climbing").
-- Current OCF listings: `select * from listings where ocf = 1` in `{{DEV_DB}}`, with their occurrences.
-- Output folder: `{{RUN_DIR}}/gyms/shared/`.
+- https://www.climbontario.ca/events and the season news/calendar.
+- Current OCF listings and occurrences in `{{DEV_DB}}` (read-only), including their source/event URLs.
+- Previous successful per-source snapshots and unresolved findings from the run handoff.
+- Output folder: `{{RUN_DIR}}/shared/ocf/`.
 
-**For each calendar event**
-- Listed and matching: nothing to do.
-- Listed but different (dates, host gym, title): an `update` with only the changed fields. Use the calendar's title with the date, e.g. `OCF Speed U13/ U15 U17/ U19/ U21 /SR — 2026-11-22`. If the calendar drops a day, replace the sessions with the calendar's days; that removal is approved.
-- Not listed: a `new` OCF competition at the host gym (`kind: competition`, `ocf: true`, `confidence: tentative` until details are posted, unknown times null).
-- Host gym not in our venues: don't add it. Note the gym, address and event in `notes.md` for Keith.
+**For every upcoming event**
+1. Use the index to discover dates, titles and hosts. Open each event's own page even when those fields
+   already match. Revisit upcoming catalogue event URLs absent from the index too.
+2. Read the full detail page and any linked schedule needed to establish times. Capture category
+   dates, climbing start/end times, separate check-in information, location, eligibility and
+   registration URL. Preserve “proposed schedule” wording. Distinct scheduled categories may need
+   separate sessions; age eligibility alone does not create sessions.
+3. Compare both index and detail evidence with their own previous checkpoints and current catalogue.
+   Save each distinct URL as an active source; identical URLs shared by gyms are checked once.
+4. Write one coverage row per event in `coverage.json`: listing ID when known, event URL, captured_at,
+   evidence path, status (`checked` or `partial`), changed fields and follow-up. Unchanged date/venue
+   is not grounds to stop before checking details. Missing stored times mean unrecorded; look for them.
+5. Propose only supported changes, including new times/registration details on existing events. Dates
+   absent from an index or an unreadable page do not establish cancellation. Preserve existing sessions
+   unless a supported change is explicitly proposed for final review. Unknown facts stay null.
 
-**For each OCF listing not on the calendar** (past events aside): set `published: false` and say why in `notes.md`.
+**Output and boundary**
+Save raw evidence, separate source checkpoints, `coverage.json`, `proposals.json` (`approved: false`),
+`decisions.json` and short `notes.md`. Each proposal has a URL, short exact quote and saved evidence
+path. Retry a failed page once, record the gap and continue. New host venues and unresolved facts go
+in the coordinator's final review, not intermediate questions to Keith. Never publish.
 
-Write `proposals.json` (approved: true, evidence with the calendar URL, a short exact quote and the saved file) and import it: `cd {{REPO}} && flock /tmp/betasheet-dev-import.lock research/apply.sh dev {{RUN_DIR}}/gyms/shared`. Finish with what changed and anything for Keith.
+The coordinator checks every coverage row before accepting “no changes”, merges these candidates
+with gym proposals, and validates one isolated combined set. Event #303's December 2026 timetable
+was missed when the November pass stopped at the index: matching index entries must still receive
+this detail-page check.
