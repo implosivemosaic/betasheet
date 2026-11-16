@@ -54,6 +54,22 @@ def month(title, available=None, clicks=None):
 GRID = "Mo\tTu\tWe\tTh\tFr\tSa\tSu\n26\t27\t28\t29\t30\t31\t1\n"
 
 
+def ig_markdown(tmp_path, body, name="ig-profile"):
+    path = tmp_path / (name + ".md")
+    path.write_text(body)
+    return str(path)
+
+
+def social_json(tmp_path, provider, posts, coverage_block, name="cap"):
+    suffix = "ig.json" if provider == "instagram" else "fb.json"
+    data = {"id": name, "url": "https://example.test/feed", "provider": provider,
+            "captured_at": "2026-11-17T10:00:00+00:00", "posts": posts,
+            "coverage": coverage_block}
+    path = tmp_path / (name + "." + suffix)
+    path.write_text(json.dumps(data))
+    return str(path)
+
+
 # ------------------------------------------------------------------------ Rock Gym Pro
 
 def test_no_months_is_a_failed_capture(tmp_path):
@@ -172,12 +188,52 @@ def test_redpoint_cells_without_availability_are_read_empty(tmp_path):
     assert record["outcome"] == extract.READ_EMPTY
 
 
-def test_error_months_are_a_gap_when_the_page_is_a_real_page(tmp_path):
+def test_error_months_with_a_readable_offering_page_baseline_the_page_only(tmp_path):
+    # The description is readable and the calendar markup is not. That is a page
+    # baseline with a calendar gap: no session claim may come out of it.
     path = rphq(tmp_path, months=[{"error": "no calendar cells"}],
-                txt="CLIMBERSROCK.COM\nClimber's Rock\nYouth Program - Tykes\nBook Now")
+                txt="CLIMBERSROCK.COM\nClimber's Rock\nYouth Program - Tykes\n"
+                    "Weekly classes for ages 6 to 9, Tuesdays from 4pm.\nBook Now\n"
+                    "Contact us\nSign In / Register\nPowered by Redpoint HQ")
+    record = extract.extract(path)
+    assert record["outcome"] == extract.READ
+    assert record["evidence"] == "page-only"
+    assert record["calendar_observed"] is False
+    assert record["coverage"]["contract"] == "web-page"
+    assert record["notice"] is None
+
+
+def test_a_booking_header_without_a_description_is_not_a_page_baseline(tmp_path):
+    # The real Aspire Whitby capture: gym name, address, phone, url, portal chrome.
+    path = rgp(tmp_path, txt="\t\nAspire Climbing Whitby\n"
+                             "1400 Victoria St E Unit 4 Whitby ON, L1N0M2\n"
+                             "905 430 9813\nhttps://www.aspireclimbing.com  "
+                             "whitby@aspireclimbing.com\n\n"
+                             " Save time!  Log In or Create Profile\nPowered by Rock Gym Pro\n")
     record = extract.extract(path)
     assert record["outcome"] == extract.FAILED
-    assert record["notice"] is None
+    assert record["page"]["has_description"] is False
+    assert record["calendar_observed"] is False
+
+
+def test_an_offering_description_with_portal_chrome_is_a_page_baseline(tmp_path):
+    path = rgp(tmp_path, txt="\t\nBoulderz Etobicoke\n80 The East Mall Unit 9 Etobicoke, ON M8Z 5X1\n"
+                             "(416) 255-6676\nhttps://boulderzclimbing.com/  "
+                             "etobicoke@boulderzclimbing.com\n\n"
+                             " Save time!  Log In or Create Profile\nLead Course - Day 2\n\n"
+                             "Email us if you are interested in taking the course and we will "
+                             "schedule a date.\n\nPowered by Rock Gym Pro\n")
+    record = extract.extract(path)
+    assert record["outcome"] == extract.READ
+    assert record["evidence"] == "page-only"
+    assert record["page"]["has_description"] is True
+
+
+def test_error_months_with_no_readable_page_are_a_gap(tmp_path):
+    path = rphq(tmp_path, months=[{"error": "no calendar cells"}], txt="")
+    record = extract.extract(path)
+    assert record["outcome"] == extract.FAILED
+    assert record["calendar_observed"] is False
 
 
 def test_same_error_shape_is_a_notice_when_the_page_says_why(tmp_path):
@@ -270,9 +326,113 @@ def test_deleted_file_is_a_notice(tmp_path):
     assert extract.extract(page(tmp_path, body))["notice"] == "file-deleted"
 
 
+def test_a_page_quoting_an_error_message_stays_readable(tmp_path):
+    body = "\n".join([
+        "Troubleshooting your booking",
+        "If the calendar will not load, your browser may be showing a security check.",
+        "A common message is Performing security verification, sometimes followed by a",
+        "Ray ID. Waiting a few seconds and reloading usually clears it.",
+        "If you instead see Error: Page Not Found, the link has probably changed;",
+        "use the program menu above.",
+        "Members can book 14 days ahead, non-members 7 days ahead.",
+        "Questions? Call the front desk between 10am and 8pm.",
+        "We update this page whenever a program changes.",
+        "Last reviewed November 2026.",
+    ])
+    record = extract.extract(page(tmp_path, body))
+    assert record["outcome"] == extract.READ
+    assert record["challenge"] is None
+
+
 def test_shell_phrase_mention_inside_prose_stays_a_page(tmp_path):
     body = "\n".join(["Programming at the gym", "We teach beginners to check their "
                       "browser settings before registering.", "Every class runs weekly "
                       "for six weeks.", "Members get priority booking.",
                       "Contact the front desk with questions."])
     assert extract.extract(page(tmp_path, body))["outcome"] == extract.READ
+
+
+# ------------------------------------------------------------------------ social: structure
+
+
+def test_structured_social_capture_with_complete_coverage_is_read(tmp_path):
+    path = social_json(tmp_path, "instagram", [
+        {"id": "AAA", "caption": "Adult intro course starts January 5", "published": "2026-11-16"},
+        {"id": "BBB", "caption": "Winter youth program, eight Thursdays", "published": "2026-11-10"},
+    ], {"posts_requested": 4, "posts_fully_read": 2, "complete": True,
+        "anchor_id": "BBB", "anchor_reached": True, "stopping_post": "BBB",
+        "stopped_reason": "anchor-reached"})
+    record = extract.extract(path)
+    assert record["outcome"] == extract.READ
+    assert record["coverage"]["complete"] is True
+    assert [p["id"] for p in record["posts"]] == ["AAA", "BBB"]
+    assert all(p["text_sha"] for p in record["posts"])
+
+
+def test_structured_social_capture_short_of_its_window_is_partial(tmp_path):
+    path = social_json(tmp_path, "instagram",
+                       [{"id": "AAA", "caption": "One post only, read in full"}],
+                       {"posts_requested": 6, "posts_fully_read": 1, "complete": False,
+                        "stopping_post": "AAA", "stopped_reason": "declared-limit"})
+    record = extract.extract(path)
+    assert record["outcome"] == extract.PARTIAL
+    assert record["coverage"]["complete"] is False
+
+
+def test_facebook_post_and_photo_ids_stay_distinct(tmp_path):
+    path = social_json(tmp_path, "facebook", [
+        {"post_id": "1234567890", "photo_ids": ["9876543210"],
+         "caption": "New winter schedule is up", "published": "2026-11-14",
+         "alts": ["May be an image of text"]},
+    ], {"posts_requested": 6, "posts_fully_read": 1, "complete": True,
+        "anchor_id": "1234567890", "anchor_reached": True})
+    record = extract.extract(path)
+    kinds = {(p["id"], p["kind"]) for p in record["posts"]}
+    assert kinds == {("1234567890", "post"), ("9876543210", "photo")}
+    assert record["outcome"] == extract.READ
+
+
+def test_historical_instagram_summary_is_partial_never_read(tmp_path):
+    body = ("# Instagram \u2014 basecampclimbing_qw\n\nurl: https://www.instagram.com/x/\n\n"
+            "newest post: https://www.instagram.com/altitudegym/p/DfnXI29u3It/\n"
+            "newest post date: 2026-11-11\n\n## candidate posts\n\n"
+            "- 2026-11-11 | https://www.instagram.com/altitudegym/p/DfnXI29u3It/ | "
+            "Liked by ontarioclimbingfederation and 163 others\n"
+            "- 2026-10-02 | https://www.instagram.com/altitudegym/reel/DbO4UlgJW_4/ | "
+            "Adult intro course, Tuesdays 6:30pm\n\n## newest post text\n\n"
+            "Our women's board clinics are back on 26 November, 6pm to 8pm.\n")
+    record = extract.extract(ig_markdown(tmp_path, body))
+    assert record["outcome"] == extract.PARTIAL
+    assert record["coverage"]["complete"] is False
+
+
+def test_historical_summary_keeps_the_newest_post_date(tmp_path):
+    body = ("## candidate posts\n\n"
+            "newest post: https://www.instagram.com/gym/p/AAA/\n"
+            "newest post date: 2026-11-11\n\n## newest post text\n\n"
+            "Winter schedule is live now, eight Thursdays from January.\n")
+    record = extract.extract(ig_markdown(tmp_path, body))
+    assert record["posts"][0]["published"] == "2026-11-11"
+
+
+def test_single_post_summary_hashes_its_caption_and_ignores_engagement_text(tmp_path):
+    body = ("## https://www.instagram.com/altitudegym/p/DfnXI29u3It/\n\n"
+            "desc: 84 likes, 0 comments - altitudegym on November 11, 2026\n\n"
+            "Post\naltitudegym\nLiked by ontarioclimbingfederation and 163 others\n"
+            "\nOur women's board clinics are back on 26 November, 6pm to 8pm.\n")
+    record = extract.extract(ig_markdown(tmp_path, body, name="ig-post-full"))
+    post_record = record["posts"][0]
+    assert post_record["text_sha"] is not None
+    assert "liked by" not in post_record["text_sha"]
+
+
+def test_a_profile_snippet_becomes_content_but_engagement_text_does_not(tmp_path):
+    body = ("## candidate posts\n\n"
+            "- 2026-10-02 | https://www.instagram.com/gym/reel/AAA/ | "
+            "Adult intro course, Tuesdays 6:30pm\n"
+            "- 2026-09-20 | https://www.instagram.com/gym/p/BBB/ | "
+            "Liked by 163 others\n")
+    record = extract.extract(ig_markdown(tmp_path, body))
+    hashes = {p["id"]: p["text_sha"] for p in record["posts"]}
+    assert hashes["AAA"] is not None
+    assert hashes["BBB"] is None

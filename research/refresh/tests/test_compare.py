@@ -11,10 +11,15 @@ def entry(date, start=None, end=None, state="available", cohort=None, line=None)
             "line": line or "%s %s to %s" % (date, start, end)}
 
 
+def coverage(complete=True):
+    return {"contract": "calendar-3-months", "months_requested": 3,
+            "months_read": 3 if complete else 1, "complete": complete, "errors": []}
+
+
 def calendar(entries, months=None, captured_at="2026-11-17T09:00:00+00:00",
-             outcome="read", evidence=None, errors=None):
+             outcome="read", evidence=None, errors=None, complete=True):
     return {"source_id": "src", "type": "rockgympro", "captured_at": captured_at,
-            "outcome": outcome, "evidence": evidence,
+            "outcome": outcome, "evidence": evidence, "coverage": coverage(complete),
             "window": {"months": months if months is not None
                        else sorted({e["date"][:7] for e in entries if e.get("date")}),
                        "read": 3},
@@ -23,13 +28,19 @@ def calendar(entries, months=None, captured_at="2026-11-17T09:00:00+00:00",
 
 def page(text_sha, captured_at="2026-11-17T09:00:00+00:00", outcome="read"):
     return {"source_id": "src", "type": "page", "captured_at": captured_at,
-            "outcome": outcome, "window": {"months": [], "read": 0},
+            "outcome": outcome, "coverage": coverage(),
+            "window": {"months": [], "read": 0},
             "entries": [{"text_sha": text_sha}], "notes": []}
 
 
-def social(posts, captured_at="2026-11-17T09:00:00+00:00", outcome="read"):
+def social(posts, captured_at="2026-11-17T09:00:00+00:00", outcome="read",
+           complete=True, anchor=None, reached=None):
     return {"source_id": "src", "type": "instagram", "captured_at": captured_at,
-            "outcome": outcome, "window": {"months": [], "read": 0}, "entries": [],
+            "outcome": outcome,
+            "coverage": {"contract": "social-window", "posts_fully_read": len(posts),
+                         "complete": complete, "errors": []},
+            "coverage_social": {"anchor_id": anchor, "anchor_reached": reached},
+            "window": {"months": [], "read": 0}, "entries": [],
             "posts": posts, "notes": []}
 
 
@@ -169,6 +180,60 @@ def test_a_changed_error_message_is_not_a_session_change():
     assert compare.compare_source(before, after)["status"] == "unchanged"
 
 
+def page_only(text_sha, captured_at="2026-11-17T09:00:00+00:00"):
+    return {"source_id": "src", "type": "rockgympro", "captured_at": captured_at,
+            "outcome": "read", "evidence": "page-only", "calendar_observed": False,
+            "page": {"text_sha": text_sha, "lines": 20, "readable": True},
+            "coverage": {"contract": "web-page", "complete": True, "errors": []},
+            "window": {"months": [], "read": 0}, "entries": [], "notes": []}
+
+
+def test_a_page_only_capture_reports_a_page_change_and_no_session_claim():
+    before = page_only("old")
+    after = page_only("new")
+    verdict = compare.compare_source(before, after)
+    assert verdict["status"] == "changed"
+    assert verdict["coverage"]["calendar_observed"] is False
+    assert verdict["coverage"]["met"] is False
+    assert verdict["coverage"]["page_met"] is True
+    assert verdict["changes"]["edited"][0]["field"] == "page_text_sha"
+    assert verdict["changes"]["added"] == [] and verdict["changes"]["removed"] == []
+    assert any("interpretation pending" in note for note in verdict["notes"])
+
+
+def test_an_unchanged_page_only_capture_claims_nothing_about_sessions():
+    verdict = compare.compare_source(page_only("same"), page_only("same"))
+    assert verdict["status"] == "unchanged"
+    assert verdict["coverage"]["met"] is False
+    assert verdict["changes"]["removed"] == []
+
+
+def test_a_calendar_capture_against_a_page_only_baseline_is_a_page_comparison():
+    before = page_only("old")
+    after = calendar([entry("2026-11-20", "18:30", "19:30")])
+    verdict = compare.compare_source(before, after)
+    assert verdict["coverage"]["calendar_observed"] is False
+    assert verdict["coverage"]["met"] is False
+
+
+def test_incomplete_declared_coverage_cannot_advance_a_baseline():
+    # The shrinking-baseline case: a follow-up read fewer posts of the same feed and
+    # called itself `read`. Outcome alone would let it look unchanged.
+    before = social([post("A"), post("B"), post("C")])
+    after = social([post("A")], complete=False)
+    verdict = compare.compare_source(before, after)
+    assert verdict["status"] == "incomplete"
+    assert verdict["coverage"]["met"] is False
+    assert verdict["coverage"]["reason"] == "coverage-incomplete"
+    assert verdict["fingerprint"] is None
+
+
+def test_an_incomplete_baseline_is_not_compared_against():
+    before = social([post("A"), post("B")], complete=False)
+    after = social([post("A"), post("B")])
+    assert compare.compare_source(before, after)["status"] == "incomplete"
+
+
 def test_no_baseline_sets_one_without_claiming_a_change():
     verdict = compare.compare_source(None, calendar([entry("2026-11-20")]))
     assert verdict["status"] == "new-baseline"
@@ -215,6 +280,14 @@ def test_a_feed_that_stops_before_the_baseline_post_is_incomplete():
                                      social([post("C")]))
     assert verdict["status"] == "incomplete"
     assert verdict["coverage"]["reason"] == "anchor-not-reached"
+
+
+def test_an_edit_to_a_non_newest_post_is_reported():
+    before = social([post("C"), post("B", sha="old"), post("A")], anchor="A", reached=True)
+    after = social([post("C"), post("B", sha="new"), post("A")], anchor="A", reached=True)
+    verdict = compare.compare_source(before, after)
+    assert verdict["status"] == "changed"
+    assert [p["id"] for p in verdict["changes"]["edited_posts"]] == ["B"]
 
 
 def test_two_empty_social_captures_are_incomplete():

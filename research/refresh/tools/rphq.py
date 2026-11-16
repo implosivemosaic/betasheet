@@ -13,9 +13,11 @@ so an empty calendar can be told from a page that never rendered. When the porta
 for a reason of its own ("This plan is inactive") the rendered text carries it, and the
 capture keeps that text for the reviewer.
 """
+import collections
 import datetime
 import json
 import pathlib
+import re
 import subprocess
 import sys
 
@@ -33,6 +35,9 @@ def ab(*args, timeout=120):
     if result.returncode != 0:
         raise RuntimeError("agent-browser %s failed: %s" % (args[0], result.stderr.strip()[:200]))
     return result.stdout.strip()
+
+
+LOAD_TIMEOUT = "waiting for load state"
 
 
 def js(expr):
@@ -103,6 +108,59 @@ def wait_cells():
     return {"cells": [], "headers": []}
 
 
+MONTHS = ("January February March April May June July August September October "
+          "November December").split()
+CELL_LABEL = re.compile(r"^([A-Z][a-z]+)\s+(\d{1,2}),\s*(\d{4})")
+
+
+def derive_month_title(cells):
+    """The month this grid is showing, read from its own cells.
+
+    The datepicker's header element differs between PrimeVue builds and is often absent
+    from the DOM entirely, but every day cell's aria-label carries its full date, so the
+    month the grid is showing is a fact the cells already state: it is the month most of
+    its cells belong to. `data-p-other-month` is not consulted — this build marks the
+    shown month's own days as "other" when a different month was selected, so trusting
+    the flag shifts the label a month forward. A tie leaves the title unknown.
+    """
+    counts = collections.Counter()
+    for cell in cells:
+        match = CELL_LABEL.match(cell.get("label") or "")
+        if match and match.group(1) in MONTHS:
+            counts[(int(match.group(3)), MONTHS.index(match.group(1)) + 1)] += 1
+    if not counts:
+        return None, None
+    (year, month), hits = counts.most_common(1)[0]
+    if len(counts) > 1 and list(counts.values()).count(hits) > 1:
+        return None, None
+    return "%s %d" % (MONTHS[month - 1], year), "cells"
+
+
+def title_of(state):
+    """The month a grid is showing: its header when there is one, else its own cells."""
+    if not state or not state.get("cells"):
+        return None, None
+    return (state.get("title"), "header") if state.get("title") else \
+        derive_month_title(state["cells"])
+
+
+def wait_for_next_month(previous, tries=10):
+    """Wait until the grid has actually advanced.
+
+    Clicking "next month" re-renders asynchronously: the previous month's cells are still
+    in the DOM for a moment, and a capture taken then records the same month twice. The
+    transition is only over when the grid's own title changes.
+    """
+    state = {"cells": [], "headers": []}
+    for _ in range(tries):
+        state = wait_cells()
+        title, _ = title_of(state)
+        if title and title != previous:
+            return state
+        ab("wait", "1000")
+    return state
+
+
 def state_of(label):
     low = label.lower()
     for word in ("available", "waitlist", "full/closed"):
@@ -111,8 +169,16 @@ def state_of(label):
     return "unmarked"
 
 
-ab("open", url)
+note = None
+try:
+    ab("open", url)
+except RuntimeError as exc:
+    if LOAD_TIMEOUT not in str(exc):
+        raise
+    note = "navigation load-state timed out; polled the DOM instead"
 state = wait_cells()
+if not state.get("cells") and note is None:
+    note = "no day cells rendered"
 result = {"id": ident, "url": url,
           "captured_at": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
           "months": [], "available": [], "details": {}}
@@ -121,7 +187,8 @@ for _ in range(months):
     if not state.get("cells"):
         result["months"].append({"error": "no calendar cells"})
         break
-    month = {"title": state.get("title"),
+    title, title_from = title_of(state)
+    month = {"title": title, "title_from": title_from,
              "cells": [{"label": cell["label"], "state": state_of(cell["label"]),
                         "disabled": cell["disabled"], "other_month": cell["other"]}
                        for cell in state["cells"]],
@@ -148,8 +215,9 @@ for _ in range(months):
     if not js(NEXT_JS):
         break
     ab("wait", "1500")
-    state = wait_cells()
+    state = wait_for_next_month(title)
 
+result["notes"] = [note] if note else []
 result["coverage"] = coverage.calendar(months, result["months"])
 
 raw = js("document.body.innerText") or ""

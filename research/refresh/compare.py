@@ -10,9 +10,12 @@ the November run read `unchanged` while holding no comparable content.
 
 Rules, in the order they apply:
 
-1. Eligibility before comparison. Both captures must be `read` or `read-empty`; anything
-   else is `incomplete` and the baseline stands. Two verified empty calendars are
-   therefore `unchanged`, while two failures can never be mistaken for each other.
+1. Eligibility before comparison. Both captures must be `read` or `read-empty` **and**
+   declare complete coverage; anything else is `incomplete` and the baseline stands. The
+   outcome alone is not enough: a capture can read one post of a feed and still call
+   itself `read`, so the declared coverage is the half that decides whether the
+   comparison is allowed to say anything. Two verified empty calendars are therefore
+   `unchanged`, while two failures can never be mistaken for each other.
 2. A fingerprint describes what is still bookable. Elapsed entries and the read window
    are coverage, not content, so a calendar whose only difference is a week passing
    hashes equal.
@@ -61,12 +64,27 @@ def _fingerprint(items, basis):
     return hashlib.sha256(payload.encode()).hexdigest(), basis
 
 
+def _eligible(record):
+    """Can this capture stand as a baseline, or be compared against one?
+
+    Two independent halves, both required: the outcome says the source was read, the
+    declared coverage says the read was the whole of what the contract asks for. A
+    capture that read one post of a fifteen-post window is `read` and incomplete, and
+    comparing it would advance the baseline to a shrinking window.
+    """
+    if not record:
+        return False
+    if record.get("outcome") not in ex.BASELINE_OUTCOMES:
+        return False
+    return bool((record.get("coverage") or {}).get("complete"))
+
+
 def _verdict(current, status, **fields):
     verdict = {
         "source_id": current.get("source_id"), "type": current.get("type"),
         "status": status,
         "outcome": {"current": current.get("outcome")},
-        "coverage": {"met": current.get("outcome") in ex.BASELINE_OUTCOMES,
+        "coverage": {"met": _eligible(current),
                      "detail": current.get("window")},
         "fingerprint": None, "fingerprint_basis": None,
         "changes": {"added": [], "removed": [], "moved": [], "edited": [],
@@ -91,12 +109,19 @@ def compare_source(baseline, current):
     if baseline is None:
         return _verdict(current, NEW, fingerprint_basis=None)
 
-    if baseline.get("outcome") not in ex.BASELINE_OUTCOMES:
+    if not _eligible(baseline):
         return _incomplete(baseline, current, "baseline-not-verified",
-                           ["previous capture was %s" % baseline.get("outcome")])
+                           ["previous capture was %s with coverage %s" % (
+                               baseline.get("outcome"),
+                               "complete" if (baseline.get("coverage") or {}).get("complete")
+                               else "incomplete")])
     if current.get("outcome") not in ex.BASELINE_OUTCOMES:
         return _incomplete(baseline, current, "capture-not-verified",
                            current.get("notes") or [])
+    if not _eligible(current):
+        return _incomplete(baseline, current, "coverage-incomplete",
+                           list(current.get("notes") or []) +
+                           ["declared coverage was not met, so nothing may be concluded"])
 
     kind = current.get("type")
     if kind in ("rockgympro", "redpoint"):
@@ -108,7 +133,41 @@ def compare_source(baseline, current):
 
 # ----------------------------------------------------------------------------- calendars
 
+def _compare_page_channel(baseline, current, reason):
+    """Compare the offering's page text when its calendar was not observed.
+
+    Two channels answer two questions. The page channel says whether the description
+    changed; the calendar channel says whether sessions did. A readable description with
+    no rendered calendar answers the first and nothing about the second, so it can report
+    a page change but must never claim a session change, a removal or a cancellation —
+    and it must not let a calendar baseline advance.
+    """
+    before = (baseline.get("page") or {}).get("text_sha")
+    after = (current.get("page") or {}).get("text_sha")
+    delta = [] if before == after else [{"field": "page_text_sha",
+                                        "from": before, "to": after}]
+    verdict = _verdict(current, CHANGED if delta else UNCHANGED)
+    verdict["outcome"]["baseline"] = baseline.get("outcome")
+    verdict["fingerprint"], verdict["fingerprint_basis"] = after, "page-text"
+    verdict["changes"]["edited"] = delta
+    verdict["coverage"]["met"] = False
+    verdict["coverage"]["page_met"] = bool(after)
+    verdict["coverage"]["calendar_observed"] = False
+    verdict["coverage"]["reason"] = reason
+    verdict["notes"] = list(current.get("notes") or []) + [
+        "calendar not observed; compared page text only",
+        "page content changed; interpretation pending" if delta
+        else "page text identical; no session claim made",
+    ]
+    return verdict
+
+
 def _compare_calendar(baseline, current):
+    if not current.get("calendar_observed", True):
+        return _compare_page_channel(baseline, current, "calendar-not-observed")
+    if not baseline.get("calendar_observed", True):
+        return _compare_page_channel(baseline, current, "baseline-calendar-not-observed")
+
     ref = _date(current.get("captured_at"))
     if ref is None:
         return _incomplete(baseline, current, "no-capture-date")
@@ -191,6 +250,7 @@ def _compare_calendar(baseline, current):
     verdict["suppressed"] = [{"what": s["what"], "reason": s["reason"]} for s in suppressed]
     verdict["coverage"]["detail"] = {"window": sorted(window),
                                      "baseline_window": sorted(_window_months(baseline))}
+    verdict["coverage"]["calendar_observed"] = True
     verdict["notes"] = list(current.get("notes") or [])
     if not curr_future and not added:
         verdict["notes"].append("no bookable entry after %s" % ref)

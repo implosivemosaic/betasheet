@@ -27,12 +27,36 @@ out = pathlib.Path(out_dir)
 out.mkdir(parents=True, exist_ok=True)
 
 
+LOAD_TIMEOUT = "waiting for load state"
+
+
 def ab(*args):
     result = subprocess.run(["agent-browser", "--session", session, *args],
                             capture_output=True, text=True, timeout=120)
     if result.returncode != 0:
         raise RuntimeError("agent-browser %s failed: %s" % (args[0], result.stderr.strip()))
     return result.stdout.strip()
+
+
+def open_url(url, ready, polls=12):
+    """Navigate, then wait for the widget rather than for the page's `load` event.
+
+    A booking widget streams its calendar, so the browser's load state can time out
+    while the DOM is perfectly usable. That is a navigation detail, not a failed
+    capture: poll the widget and let the coverage block say what was actually read.
+    """
+    note = None
+    try:
+        ab("open", url)
+    except RuntimeError as exc:
+        if LOAD_TIMEOUT not in str(exc):
+            raise
+        note = "navigation load-state timed out; polled the DOM instead"
+    for _ in range(polls):
+        if ready():
+            return note
+        ab("wait", "1000")
+    return note or "widget never rendered"
 
 
 def js(expr):
@@ -104,12 +128,7 @@ def details():
     return {"date_selected": selected, "days": days}
 
 
-ab("open", url)
-# Chrome renders the widget asynchronously; poll until the calendar exists.
-for _ in range(12):
-    if month_state():
-        break
-    ab("wait", "1000")
+note = open_url(url, lambda: bool(month_state()))
 captured = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
 result = {"id": ident, "url": url, "captured_at": captured, "months": [], "series": []}
 seen = set()
@@ -143,6 +162,7 @@ for _ in range(months):
     js("(() => { const a=document.querySelector('a.ui-datepicker-next'); if(a) a.click(); return true; })()")
     ab("wait", "800")
 
+result["notes"] = [note] if note else []
 result["coverage"] = coverage.calendar(months, result["months"])
 
 raw = js("document.body.innerText") or ""

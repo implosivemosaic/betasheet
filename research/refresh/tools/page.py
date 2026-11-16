@@ -41,7 +41,13 @@ def js(expr):
         return raw
 
 
-ab("open", url)
+note = None
+try:
+    ab("open", url)
+except Exception as exc:  # a load-state timeout still leaves a usable DOM
+    if "waiting for load state" not in str(exc):
+        raise
+    note = "navigation load-state timed out; polled the DOM instead"
 # Chrome renders asynchronously: poll the DOM until the page has real text.
 for _ in range(8):
     length = js("document.body ? document.body.innerText.length : 0")
@@ -69,6 +75,7 @@ meta = {
     "captured_at": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
     "text_sha256": hashlib.sha256(" ".join(norm.split()).encode()).hexdigest(),
     "text_lines": lines,
+    "notes": [note] if note else [],
     "coverage": coverage.page(
         lines,
         challenge=signature if kind == "unreadable" else None,
