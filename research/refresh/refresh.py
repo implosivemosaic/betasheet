@@ -3,7 +3,9 @@
 
     refresh.py capture  <id> --run R --session S --by NAME [--force]
     refresh.py ingest   <id> --run R --by NAME
-    refresh.py review   --run R --gym G [--source ID ...] [--all-gyms] --by NAME --note TEXT
+    refresh.py findings [--gym G] [--source ID] [--all]
+    refresh.py review   (--gym G ... | --all-gyms) (--run R [--source ID ...] | --finding REF ...)
+                        --outcome proposed|no-change|held --by NAME --note TEXT [--ref ID]
     refresh.py status   --run R [--gym G]
     refresh.py close    --run R [--dry-run]
     refresh.py register <url> --gym G [--gym G2] --type T [--id ID]
@@ -14,7 +16,6 @@ checkout beside this repository.
 """
 import argparse
 import datetime
-import json
 import os
 import pathlib
 import sys
@@ -40,14 +41,25 @@ def default_data():
 def show_verdict(out):
     verdict = out.get("verdict") or {}
     changes = {k: len(v) for k, v in (verdict.get("changes") or {}).items() if v}
-    print("%s  outcome=%s eligible=%s verdict=%s%s%s" % (
-        out["source_id"], out.get("outcome"), out.get("eligible"), verdict.get("status"),
+    print("%s  outcome=%s eligible=%s compared-with=%s verdict=%s%s%s" % (
+        out["source_id"], out.get("outcome"), out.get("eligible"),
+        (out.get("baseline") or {}).get("slot"), verdict.get("status"),
         " changes=%s" % changes if changes else "",
         " (reused this run's capture)" if out.get("reused") else ""))
     if out.get("blocked"):
         print("  not baseline-eligible: %s" % out["blocked"])
     if out.get("notice"):
         print("  notice: %s" % out["notice"])
+    for ref in out.get("findings") or []:
+        print("  finding saved for %s: %s" % (", ".join(out.get("gyms") or []), ref))
+
+
+def show_finding(finding):
+    print("%s  [%s] %s, %s, %s%s" % (
+        finding["ref"], finding.get("status"), finding.get("gym"), finding.get("run"),
+        finding.get("kind"), ", %s" % finding["shown_now"] if finding.get("shown_now") else ""))
+    print("  %s" % finding.get("summary"))
+    print("  evidence: %s" % ", ".join(finding.get("evidence") or []))
 
 
 def main(argv=None):
@@ -68,13 +80,21 @@ def main(argv=None):
     p.add_argument("--run", required=True)
     p.add_argument("--by", required=True)
 
+    p = sub.add_parser("findings")
+    p.add_argument("--gym")
+    p.add_argument("--source")
+    p.add_argument("--all", action="store_true", help="include resolved findings")
+
     p = sub.add_parser("review")
-    p.add_argument("--run", required=True)
-    p.add_argument("--gym", required=True)
-    p.add_argument("--source", action="append")
+    p.add_argument("--gym", action="append", default=[])
     p.add_argument("--all-gyms", action="store_true")
+    p.add_argument("--run")
+    p.add_argument("--source", action="append")
+    p.add_argument("--finding", action="append")
+    p.add_argument("--outcome", required=True, choices=sorted(reg.DISPOSITIONS))
     p.add_argument("--by", required=True)
     p.add_argument("--note", required=True)
+    p.add_argument("--ref", help="the proposal or decision record that carries the work")
 
     p = sub.add_parser("status")
     p.add_argument("--run", required=True)
@@ -109,34 +129,46 @@ def main(argv=None):
                                      force=args.force))
         elif args.command == "ingest":
             show_verdict(reg.ingest(data, args.run, args.source, args.by))
+        elif args.command == "findings":
+            found = reg.open_findings(data, gym=args.gym, source_id=args.source,
+                                      include_resolved=args.all)
+            for finding in found:
+                show_finding(finding)
+            print("%d finding(s)%s" % (len(found), "" if args.all else " pending"))
         elif args.command == "review":
-            marked = reg.review(data, args.run, args.gym, args.by, args.note,
-                                source_ids=args.source, all_gyms=args.all_gyms)
-            print("reviewed for %s: %s" % ("all gyms" if args.all_gyms else args.gym,
-                                            ", ".join(marked) or "nothing captured"))
+            done = reg.review(data, args.gym, args.by, args.note, outcome=args.outcome,
+                              run=args.run, source_ids=args.source, refs=args.finding,
+                              all_gyms=args.all_gyms, ref=args.ref)
+            for row in done:
+                print("%s  %s: %s" % (row["ref"], row["gym"], row["status"]))
+            print("%d disposition(s) recorded" % len(done))
         elif args.command == "status":
             rows = reg.plan(data, args.run)
             for sid, row in rows.items():
                 if args.gym and args.gym not in row.get("gyms", []):
                     continue
                 record = row.get("record") or {}
-                print("%-48s %-10s %-12s %s" % (
+                print("%-48s %-10s %-12s %s%s" % (
                     sid, record.get("outcome", "-"), (row.get("verdict") or {}).get("status", "-"),
-                    ("advance: " if row["advance"] else "keep: ") + row["reason"]))
+                    ("moves %s: " % row["slot"]) if row["slot"] else "keeps baselines: ",
+                    row["reason"]))
+            sources = reg.load(data)
             if args.gym:
-                captured = set(rows)
-                missing = [s["id"] for s in reg.load(data)
+                missing = [s["id"] for s in sources
                            if s.get("active") and args.gym in (s.get("gyms") or [])
-                           and s["id"] not in captured]
+                           and s["id"] not in rows]
                 print("not captured in %s: %s" % (args.run, ", ".join(missing) or "none"))
+                gaps = [g["source_id"] for g in reg.calendar_gaps(sources) if args.gym in g["gyms"]]
+                print("calendar gaps: %s" % (", ".join(gaps) or "none"))
+                print("pending findings: %d" % len(reg.open_findings(data, gym=args.gym)))
         elif args.command == "close":
-            results, findings = reg.close(data, args.run, dry_run=args.dry_run)
+            results, pending, gaps = reg.close(data, args.run, dry_run=args.dry_run)
             for sid, row in results.items():
-                print("%-48s %s  %s" % (sid, "advanced" if row["advanced"] else "kept    ",
-                                        row["reason"]))
-            moved = sum(row["advanced"] for row in results.values())
-            print("%s%d of %d baselines advanced; %d notice finding(s)" % (
-                "dry run: " if args.dry_run else "", moved, len(results), len(findings)))
+                print("%-48s %-14s %s" % (sid, row["advanced"] or "kept", row["reason"]))
+            moved = sum(bool(row["advanced"]) for row in results.values())
+            print("%s%d of %d sources moved a baseline; %d calendar gap(s); %d pending finding(s)"
+                  % ("dry run: " if args.dry_run else "", moved, len(results), len(gaps),
+                     len(pending)))
         elif args.command == "register":
             record, created = reg.register(data, args.url, args.gym, args.type, sid=args.id,
                                            origin=args.origin)
@@ -155,7 +187,7 @@ def main(argv=None):
                 reg.write_json(out / "sources.json", proposed)
             reg.write_json(out / "recovery-report.json", report)
             (out / "recovery-report.md").write_text(rec.summary(report))
-            print(rec.summary(report).split("\n\n")[0])
+            print(rec.summary(report).split("\n\n")[1])
             print("report: %s" % (out / "recovery-report.md"))
     except reg.RegistryError as exc:
         print("refresh: %s" % exc, file=sys.stderr)

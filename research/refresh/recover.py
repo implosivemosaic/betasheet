@@ -1,9 +1,11 @@
-"""One-time recovery: rebuild each source's baseline from a past run's captures.
+"""One-time recovery: rebuild each source's baselines from a past run's captures.
 
 The November registry pointed at files without saying what they proved. Recovery reads every
 capture in the run with `extract()`, matches it to a source id, and keeps as a baseline only a
-capture that read its source and met its coverage. Nothing is attached by resemblance, and no
-evidence file is moved or changed. See REGISTRY.md.
+capture that read its source and met its coverage. A calendar source gets its calendar
+baseline and, separately, a page baseline from a read that found only the offering's text,
+with its calendar gap noted. Nothing is attached by resemblance, and no evidence file is moved
+or changed. See REGISTRY.md.
 """
 import collections
 import pathlib
@@ -12,8 +14,9 @@ import compare
 import extract as ex
 import registry as reg
 
-GLOBS = ("*.rgp.json", "*.rphq.json", "*.meta.json", "ig-*.md", "fb-*.md")
-SUFFIXES = (".rgp.json", ".rphq.json", ".meta.json")
+GLOBS = ("*.rgp.json", "*.rphq.json", "*.meta.json", "*.ig.json", "*.fb.json", "ig-*.md",
+         "fb-*.md")
+SUFFIXES = (".rgp.json", ".rphq.json", ".meta.json", ".ig.json", ".fb.json")
 
 
 def capture_files(run_path):
@@ -55,6 +58,37 @@ def gym_names(sources):
 
 def newest(items):
     return max(items, key=lambda item: item["record"].get("captured_at") or "")
+
+
+def assign_baselines(data, run, source, system, mine, report):
+    """Set a source's baselines from its own run captures: the newest eligible capture for
+    each slot. A calendar source also records whether its calendar is still a gap."""
+    for field in ("baseline", "page_baseline") if system in reg.CALENDAR else ("baseline",):
+        source[field] = None
+    slots = collections.defaultdict(list)
+    for item in mine:
+        if reg.eligible(item["record"], system):
+            slots[reg.slot_for(item["record"], system)].append(item)
+    for slot, items in slots.items():
+        best = newest(items)
+        check = compare.compare_source(best["record"], best["record"])
+        if check["status"] != compare.UNCHANGED:
+            report["self_compare_failures"].append({"id": source["id"], "capture": best["capture"],
+                                                    "status": check["status"]})
+        source[slot] = reg.baseline_facts(data, best["record"], best["capture"], run,
+                                          check.get("fingerprint"), recovered=True)
+        report["baselines"].append({"id": source["id"], "system": system, "slot": slot,
+                                    "outcome": best["record"]["outcome"],
+                                    "evidence": best["record"].get("evidence")})
+    if system in reg.CALENDAR:
+        last = newest(mine) if mine else None
+        if last and reg.calendar_seen(last["record"]):
+            source["calendar_gap"] = None
+        else:
+            why = ("calendar markup not observed; page text read"
+                   if last and reg.page_only(last["record"], system) else
+                   reg.why_not(last["record"], system) if last else "no capture in %s" % run)
+            source["calendar_gap"] = {"since_run": run, "last_run": run, "reason": why}
 
 
 def recover(data, run, register_discovered=False):
@@ -115,34 +149,19 @@ def recover(data, run, register_discovered=False):
             if item["record"].get("notice"):
                 key = (source["id"], item["record"]["notice"])
                 findings.setdefault(key, []).append(item["capture"])
-        calendar = [i for i in items if i["kind"] in reg.CALENDAR]
-        system = (calendar[0]["kind"] if calendar else
-                  source["type"] if source.get("type") in reg.SOCIAL else reg.system_for(source))
+        system = reg.system_for(source, [item["kind"] for item in items])
         mine = [i for i in items if i["kind"] == system]
         for field in reg.FOLDED:
             source.pop(field, None)
         source["system"] = system
         source["coverage_contract"] = reg.CONTRACT[system]
         source.setdefault("aliases", [])
-        source["baseline"] = source["ineligible"] = source["last_attempt"] = None
-
-        good = [i for i in mine if reg.eligible(i["record"], system)]
-        if good:
-            best = newest(good)
-            check = compare.compare_source(best["record"], best["record"])
-            if check["status"] != compare.UNCHANGED:
-                report["self_compare_failures"].append({"id": source["id"],
-                                                        "capture": best["capture"],
-                                                        "status": check["status"]})
-            source["baseline"] = reg.baseline_facts(data, best["record"], best["capture"], run,
-                                                    check.get("fingerprint"), recovered=True)
-            report["baselines"].append({"id": source["id"], "system": system,
-                                        "outcome": best["record"]["outcome"],
-                                        "evidence": best["record"].get("evidence")})
+        source["ineligible"] = source["last_attempt"] = None
+        assign_baselines(data, run, source, system, mine, report)
         if mine:
             last = newest(mine)
             outcome = last["record"].get("outcome")
-            if system in reg.SOCIAL and outcome in (ex.READ, ex.READ_EMPTY):
+            if system in reg.SOCIAL and not reg.eligible(last["record"], system):
                 outcome = ex.PARTIAL  # a summary is partial evidence until a social-window read
             source["last_attempt"] = {"run": run, "capture": last["capture"],
                                       "captured_at": last["record"].get("captured_at"),
@@ -160,6 +179,8 @@ def recover(data, run, register_discovered=False):
                 reason = "not a capture file extract() reads"
             elif old_item["kind"] != system:
                 reason = "a %s capture cannot be a %s baseline" % (old_item["kind"], system)
+            elif reg.page_only(old_item["record"], system):
+                reason = "page text only; kept as the page baseline, calendar not observed"
             else:
                 reason = reg.why_not(old_item["record"], system)
             if reason:
@@ -172,7 +193,11 @@ def recover(data, run, register_discovered=False):
         if not source["baseline"]:
             why = ("no capture in %s" % run if not items else
                    "captures are not %s" % system if not mine else
+                   "page baseline only; calendar not observed" if source.get("page_baseline") else
                    reg.why_not(newest(mine)["record"], system))
+            if not mine and items and system == "page":
+                kinds = sorted({i["kind"] for i in items})
+                why = "discovery page captured as %s; capture it as a page" % "/".join(kinds)
             report["no_baseline"].append({"id": source["id"], "system": system, "reason": why})
         proposed.append(source)
 
@@ -191,18 +216,17 @@ def recover(data, run, register_discovered=False):
                 sid = "%s-%s" % (reg.slug(entry["gym"]), sid)
             kind = "web page" if item["kind"] == "page" else "booking page"
             new = {"id": sid, "url": item["url"], "type": kind, "gyms": [entry["gym"]],
-                   "active": True, "origin": "%s followed link" % run,
-                   "system": item["kind"], "coverage_contract": reg.CONTRACT[item["kind"]],
-                   "aliases": [], "baseline": None, "ineligible": None,
-                   "last_attempt": {"run": run, "capture": item["capture"],
-                                    "captured_at": record.get("captured_at"),
-                                    "outcome": record.get("outcome"),
-                                    "evidence": record.get("evidence"), "verdict": None,
-                                    "recovered": True}}
-            if reg.eligible(record, item["kind"]):
-                check = compare.compare_source(record, record)
-                new["baseline"] = reg.baseline_facts(data, record, item["capture"], run,
-                                                     check.get("fingerprint"), recovered=True)
+                   "active": True, "origin": "%s followed link" % run}
+            system = reg.system_for(new, [item["kind"]])
+            new.update(system=system, coverage_contract=reg.CONTRACT[system], aliases=[],
+                       ineligible=None,
+                       last_attempt={"run": run, "capture": item["capture"],
+                                     "captured_at": record.get("captured_at"),
+                                     "outcome": record.get("outcome"),
+                                     "evidence": record.get("evidence"), "verdict": None,
+                                     "recovered": True})
+            assign_baselines(data, run, new, system,
+                             [item] if item["kind"] == system else [], report)
             proposed.append(new)
             ids.add(sid)
             entry["registered_as"] = sid
@@ -217,13 +241,14 @@ def summary(report):
     """Counts a reviewer can check against the evidence."""
     count = collections.Counter
     lines = ["# Baseline recovery", ""]
-    base = count((b["system"], b["outcome"]) for b in report.get("baselines", []))
+    base = count((b["system"], b["slot"], b["outcome"]) for b in report.get("baselines", []))
     lines += ["Baselines recovered: %d" % sum(base.values())]
-    lines += ["- %s %s: %d" % (system, outcome, n) for (system, outcome), n in sorted(base.items())]
+    lines += ["- %s %s %s: %d" % (system, slot, outcome, n)
+              for (system, slot, outcome), n in sorted(base.items())]
     lines += ["", "Old pointers kept as ineligible: %d" % len(report.get("ineligible", []))]
     lines += ["- %s: %s" % (i["id"], i["reason"]) for i in report.get("ineligible", [])]
     reasons = count(n["reason"].split(" (")[0] for n in report.get("no_baseline", []))
-    lines += ["", "No baseline: %d" % len(report.get("no_baseline", []))]
+    lines += ["", "No calendar or main baseline: %d" % len(report.get("no_baseline", []))]
     lines += ["- %s: %d" % (reason, n) for reason, n in reasons.most_common()]
     lines += ["", "Captures with no source: %d" % len(report.get("discovered", []))]
     lines += ["- %s %s (%s, %s)%s" % (d["kind"], d["capture"], d["gym"], d["outcome"],
