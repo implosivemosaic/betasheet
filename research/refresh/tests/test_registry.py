@@ -646,8 +646,11 @@ def test_a_legacy_calendar_compares_by_date_and_lists_its_slots_to_reconcile(tmp
         ("2026-11-26", "16:00"), ("2026-11-26", "20:00")]
     found = {f["kind"]: f for f in (held(root, "Gym A", "w2")[r] for r in out["findings"])}
     assert found["source_change"]["summary"] == (
-        "Calendar changed: 1 session(s) added: 2026-12-17 18:00-19:00; "
-        "1 no longer listed: 2026-12-10 18:00-19:00.")
+        "Calendar dates changed: 1 new date(s): 2026-12-17 (1 session(s) read on them); "
+        "1 date(s) no longer shown: 2026-12-10.")  # no legacy time attached to the gone date
+    details = found["source_change"]["details"]
+    assert details["dates_added"] == ["2026-12-17"] and details["dates_missing"] == ["2026-12-10"]
+    assert "removed" not in details
     assert found["source_first_read"]["summary"].startswith(
         "Time slots read in full for the first time: 2 session(s) on 1 date(s) from 2026-11-26")
     reg.close(root, "w2")
@@ -689,6 +692,30 @@ def test_dates_only_reports_added_and_missing_dates(tmp_path):
     assert verdict["dates_added"] == ["2026-12-10"] and verdict["dates_missing"] == ["2026-12-03"]
     assert [(e["date"], e["start"]) for e in verdict["changes"]["removed"]] == [("2026-12-03", "16:00")]
     assert {e["date"] for e in verdict["slots_to_reconcile"]} == {"2026-11-26"}
+
+
+def test_a_partial_read_whose_times_all_shifted_keeps_them_as_provisional_slots(tmp_path):
+    """Finch Q2: a partial comparison carries additions only; shifted times must survive."""
+    root = registry(tmp_path, source())
+    rgp_legacy(root, "w1", "src", ["Thu, November 26, 4 PM to 5 PM",
+                                   "Thu, December 3, 4 PM to 5 PM"])
+    reg.ingest(root, "w1", "src", "test")
+    reg.close(root, "w1")
+    before = entry(root)["baseline"]
+    rgp(root, "w2", "src", ["Thu, November 26, 6 PM to 7 PM", "Thu, December 3, 6 PM to 7 PM"],
+        read=2)  # two of three months: partial
+    out = reg.ingest(root, "w2", "src", "test")
+    verdict = out["verdict"]
+    assert verdict["status"] == "incomplete" and verdict["provisional"] is True
+    assert verdict["changes"]["removed"] == [] and verdict["changes"]["moved"] == []
+    assert verdict["dates_missing"] == []
+    assert [(e["date"], e["start"]) for e in verdict["slots_to_reconcile"]] == [
+        ("2026-11-26", "18:00"), ("2026-12-03", "18:00")]
+    [finding] = [held(root, "Gym A", "w2")[r] for r in out["findings"]]
+    assert finding["provisional"] and finding["kind"] == "source_first_read"
+    assert finding["summary"].startswith("Partial capture (")
+    assert reg.close(root, "w2")[0]["src"]["advanced"] is None
+    assert entry(root)["baseline"] == before
 
 
 def test_an_unverified_empty_baseline_reconciles_sessions_instead_of_adding_them(tmp_path):
@@ -924,9 +951,11 @@ def test_recovery_keeps_only_captures_that_prove_what_they_read(tmp_path):
     assert by_id["legacy"]["baseline"]["slot_coverage"] == "dates-only"
     assert sorted(report["recapture"], key=lambda q: q["id"]) == [
         {"capture": old + "cal.rgp.json", "capture_id": "cal", "id": "cal", "gyms": ["Gym A"],
-         "slot_coverage": "availability-unverified", "sessions": 0},
+         "slot_coverage": "availability-unverified",
+         "why": reg.UNVERIFIED_SLOTS["availability-unverified"], "sessions": 0},
         {"capture": old + "rgpS-legacy-1.rgp.json", "capture_id": "rgpS-legacy-1",
-         "id": "legacy", "gyms": ["Gym A"], "slot_coverage": "dates-only", "sessions": 2}]
+         "id": "legacy", "gyms": ["Gym A"], "slot_coverage": "dates-only",
+         "why": reg.UNVERIFIED_SLOTS["dates-only"], "sessions": 2}]
     assert by_id["cal"]["baseline"]["slot_coverage"] == "availability-unverified"
     assert by_id["notimes"]["baseline"] is None
     assert "proves neither" in by_id["notimes"]["calendar_gap"]["reason"]

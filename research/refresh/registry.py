@@ -449,6 +449,8 @@ def _page_change(data, wrapper):
 
 
 def _calendar_change(verdict):
+    if "dates_added" in verdict:
+        return _date_change(verdict)
     changes = verdict.get("changes") or {}
     added, removed, moved = (changes.get(k) or [] for k in ("added", "removed", "moved"))
     parts = []
@@ -462,6 +464,25 @@ def _calendar_change(verdict):
     summary = "Calendar changed: %s." % "; ".join(parts) if parts else "Calendar changed."
     return summary, {"added": added, "removed": removed, "moved": moved,
                      "availability_changes": verdict.get("availability_changes") or []}
+
+
+def _date_change(verdict):
+    """A change against a baseline whose slots were never verified, stated as dates. A
+    missing date carries no time: the only time known for it is the legacy capture's one."""
+    new = verdict.get("dates_added") or []
+    gone = verdict.get("dates_missing") or []
+    added = (verdict.get("changes") or {}).get("added") or []
+    parts = []
+    if new:
+        parts.append("%d new date(s): %s (%d session(s) read on them)" % (
+            len(new), _listed(new, str), len([e for e in added if e.get("date") in new])))
+    if gone:
+        parts.append("%d date(s) no longer shown: %s" % (len(gone), _listed(gone, str)))
+    summary = ("Calendar dates changed: %s." % "; ".join(parts) if parts else
+               "Calendar changed.")
+    return summary, {"dates_added": new, "dates_missing": gone, "sessions_on_new_dates": added,
+                     "compared_by": "date",
+                     "baseline_slot_coverage": verdict.get("slots_reason")}
 
 
 def _social_change(record, verdict):
@@ -936,6 +957,10 @@ def recapture_queue(sources):
             if (source.get("baseline") or {}).get("slot_coverage") in UNVERIFIED_SLOTS]
 
 
+def _slot_key(entry):
+    return (entry.get("date"), entry.get("start"), entry.get("end"), entry.get("cohort"))
+
+
 def reconcile_unverified(verdict, before, current, coverage):
     """Read a current-tool comparison against a baseline whose slots were never verified.
 
@@ -951,22 +976,24 @@ def reconcile_unverified(verdict, before, current, coverage):
     moved = list(changes.get("moved") or [])
     seen = {e.get("date") for e in before.get("entries") or [] if e.get("date")}
     now_dates = {e.get("date") for e in current.get("entries") or [] if e.get("date")}
+    known = {_slot_key(e) for e in before.get("entries") or []}
+    # Slots come from the capture itself, not from the verdict's changes: a partial
+    # comparison carries additions only, so a read whose times all shifted would otherwise
+    # leave nothing behind.
+    observed = [e for e in current.get("entries") or [] if _slot_key(e) not in known]
 
     if coverage == "availability-unverified":
-        slots, added, removed, moved_slots = added, [], [], []
+        slots, added, removed = observed, [], []
         note = ("baseline's empty calendar is unverified: %d session(s) read now are listed "
                 "to reconcile, not as added" % len(slots))
     else:
-        slots = [e for e in added if e.get("date") in seen]
-        added = [e for e in added if e.get("date") not in seen]
+        slots = [e for e in observed if e.get("date") in seen or not e.get("date")]
+        added = [e for e in added if e.get("date") and e.get("date") not in seen]
         dropped = [e for e in removed if e.get("date") in now_dates]
         removed = [e for e in removed if e.get("date") not in now_dates]
-        moved_slots = [dict(m.get("to") or {}, date=m.get("date"), cohort=m.get("cohort"),
-                            line=m.get("line")) for m in moved]
         note = ("baseline recorded one session per date: compared by date; %d session(s) on "
                 "dates it saw are listed to reconcile, %d of its slot(s) on dates still shown "
-                "are not called removed" % (len(slots) + len(moved_slots), len(dropped)))
-    slots = slots + moved_slots
+                "are not called removed" % (len(slots), len(dropped)))
     dates_added = sorted({e.get("date") for e in added})
     dates_missing = sorted({e.get("date") for e in removed})
     view = dict(verdict, changes=dict(changes, added=added, removed=removed, moved=[]),

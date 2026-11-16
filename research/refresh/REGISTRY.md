@@ -53,7 +53,10 @@ November fields `last_copy`, `fingerprint`, `last_checked` and `coverage_note` a
   with it by date: a date it lacked is an added date (`dates_added`), a date it had that a
   complete read no longer shows is a missing date (`dates_missing`). Sessions on dates both
   saw are never added, removed or moved; the newly read ones go to `slots_to_reconcile`, a
-  `source_first_read` finding to compare with the catalogue, never a schedule change.
+  `source_first_read` finding to compare with the catalogue, never a schedule change. Those
+  slots are taken from the capture itself, so a partial read keeps them (provisionally) even
+  when every time shifted. A date change is reported as dates, `dates_added` and
+  `dates_missing` in the finding's details, with no legacy time attached to a missing date.
 - `baseline.slot_coverage: "availability-unverified"` marks a Rock Gym Pro calendar the
   November tool read as empty, before the check that every day cell had loaded. It is kept
   as history and queued for recapture; every session a current-tool read finds against it

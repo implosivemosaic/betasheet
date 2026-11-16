@@ -86,7 +86,7 @@ def assign_baselines(data, run, source, system, mine, report):
             report["recapture"].append({
                 "capture": best["capture"], "capture_id": stem(best["path"]),
                 "id": source["id"], "gyms": source.get("gyms") or [],
-                "slot_coverage": unverified,
+                "slot_coverage": unverified, "why": reg.UNVERIFIED_SLOTS[unverified],
                 "sessions": len(best["record"].get("entries") or [])})
     if system in reg.CALENDAR:
         last = newest(mine) if mine else None
