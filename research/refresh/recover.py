@@ -99,6 +99,20 @@ def assign_baselines(data, run, source, system, mine, report):
             source["calendar_gap"] = {"since_run": run, "last_run": run, "reason": why}
 
 
+def already_recovered(sources):
+    """Has this registry already been through recovery?
+
+    Recovery is a one-time migration: it turns the November pointers (`last_copy`) into
+    baselines. Running it again over its own output would re-derive every baseline from
+    the November captures and erase whatever the weekly runs have moved since. The test
+    is the registry's own shape: pointers and no baselines means it is still unrecovered;
+    baselines and no pointers means it is already recovered.
+    """
+    if any(source.get("last_copy") for source in sources):
+        return False
+    return any(source.get("baseline") or source.get("page_baseline") for source in sources)
+
+
 def recover(data, run, register_discovered=False):
     """Returns (proposed sources list, report). Writes nothing."""
     data = pathlib.Path(data)
@@ -168,7 +182,12 @@ def recover(data, run, register_discovered=False):
         source["system"] = system
         source["coverage_contract"] = reg.CONTRACT[system]
         source.setdefault("aliases", [])
-        source["ineligible"] = source["last_attempt"] = None
+        # A record the earlier run marked as an unusable capture is history: it is the
+        # only explanation of why a source has no baseline. Rerunning recovery over an
+        # already-recovered checkout has no `last_capture` field left to rediscover that
+        # reason from, so the value carries forward rather than being reset to nothing.
+        source["ineligible"] = source.get("ineligible")
+        source["last_attempt"] = None
         assign_baselines(data, run, source, system, mine, report)
         if mine:
             last = newest(mine)
@@ -202,6 +221,10 @@ def recover(data, run, register_discovered=False):
                                         "reason": reason, "since": old_checked}
                 report["ineligible"].append({"id": source["id"], "capture": old,
                                              "reason": reason})
+        elif source["ineligible"] and source.get("baseline"):
+            # No legacy pointer to re-derive from, and the source now has a real baseline:
+            # the capture that replaced the failed pointer supersedes it.
+            source["ineligible"] = None
         if not source["baseline"]:
             why = ("no capture in %s" % run if not items else
                    "captures are not %s" % system if not mine else

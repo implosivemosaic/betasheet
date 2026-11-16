@@ -131,6 +131,14 @@ refresh.py register <url> --gym G --type T
 refresh.py recover  --from runs/2026-11-11-refresh [--out DIR | --apply] [--register-discovered]
 ```
 
+Recovery is a **one-time migration** from the November pointers to baselines. `--apply`
+refuses a registry that has already been recovered — it carries baselines and no `last_copy`
+— because a second pass would re-derive every baseline from the November captures and erase
+whatever the weekly runs have moved since. A dry run (`--out DIR`) still runs, and leaves
+the registry untouched. Existing `ineligible` records are carried through a rerun: they are
+the only record of what the November run failed to read, and a recovered registry no longer
+has the pointer to rebuild them from.
+
 ## The rules
 
 **Saving.** `ingest` saves a capture's findings the moment it compares it. `close` saves them

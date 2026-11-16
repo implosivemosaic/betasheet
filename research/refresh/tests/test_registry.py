@@ -966,3 +966,80 @@ def test_recovery_keeps_only_captures_that_prove_what_they_read(tmp_path):
     for record in proposed:
         assert not {"last_copy", "fingerprint", "last_checked"} & set(record)
     assert reg.load(root)[0]["last_copy"] == old + "cal.rgp.json"  # nothing written
+
+
+def test_a_recovery_rerun_keeps_the_record_of_what_failed(tmp_path):
+    """The recovered registry has no legacy pointer left to re-derive the reason from.
+
+    Running recovery twice over the same captures used to reset every `ineligible` record
+    to null on the second pass: the first pass folds `last_copy` away, so the old pointer
+    could no longer be looked up. Baselines were unaffected, but the only explanation of
+    why a source has no baseline was erased without any new evidence.
+    """
+    run = "2026-11-11-refresh"
+    evidence = tmp_path / "data" / "runs" / run / "gyms" / "gym-a" / "evidence"
+    old = "runs/%s/gyms/gym-a/evidence/" % run
+    root = registry(tmp_path, dict(source("shell", url="https://gym.test/a", kind="web page"),
+                                   last_copy=old + "shell.norm.txt", last_checked="2026-11-12"))
+    evidence.mkdir(parents=True)
+    page(evidence, "shell", "Performing security verification\nThis may take a moment.",
+         url="https://gym.test/a")
+
+    first, first_report = rec.recover(root, run)
+    [record] = first
+    assert record["ineligible"]["capture"] == old + "shell.meta.json"
+    assert record["baseline"] is None
+    assert [row["id"] for row in first_report["ineligible"]] == ["shell"]
+
+    reg.write_json(root / "sources.json", first)  # the registry the next run reads
+    second, second_report = rec.recover(root, run)
+    assert second[0]["ineligible"] == record["ineligible"]
+    assert second[0]["ineligible"]["reason"] == record["ineligible"]["reason"]
+    assert second[0]["baseline"] is None
+    assert second_report.get("ineligible", []) == []  # nothing re-derived, nothing lost
+
+
+def test_a_real_baseline_supersedes_the_older_failure(tmp_path):
+    """Once an eligible capture is the baseline, the failed pointer it stood in for goes."""
+    run = "2026-11-19"
+    evidence = tmp_path / "data" / "runs" / run / "gyms" / "gym-a" / "evidence"
+    root = registry(tmp_path, dict(
+        source("program", url="https://gym.test/p", kind="web page"),
+        ineligible={"capture": "runs/2026-11-11-refresh/gyms/gym-a/evidence/program.meta.json",
+                    "outcome": "failed", "reason": "capture failed (render of 3 lines)",
+                    "since": "2026-11-12"}))
+    evidence.mkdir(parents=True)
+    page(evidence, "program", PAGE, url="https://gym.test/p")
+
+    proposed, _ = rec.recover(root, run)
+    assert proposed[0]["baseline"]["outcome"] == "read"
+    assert proposed[0]["ineligible"] is None
+
+
+def test_recovery_refuses_to_apply_twice(tmp_path):
+    """`--apply` is a one-time migration; a dry run over recovered data stays available."""
+    run = "2026-11-19"
+    root = registry(tmp_path, dict(
+        source("program", url="https://gym.test/p", kind="web page"),
+        baseline={"capture": "runs/%s/sources/program/program.meta.json" % run,
+                  "run": run, "outcome": "read", "recovered": True}))
+    (root / "runs" / run).mkdir(parents=True)
+    assert rec.already_recovered(reg.load(root)) is True
+
+    code, _, err = cli("--data", str(root), "recover", "--from", run, "--apply")
+    assert code == 1
+    assert "already recovered" in err
+    assert reg.load(root) == reg.load(root)  # the registry is untouched
+
+    out = tmp_path / "dry"
+    code, stdout, err = cli("--data", str(root), "recover", "--from", run, "--out", str(out))
+    assert code == 0 and err == ""
+    assert (out / "sources.json").exists()
+
+
+def test_an_unrecovered_registry_is_not_refused(tmp_path):
+    run = "2026-11-11-refresh"
+    old = "runs/%s/gyms/gym-a/evidence/" % run
+    root = registry(tmp_path, dict(source("program", url="https://gym.test/p", kind="web page"),
+                                   last_copy=old + "program.norm.txt"))
+    assert rec.already_recovered(reg.load(root)) is False

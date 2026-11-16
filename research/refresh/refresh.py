@@ -193,6 +193,11 @@ def main(argv=None):
             print("%s %s" % ("registered" if created else "already registered as",
                              record["id"]))
         elif args.command == "recover":
+            if args.apply and rec.already_recovered(reg.load(data)):
+                raise reg.RegistryError(
+                    "this registry is already recovered: it has baselines and no November "
+                    "pointers, so a second pass would reset every baseline to its November "
+                    "capture. Apply recovery once; a dry run (--out DIR) still runs.")
             proposed, report = rec.recover(data, args.run,
                                            register_discovered=args.register_discovered)
             out = (data / "runs" / (datetime.date.today().isoformat() + "-recovery")
