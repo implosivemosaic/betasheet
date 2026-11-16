@@ -43,7 +43,19 @@ November fields `last_copy`, `fingerprint`, `last_checked` and `coverage_note` a
   `page_baseline` is its last read that found the offering's text but no calendar markup. A
   page-only read is compared with, and may replace, only `page_baseline`; the calendar
   baseline stays, and `calendar_gap` records since when the calendar has not been read.
-  The gap closes only when a full calendar read replaces `baseline`.
+  The gap closes only when a full calendar read replaces `baseline`. The first page-only
+  read sets `page_baseline` and carries no finding: compared with the calendar's own render
+  it would differ only in page furniture. Page reads compare with it from the next one on.
+- `baseline.slot_coverage: "dates-only"` marks a Rock Gym Pro calendar read by the November
+  tool, which kept one session per highlighted date. Its dates are evidence; its time slots
+  are not complete. Such a source is in the recapture queue (`close.json` `recapture`,
+  `status --gym`) until a full read replaces the baseline. Compared with it, a new date is an
+  addition and a session it recorded that is gone is a removal, but a session on a date it saw
+  goes to `slots_to_reconcile`: a `source_first_read` finding to compare with the catalogue,
+  never a schedule change on its own.
+- A calendar whose clicked days all answered "no available times" is a baseline only when
+  the capture tool declared complete coverage: the answer alone proves neither an empty
+  calendar nor a complete read.
 - `anchor` (social baselines) is the newest post a later capture must read back to.
 - `ineligible` keeps a November pointer that failed validation, for history. It is never
   compared and is cleared when a real calendar or page baseline replaces it.
@@ -68,7 +80,7 @@ collector's own records:
 ```
 
 A gym's `proposed` disposition adds `"status": "proposed"` and
-`"proposal": {"ref": "boulderz-climbing-toronto/winter-youth-camp", "file": "runs/2026-11-19/gyms/boulderz-climbing-toronto/proposals.json"}`
+`"proposal": {"ref": "boulderz-climbing-toronto/winter-youth-camp", "run": "2026-11-19", "file": "runs/2026-11-19/gyms/boulderz-climbing-toronto/proposals.json"}`
 to the record, and the same link to its entry in `dispositions`.
 
 Kinds: `source_change` (page text, calendar sessions or posts changed; `provisional` when a
@@ -78,7 +90,8 @@ answered with a status notice such as `plan-inactive`; never a cancellation). A 
 says "interpretation pending" with the lines added and removed; nothing invents an event.
 
 The ref is derived from the source, the baseline and the content, so the same change is
-saved once per gym however often it is captured or closed.
+saved once per gym however often it is captured or closed. A provisional record and the full
+read that later confirms it are separate records.
 
 ## A run
 
@@ -102,7 +115,8 @@ refresh.py capture  <id> --run R --session S --by NAME [--force]
 refresh.py ingest   <id> --run R --by NAME        compare a capture already saved in the folder
 refresh.py findings [--gym G] [--source ID] [--all]
 refresh.py review   (--gym G ... | --all-gyms) (--run R [--source ID ...] | --finding REF ...)
-                    --outcome no-change|held|proposed [--proposal GYM/REF] --by NAME --note TEXT
+                    --outcome no-change|held|proposed [--proposal GYM/REF [--proposal-run R]]
+                    --by NAME --note TEXT
 refresh.py status   --run R [--gym G]
 refresh.py close    --run R [--dry-run]
 refresh.py register <url> --gym G --type T
@@ -124,14 +138,20 @@ Otherwise every baseline stands and `close` says why. `last_attempt` is recorded
 
 **Resolving.** Each gym disposes of its own record. `no-change` resolves it and `held` keeps it
 pending with the note. `proposed` must name the proposal that carries the work as
-`<gym-folder>/<ref>` (the bare ref when one gym is named), and that proposal must exist in a
-run's proposal files: the gym's own `proposals.json`, or a coordinator's file of prefixed refs.
-The finding then keeps that link and stays unresolved until a production receipt records the
-proposal published: a row in an `applied.json` with that ref, `target: prod` and `status: ok`,
-as `research/apply.sh prod` writes it. `findings` shows each link and whether its proposal is
-awaiting publication. A held proposal leaves its finding open; a withdrawn or declined one is
-settled by disposing the finding again by ref. The gyms of a shared source may all point at
-one proposal.
+`<gym-folder>/<ref>` (the bare ref when one gym is named). Refs are reused across seasons, so a
+proposal is the pair (run, ref): it is looked up in the findings' own run, or in the later run
+`--proposal-run` names, in the gym's own `proposals.json` or a coordinator's file of prefixed
+refs. A run before the finding's is refused, since a proposal drafted before a change was seen
+cannot carry it, and findings from several runs need `--proposal-run`.
+
+The finding keeps that link and stays unresolved until a production receipt **from the
+proposal's own run** records it published: a row in that run's `applied.json` with the exact
+ref, `target: prod` and `status: ok`, as `research/apply.sh prod` writes it. A receipt for the
+same ref from any other run published different work and never counts; `findings` lists such
+receipts under the link so nobody mistakes them. A proposal carried into a later run stays
+unresolved until the finding is relinked to the carried copy (`--finding REF --proposal-run`).
+A held proposal leaves its finding open; a withdrawn or declined one is settled by disposing
+the finding again by ref. The gyms of a shared source may all point at one proposal.
 
 A review is bound to a capture: naming a run's sources touches only pending findings from each
 source's current capture there, so a recapture needs its own review, and findings from earlier
@@ -153,6 +173,14 @@ under `flock` on each `decisions.json.lock`. The kernel releases a crashed holde
   never attached by resemblance.
 - Each slot takes the newest matching capture that read its source in full: calendar reads
   become `baseline`, page-only offering reads become `page_baseline` with a `calendar_gap`.
+  A Redpoint capture whose months repeat or skip is `partial` and never a baseline.
+- A Rock Gym Pro calendar read by the November tool with sessions becomes a dates-only
+  baseline. The recapture queue is built from those baseline evidence files and then resolved
+  to source ids, so a capture filed under another name (`rgpS-coy-2` for
+  `coyote-rock-gym-booking-page-2`) is still queued; the report lists both names.
+- The report accounts for every capture file: each is a baseline, a last attempt, an
+  ineligible old pointer, discovered, ambiguous, unreadable, or listed with the reason it was
+  not used (an older capture, or a capture of another kind).
 - A widget index captured as a calendar gets no baseline: it is a discovery page, recaptured
   with `page.py` next run.
 - An old pointer whose file extracts as a failure (a challenge page, a 404) moves to

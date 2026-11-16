@@ -120,6 +120,24 @@ def slug(text):
 
 # --------------------------------------------------------------------------- eligibility
 
+def unproven_empty(record):
+    """A calendar whose clicked days all answered "no available times", read by a tool that
+    declared no coverage. An unavailable response proves neither an empty calendar nor a
+    complete read, so only declared, complete coverage lets such a capture be a baseline."""
+    return (record.get("evidence") == "clicked-no-times"
+            and bool((record.get("coverage") or {}).get("recovered")))
+
+
+def legacy_slots(record):
+    """A Rock Gym Pro calendar read by the November tool, which kept one session per
+    highlighted date. Its dates are evidence; its time slots are not complete. The current
+    tool declares its coverage, so a reconstructed coverage marks the old one."""
+    return (record is not None and record.get("type") == "rockgympro"
+            and record.get("calendar_observed", True)
+            and bool((record.get("coverage") or {}).get("recovered"))
+            and any(entry.get("date") for entry in record.get("entries") or []))
+
+
 def eligible(record, system):
     """A capture may become a baseline only when it read the source and met its declared
     coverage. Social coverage must be declared by a social-window capture: a historical
@@ -129,7 +147,7 @@ def eligible(record, system):
         return False
     if system in SOCIAL and coverage.get("recovered"):
         return False
-    return True
+    return not unproven_empty(record)
 
 
 def why_not(record, system):
@@ -143,6 +161,9 @@ def why_not(record, system):
                                                     coverage.get("months_requested"))
     if system in SOCIAL and coverage.get("recovered"):
         return "historical social summary; needs a social-window capture"
+    if unproven_empty(record):
+        return ("clicked days answered no times and the capture declared no coverage, which "
+                "proves neither an empty calendar nor a complete read")
     return None
 
 
@@ -156,8 +177,7 @@ def page_only(record, system):
 def calendar_seen(record):
     """A capture that read its calendar in full: the only kind that closes a calendar gap."""
     return (record is not None and record.get("calendar_observed", True)
-            and record.get("outcome") in ex.BASELINE_OUTCOMES
-            and (record.get("coverage") or {}).get("complete") is True)
+            and eligible(record, record.get("type")))
 
 
 def slot_for(record, system):
@@ -278,6 +298,9 @@ def baseline_facts(data, record, capture, run, fingerprint=None, recovered=False
              "outcome": record.get("outcome"), "evidence": record.get("evidence"),
              "fingerprint": fingerprint, "sha256": file_sha(pathlib.Path(data) / capture),
              "recovered": recovered}
+    if legacy_slots(record):
+        # Recapture with the current tool; until then the calendar compares by date.
+        facts["slot_coverage"] = "dates-only"
     if record.get("type") in SOCIAL:
         # The next capture must read back to this post before it can replace the baseline.
         posts = [post for post in record.get("posts") or [] if post.get("id")]
@@ -490,21 +513,31 @@ def finding_templates(data, source, wrapper, record, verdict):
             "not a cancellation; check the listings that cite it." % notice,
             "Open the capture and decide whether listings citing this source need review.",
             {"notice": notice}))
-    calendar = source.get("baseline") if page_only(record, system) else None
-    if status == compare.NEW and wrapper.get("eligible") and calendar:
-        # The offering's text was last seen above its calendar. Only text that calendar read
-        # did not show is news; the missing calendar itself is the source's calendar gap.
-        added, _ = text_delta(data, calendar.get("capture"), wrapper.get("capture"))
-        if added:
-            out.append(_template(
-                dict(common, evidence=[calendar.get("capture"), wrapper.get("capture")]),
-                "source_change", [_digest(added)],
-                "Calendar not shown this run, and the offering page has text its last calendar "
-                "read did not: “%s”. Interpretation pending." % _short(added[0]),
-                "Read the old and new captures; propose catalogue changes, or record why none "
-                "are needed, with refresh.py review.",
-                {"lines_added": added[:40], "lines_added_total": len(added),
-                 "compared_with_calendar_capture": calendar.get("capture")}))
+    # A calendar source's first page-only read sets its page baseline beside the calendar
+    # baseline; page reads compare with it from the next one on. Against the calendar's own
+    # render it would differ only in page furniture, and the calendar gap already says the
+    # calendar went unread, so it carries no finding.
+    first_page_beside_calendar = page_only(record, system) and source.get("baseline")
+    slots = verdict.get("slots_to_reconcile") or []
+    if slots:
+        dates = sorted({entry["date"] for entry in slots})
+        summary = ("Time slots read in full for the first time: %d session(s) on %d date(s) from "
+                   "%s to %s, on dates the previous capture recorded with one session each. "
+                   "Compare these times with the catalogue; this is not a schedule change." % (
+                       len(slots), len(dates), dates[0], dates[-1]))
+        if status == compare.INCOMPLETE:
+            summary = "Partial capture (%s), so no baseline moved. Provisionally: %s" % (
+                (verdict.get("coverage") or {}).get("reason") or "coverage not met", summary)
+        out.append(_template(  # a confirming full read is its own record, as for changes
+            common, "source_first_read",
+            ["slots", "provisional" if status == compare.INCOMPLETE else "read", _digest(slots)],
+            summary,
+            "Reconcile these times with the catalogue's sessions, then record the outcome with "
+            "refresh.py review.",
+            {"slots_to_reconcile": slots[:60], "slots_total": len(slots)},
+            status == compare.INCOMPLETE))
+    if status == compare.NEW and first_page_beside_calendar:
+        pass
     elif status == compare.NEW and wrapper.get("eligible"):
         summary, details = _first_read(data, system, record, wrapper)
         out.append(_template(
@@ -593,35 +626,45 @@ def shown_now(data, finding, latest):
     return "no longer shown" if not any(hits) else "partly shown (%d of %d)" % (sum(hits), len(hits))
 
 
-def find_proposal(data, ref):
-    """Where proposal `<gym-folder>/<ref>` is recorded, as {ref, file}: the newest run that
-    holds it, looking first in the gym's own `gyms/<gym>/proposals.json` (bare refs), then in
-    that run's other proposal files (prefixed refs). None when no run has it."""
+def run_of(path):
+    """The run a data-relative path belongs to: `runs/<run>/...`."""
+    parts = pathlib.PurePosixPath(path or "").parts
+    return parts[1] if len(parts) > 2 and parts[0] == "runs" else None
+
+
+def find_proposal(data, ref, run):
+    """Proposal `<gym-folder>/<ref>` in run `run`, as {ref, run, file}: the gym's own
+    `gyms/<gym>/proposals.json` (bare refs) first, then the run's other proposal files
+    (prefixed refs). None when that run does not hold it. Refs are reused across runs, so a
+    proposal is always the pair (run, ref)."""
     match = PROPOSAL_REF.match(ref or "")
     if not match:
         raise RegistryError("name the proposal as <gym-folder>/<ref>, not %r" % ref)
     folder, bare = match.groups()
-    data = pathlib.Path(data)
-    for run in sorted((p for p in (data / "runs").glob("*") if p.is_dir()), reverse=True):
-        own = run / "gyms" / folder / "proposals.json"
-        for path in [own] + sorted(p for p in run.rglob("*proposals.json") if p != own):
-            entries = read_json(path, []) if path.exists() else []
-            for entry in entries if isinstance(entries, list) else []:
-                if isinstance(entry, dict) and (entry.get("ref") == ref or
-                                                (path == own and entry.get("ref") == bare)):
-                    return {"ref": ref, "file": relative(data, path)}
+    root = run_dir(data, run)
+    own = root / "gyms" / folder / "proposals.json"
+    others = sorted(p for p in root.rglob("*proposals.json") if p != own) if root.is_dir() else []
+    for path in [own] + others:
+        entries = read_json(path, []) if path.exists() else []
+        for entry in entries if isinstance(entries, list) else []:
+            if isinstance(entry, dict) and (entry.get("ref") == ref or
+                                            (path == own and entry.get("ref") == bare)):
+                return {"ref": ref, "run": run, "file": relative(data, path)}
     return None
 
 
 def publication_receipts(data):
-    """Production receipts by proposal ref. `research/apply_record.py` appends every applied
-    proposal to its package's `applied.json` as {ref, id, status, target}."""
+    """Production receipts by (run, proposal ref). `research/apply_record.py` appends every
+    applied proposal to its package's `applied.json` as {ref, id, status, target}. A receipt
+    publishes its own run's proposal only: another run that reuses the ref published
+    different work."""
+    data = pathlib.Path(data)
     out = {}
-    for path in sorted(pathlib.Path(data).glob("runs/**/applied.json")):
-        rows = read_json(path, [])
+    for path in sorted(data.glob("runs/**/applied.json")):
+        rows, rel = read_json(path, []), relative(data, path)
         for row in rows if isinstance(rows, list) else []:
             if isinstance(row, dict) and row.get("target") == "prod" and row.get("status") == "ok":
-                out[row.get("ref")] = {"listing_id": row.get("id"), "receipt": relative(data, path)}
+                out[(run_of(rel), row.get("ref"))] = {"listing_id": row.get("id"), "receipt": rel}
     return out
 
 
@@ -638,8 +681,17 @@ def open_findings(data, gym=None, source_id=None, include_resolved=False):
         if status == PROPOSED:
             if receipts is None:
                 receipts = publication_receipts(data)
-            receipt = receipts.get((record.get("proposal") or {}).get("ref"))
-            state = dict(receipt, state="published") if receipt else {"state": "awaiting publication"}
+            link = record.get("proposal") or {}
+            run = link.get("run") or run_of(link.get("file"))
+            receipt = receipts.get((run, link.get("ref")))
+            if receipt:
+                state = dict(receipt, state="published")
+            else:
+                state = {"state": "awaiting publication"}
+                elsewhere = sorted(r["receipt"] for (other, ref), r in receipts.items()
+                                   if ref == link.get("ref") and other != run)
+                if elsewhere:  # the same ref published other runs' work, not this proposal
+                    state["same_ref_other_runs"] = elsewhere
             status = RESOLVED if receipt else PROPOSED
         if not include_resolved and status not in UNRESOLVED:
             continue
@@ -655,13 +707,14 @@ def open_findings(data, gym=None, source_id=None, include_resolved=False):
 
 
 def review(data, gyms, by, note, outcome="no-change", run=None, source_ids=None, refs=None,
-           all_gyms=False, proposal=None):
+           all_gyms=False, proposal=None, proposal_run=None):
     """Record gyms' dispositions of their findings. Each gym's record is its own.
 
     `no-change` resolves a finding and `held` keeps it pending with the note. `proposed` names
     the proposal that carries the work, `<gym-folder>/<ref>` (the bare ref when one gym is
-    named), which must exist in a run's proposals; the finding keeps that link and stays
-    unresolved until a production receipt records the proposal published.
+    named), in the findings' own run unless `proposal_run` names a later one. The finding
+    keeps that (run, ref) link and stays unresolved until a production receipt from that
+    run records the proposal published.
 
     A disposition is bound to a capture: naming sources touches only findings recorded from
     each source's current capture in `run`, so a recapture needs its own review. Findings
@@ -672,7 +725,6 @@ def review(data, gyms, by, note, outcome="no-change", run=None, source_ids=None,
     if not gyms and not all_gyms:
         raise RegistryError("name the gym(s) the disposition is for, or --all-gyms")
     data = pathlib.Path(data)
-    link = None
     if outcome == "proposed":
         if not proposal:
             raise RegistryError("--outcome proposed needs --proposal: the proposal that carries "
@@ -682,10 +734,9 @@ def review(data, gyms, by, note, outcome="no-change", run=None, source_ids=None,
                 raise RegistryError("name the proposal as <gym-folder>/<ref> when the "
                                     "disposition covers several gyms")
             proposal = "%s/%s" % (slug(gyms[0]), proposal)
-        link = find_proposal(data, proposal)
-        if link is None:
-            raise RegistryError("no proposal %s in any run's proposals" % proposal)
-    elif proposal:
+        if not PROPOSAL_REF.match(proposal):
+            raise RegistryError("name the proposal as <gym-folder>/<ref>, not %r" % proposal)
+    elif proposal or proposal_run:
         raise RegistryError("--proposal goes with --outcome proposed only")
     findings = all_findings(data)
     if refs:
@@ -711,7 +762,24 @@ def review(data, gyms, by, note, outcome="no-change", run=None, source_ids=None,
                    if record.get("run") == run and record.get("source_id") in current
                    and record.get("capture_sha256") == current[record["source_id"]]]
     targets = [(path, record) for path, record in targets
-               if (all_gyms and not record.get("dispositions")) or record.get("gym") in (gyms or ())]
+               if ((all_gyms and not record.get("dispositions")) or record.get("gym") in (gyms or ()))
+               and (refs is not None or record.get("status") == PENDING)]
+    link = None
+    if outcome == "proposed" and targets:
+        runs = sorted({record.get("run") for _, record in targets})
+        if proposal_run is None and len(runs) > 1:
+            raise RegistryError("these findings come from runs %s: name the run whose proposal "
+                                "carries the work with --proposal-run" % ", ".join(runs))
+        if proposal_run is not None and (not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]*", proposal_run)
+                                         or not run_dir(data, proposal_run).is_dir()):
+            raise RegistryError("no run %r under runs/" % proposal_run)
+        proposal_run = proposal_run or runs[0]
+        if proposal_run < runs[-1]:
+            raise RegistryError("run %s is before the finding's run %s: a proposal drafted before "
+                                "a change was seen cannot carry it" % (proposal_run, runs[-1]))
+        link = find_proposal(data, proposal, proposal_run)
+        if link is None:
+            raise RegistryError("no proposal %s in run %s's proposal files" % (proposal, proposal_run))
     done = []
     for path in sorted({path for path, _ in targets}):
         wanted = {record["ref"] for p, record in targets if p == path}
@@ -754,6 +822,8 @@ def ingest(data, run, sid, by):
     base = source.get(slot)
     before = ex.extract(str(data / base["capture"])) if base else None
     verdict = compare.compare_source(before, record)
+    if (base or {}).get("slot_coverage") == "dates-only" and not legacy_slots(record):
+        verdict = dates_only(verdict, before)
     out = {"source_id": sid, "gyms": source.get("gyms") or [],
            "capture": relative(data, path), "capture_sha256": file_sha(path),
            "baseline": {"slot": slot, "capture": (base or {}).get("capture"),
@@ -830,6 +900,38 @@ def plan(data, run):
     return rows
 
 
+def recapture_queue(sources):
+    """Calendar sources whose baseline is dates-only evidence, to recapture in full."""
+    return [{"source_id": source["id"], "gyms": source.get("gyms") or [],
+             "capture": source["baseline"]["capture"], "since_run": source["baseline"]["run"]}
+            for source in sources
+            if (source.get("baseline") or {}).get("slot_coverage") == "dates-only"]
+
+
+def dates_only(verdict, before):
+    """Read a comparison with a dates-only baseline by date. The baseline's sessions were
+    real, so a session it recorded that is gone is still a removal, and a new date is still
+    an addition. A session on a date the baseline saw may be one it never recorded, so it is
+    listed in `slots_to_reconcile` for the catalogue rather than claimed as added."""
+    seen = {entry.get("date") for entry in before.get("entries") or [] if entry.get("date")}
+    changes = dict(verdict.get("changes") or {})
+    added = changes.get("added") or []
+    slots = [entry for entry in added if entry.get("date") in seen]
+    if not slots:
+        return verdict
+    view = dict(verdict, changes=dict(changes, added=[e for e in added if e not in slots]),
+                slots_to_reconcile=slots,
+                notes=list(verdict.get("notes") or []) + [
+                    "baseline recorded one session per date: %d session(s) on dates it saw "
+                    "are listed to reconcile, not as added" % len(slots)])
+    left = any(view["changes"].get(key) for key in ("added", "removed", "moved"))
+    if view.get("status") == compare.CHANGED and not left:
+        view["status"] = compare.UNCHANGED
+    if view.get("status") == compare.INCOMPLETE:
+        view["provisional"] = True
+    return view
+
+
 def calendar_gaps(sources):
     return [dict(gap, source_id=source["id"], gyms=source.get("gyms") or [])
             for source in sources for gap in [source.get("calendar_gap")] if gap]
@@ -880,12 +982,14 @@ def close(data, run, dry_run=False):
             results[sid] = {"advanced": row["slot"], "reason": row["reason"],
                             "verdict": verdict.get("status"), "findings": saved.get(sid, [])}
         gaps = calendar_gaps(sources)
+        queue = recapture_queue(sources)
     pending = [{k: f.get(k) for k in ("ref", "gym", "run", "kind", "status", "summary", "capture",
                                        "shown_now", "proposal", "proposal_state", "file")}
                for f in open_findings(data)]
     if not dry_run:
         write_json(run_dir(data, run) / "close.json",
                    {"closed_at": now(), "sources": results, "calendar_gaps": gaps,
+                    "recapture": queue,
                     "pending_findings": pending})
     return results, pending, gaps
 

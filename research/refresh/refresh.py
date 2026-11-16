@@ -5,7 +5,8 @@
     refresh.py ingest   <id> --run R --by NAME
     refresh.py findings [--gym G] [--source ID] [--all]
     refresh.py review   (--gym G ... | --all-gyms) (--run R [--source ID ...] | --finding REF ...)
-                        --outcome no-change|held|proposed [--proposal GYM/REF] --by NAME --note TEXT
+                        --outcome no-change|held|proposed [--proposal GYM/REF [--proposal-run R]]
+                        --by NAME --note TEXT
     refresh.py status   --run R [--gym G]
     refresh.py close    --run R [--dry-run]
     refresh.py register <url> --gym G [--gym G2] --type T [--id ID]
@@ -66,6 +67,9 @@ def show_finding(finding):
             finding["proposal"]["ref"], finding["proposal"]["file"],
             "published as #%s (%s)" % (state.get("listing_id"), state.get("receipt"))
             if state.get("state") == "published" else state.get("state", "linked")))
+        if state.get("same_ref_other_runs"):
+            print("  not this proposal: the same ref was published from %s" % ", ".join(
+                state["same_ref_other_runs"]))
 
 
 def main(argv=None):
@@ -102,6 +106,8 @@ def main(argv=None):
     p.add_argument("--note", required=True)
     p.add_argument("--proposal", help="with --outcome proposed: the proposal that carries the "
                    "work, <gym-folder>/<ref>, or its bare ref when one --gym is named")
+    p.add_argument("--proposal-run", help="the run whose proposal files hold it, when that is "
+                   "a later run than the findings' own (a proposal carried forward)")
 
     p = sub.add_parser("status")
     p.add_argument("--run", required=True)
@@ -145,10 +151,12 @@ def main(argv=None):
         elif args.command == "review":
             done = reg.review(data, args.gym, args.by, args.note, outcome=args.outcome,
                               run=args.run, source_ids=args.source, refs=args.finding,
-                              all_gyms=args.all_gyms, proposal=args.proposal)
+                              all_gyms=args.all_gyms, proposal=args.proposal,
+                              proposal_run=args.proposal_run)
             for row in done:
+                link = row["proposal"]
                 print("%s  %s: %s%s" % (row["ref"], row["gym"], row["status"],
-                                        " -> %s" % row["proposal"]["ref"] if row["proposal"] else ""))
+                                        " -> %s (run %s)" % (link["ref"], link["run"]) if link else ""))
             print("%d disposition(s) recorded" % len(done))
         elif args.command == "status":
             rows = reg.plan(data, args.run)
@@ -168,6 +176,8 @@ def main(argv=None):
                 print("not captured in %s: %s" % (args.run, ", ".join(missing) or "none"))
                 gaps = [g["source_id"] for g in reg.calendar_gaps(sources) if args.gym in g["gyms"]]
                 print("calendar gaps: %s" % (", ".join(gaps) or "none"))
+                queue = [q["source_id"] for q in reg.recapture_queue(sources) if args.gym in q["gyms"]]
+                print("recapture (calendar baseline is dates only): %s" % (", ".join(queue) or "none"))
                 print("unresolved findings: %d" % len(reg.open_findings(data, gym=args.gym)))
         elif args.command == "close":
             results, pending, gaps = reg.close(data, args.run, dry_run=args.dry_run)

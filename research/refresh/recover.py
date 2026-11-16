@@ -77,9 +77,16 @@ def assign_baselines(data, run, source, system, mine, report):
                                                     "status": check["status"]})
         source[slot] = reg.baseline_facts(data, best["record"], best["capture"], run,
                                           check.get("fingerprint"), recovered=True)
+        dates_only = source[slot].get("slot_coverage") == "dates-only"
         report["baselines"].append({"id": source["id"], "system": system, "slot": slot,
                                     "outcome": best["record"]["outcome"],
-                                    "evidence": best["record"].get("evidence")})
+                                    "evidence": best["record"].get("evidence"),
+                                    "dates_only": dates_only})
+        if dates_only:  # the queue is keyed by the evidence file, then by its source id
+            report["recapture"].append({
+                "capture": best["capture"], "capture_id": stem(best["path"]),
+                "id": source["id"], "gyms": source.get("gyms") or [],
+                "sessions": len(best["record"].get("entries") or [])})
     if system in reg.CALENDAR:
         last = newest(mine) if mine else None
         if last and reg.calendar_seen(last["record"]):
@@ -107,13 +114,17 @@ def recover(data, run, register_discovered=False):
 
     candidates = collections.defaultdict(list)
     report = collections.defaultdict(list)
+    tally, files = collections.Counter(), set()
     for path in capture_files(run_path):
         rel = reg.relative(data, path)
+        files.add(rel)
         try:
             record = ex.extract(str(path))
         except Exception as exc:  # an unreadable file is reported, never guessed at
             report["unreadable"].append({"capture": rel, "error": str(exc)[:200]})
+            tally[(reg.capture_kind(path), "unreadable")] += 1
             continue
+        tally[(reg.capture_kind(path), record.get("outcome"))] += 1
         url = capture_url(path, record)
         item = {"path": path, "capture": rel, "record": record, "url": url,
                 "kind": reg.capture_kind(path)}
@@ -232,6 +243,28 @@ def recover(data, run, register_discovered=False):
             entry["registered_as"] = sid
         discovered.append(entry)
     report["discovered"] = discovered
+    report["captures"] = [{"kind": kind, "outcome": outcome, "count": count}
+                          for (kind, outcome), count in sorted(tally.items())]
+
+    # Account for every capture file: each is a baseline, a last attempt, an ineligible old
+    # pointer, a discovered or ambiguous capture, unreadable, or listed here with the reason
+    # it was not used, so none drops out of the registry without a trace.
+    used = {(source.get(field) or {}).get("capture") for source in proposed
+            for field in ("baseline", "page_baseline", "last_attempt", "ineligible")}
+    used |= {entry["capture"] for key in ("discovered", "ambiguous", "unreadable")
+             for entry in report.get(key, [])}
+    systems = {source["id"]: source.get("system") for source in proposed}
+    for sid, items in sorted(candidates.items()):
+        for item in items:
+            if item["capture"] in used:
+                continue
+            report["unused"].append({
+                "capture": item["capture"], "id": sid, "kind": item["kind"],
+                "outcome": item["record"].get("outcome"),
+                "reason": ("a %s capture of a %s source" % (item["kind"], systems.get(sid))
+                           if item["kind"] != systems.get(sid) else "an older capture")})
+            used.add(item["capture"])
+    report["accounted"] = {"files": len(files), "accounted": len(used & files)}
     report["findings"] = [{"source_id": sid, "notice": notice, "evidence": evidence}
                           for (sid, notice), evidence in findings.items()]
     return proposed, dict(report)
@@ -241,10 +274,25 @@ def summary(report):
     """Counts a reviewer can check against the evidence."""
     count = collections.Counter
     lines = ["# Baseline recovery", ""]
-    base = count((b["system"], b["slot"], b["outcome"]) for b in report.get("baselines", []))
-    lines += ["Baselines recovered: %d" % sum(base.values())]
+    captures = report.get("captures", [])
+    lines += ["Capture files read: %d" % sum(c["count"] for c in captures)]
+    lines += ["- %s %s: %d" % (c["kind"], c["outcome"], c["count"]) for c in captures]
+    base = count((b["system"], b["slot"], b["outcome"] + (" (dates only)" if b.get("dates_only")
+                                                          else ""))
+                 for b in report.get("baselines", []))
+    lines += ["", "Baselines recovered: %d" % sum(base.values())]
     lines += ["- %s %s %s: %d" % (system, slot, outcome, n)
               for (system, slot, outcome), n in sorted(base.items())]
+    queue = report.get("recapture", [])
+    renamed = [q for q in queue if q["capture_id"] != q["id"]]
+    lines += ["", "Recapture queue: %d Rock Gym Pro calendars whose baseline is a legacy capture "
+              "(dates are evidence; one session was kept per date), %d sessions recorded; %d "
+              "recorded under a capture id that is not the source id" % (
+                  len(queue), sum(q["sessions"] for q in queue), len(renamed))]
+    lines += ["- %s <- %s (%d sessions%s)" % (q["id"], q["capture"], q["sessions"],
+                                             "; capture id %s" % q["capture_id"]
+                                             if q["capture_id"] != q["id"] else "")
+              for q in sorted(queue, key=lambda q: q["id"])]
     lines += ["", "Old pointers kept as ineligible: %d" % len(report.get("ineligible", []))]
     lines += ["- %s: %s" % (i["id"], i["reason"]) for i in report.get("ineligible", [])]
     reasons = count(n["reason"].split(" (")[0] for n in report.get("no_baseline", []))
@@ -255,6 +303,13 @@ def summary(report):
                                        " -> registered as %s" % d["registered_as"]
                                        if d.get("registered_as") else "")
               for d in report.get("discovered", [])]
+    unused = report.get("unused", [])
+    lines += ["", "Matched captures not used as a baseline or last attempt: %d" % len(unused)]
+    lines += ["- %s <- %s (%s %s): %s" % (u["id"], u["capture"], u["kind"], u["outcome"],
+                                          u["reason"]) for u in unused]
+    accounted = report.get("accounted") or {}
+    lines += ["", "Capture files accounted for: %s of %s" % (accounted.get("accounted"),
+                                                          accounted.get("files"))]
     for key in ("ambiguous", "unreadable", "self_compare_failures"):
         lines += ["", "%s: %d" % (key.replace("_", " ").capitalize(), len(report.get(key, [])))]
         lines += ["- %s" % entry for entry in report.get(key, [])]

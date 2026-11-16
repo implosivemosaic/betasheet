@@ -74,6 +74,21 @@ def rgp_page_only(root, run, sid, text=OFFERING, captured_at="2026-11-17T10:00:0
     return folder
 
 
+def rgp_legacy(root, run, sid, days, clicks=None, captured_at="2026-11-12T14:00:00+00:00"):
+    """A Rock Gym Pro capture as the November tool wrote it: no declared coverage, and one
+    session recorded per highlighted date. `clicks` are day lines from clicked dates."""
+    folder = reg.new_attempt_folder(root, run, sid)
+    months = [{"title": title, "available": []} for title in MONTHS]
+    if clicks:
+        months[0].update(available=["26"], clicks=[{"days": list(clicks)}])
+    (folder / (sid + ".rgp.json")).write_text(json.dumps(
+        {"id": sid, "url": RGP, "captured_at": captured_at, "months": months,
+         "series": [{"date_selected": "Date Selected: " + ", ".join(days[0].split(", ")[:2]),
+                     "days": list(days)}] if days else []}))
+    (folder / (sid + ".rgp.txt")).write_text(GRID)
+    return folder
+
+
 def page(folder, name, text, url="https://gym.test/programs"):
     folder.mkdir(parents=True, exist_ok=True)
     meta = {"id": name, "requested_url": url, "final_url": url, "title": "",
@@ -133,12 +148,12 @@ def proposal_entry(root, run, folder, ref, path=None):
     target.write_text(json.dumps(entries))
 
 
-def receipt(root, path, ref, target):
+def receipt(root, path, ref, target, listing_id=104):
     """A row research/apply_record.py appends to a package's applied.json."""
     file = root / path
     rows = json.loads(file.read_text()) if file.exists() else []
-    rows.append({"id": 104, "ref": ref, "sessions": 3, "status": "ok", "title": "Thursday",
-                 "target": target})
+    rows.append({"id": listing_id, "ref": ref, "sessions": 3, "status": "ok",
+                 "title": "Thursday", "target": target})
     file.parent.mkdir(parents=True, exist_ok=True)
     file.write_text(json.dumps(rows))
 
@@ -322,20 +337,22 @@ def test_proposed_needs_a_proposal_that_exists(tmp_path):
                                                 proposal="gym-a/thursday-added")
     assert all(held(root, gym, "w2")[ref]["status"] == "pending" for gym in ("Gym A", "Gym B"))
 
-    # The newest run's copy wins, and a coordinator's prefixed proposal file counts.
+    # A proposal is looked up in one run, and a coordinator's prefixed proposal file counts.
     proposal_entry(root, "w3", "gym-a", "thursday-added")
-    assert reg.find_proposal(root, "gym-a/thursday-added") == {
-        "ref": "gym-a/thursday-added", "file": "runs/w3/gyms/gym-a/proposals.json"}
+    assert reg.find_proposal(root, "gym-a/thursday-added", "w3") == {
+        "ref": "gym-a/thursday-added", "run": "w3", "file": "runs/w3/gyms/gym-a/proposals.json"}
+    assert reg.find_proposal(root, "gym-a/thursday-added", "w1") is None
     proposal_entry(root, "w2", None, "gym-b/coach-swap",
                    path="runs/w2/consolidated/additional-proposals.json")
-    assert reg.find_proposal(root, "gym-b/coach-swap") == {
-        "ref": "gym-b/coach-swap", "file": "runs/w2/consolidated/additional-proposals.json"}
+    assert reg.find_proposal(root, "gym-b/coach-swap", "w2") == {
+        "ref": "gym-b/coach-swap", "run": "w2",
+        "file": "runs/w2/consolidated/additional-proposals.json"}
 
 
 def test_a_proposed_finding_stays_open_and_linked_until_a_receipt_shows_it_published(tmp_path):
     root, ref = changed(tmp_path, gyms=("Gym A", "Gym B"))
     proposal_entry(root, "w2", "gym-a", "thursday-added")
-    link = {"ref": "gym-a/thursday-added", "file": "runs/w2/gyms/gym-a/proposals.json"}
+    link = {"ref": "gym-a/thursday-added", "run": "w2", "file": "runs/w2/gyms/gym-a/proposals.json"}
     done = reg.review(root, ["Gym A"], "wren", "drafted the new Thursday", outcome="proposed",
                       run="w2", proposal="thursday-added")
     assert done == [{"gym": "Gym A", "ref": ref, "status": "proposed", "proposal": link}]
@@ -366,6 +383,83 @@ def test_a_proposed_finding_stays_open_and_linked_until_a_receipt_shows_it_publi
                                                "receipt": "runs/w2/publication/applied.json"}
 
 
+def test_a_receipt_counts_only_for_the_linked_proposals_own_run(tmp_path):
+    """Refs are reused across seasons: another run's `winter-camp` is different work."""
+    root, ref = changed(tmp_path)
+    proposal_entry(root, "w2", "gym-a", "winter-camp")
+    reg.review(root, ["Gym A"], "wren", "drafted the 2027 camp", outcome="proposed", run="w2",
+               proposal="winter-camp")
+
+    def state():
+        [finding] = [f for f in reg.open_findings(root, include_resolved=True)
+                     if f["ref"] == ref]
+        return finding["status"], finding["proposal_state"]
+
+    receipt(root, "runs/w1/publication/applied.json", "gym-a/winter-camp", "prod", 311)
+    receipt(root, "runs/w3/publication/applied.json", "gym-a/winter-camp", "prod", 777)
+    receipt(root, "runs/w2/publication/applied.json", "gym-b/winter-camp", "prod", 402)
+    receipt(root, "runs/w2/publication/applied.json", "winter-camp", "prod", 403)
+    status, proposal_state = state()
+    assert status == "proposed" and proposal_state["state"] == "awaiting publication"
+    assert proposal_state["same_ref_other_runs"] == ["runs/w1/publication/applied.json",
+                                                     "runs/w3/publication/applied.json"]
+
+    receipt(root, "runs/w2/publication/applied.json", "gym-a/winter-camp", "prod", 512)
+    assert state() == ("resolved", {"state": "published", "listing_id": 512,
+                                    "receipt": "runs/w2/publication/applied.json"})
+
+
+def test_a_proposal_is_linked_in_the_findings_run_unless_a_later_run_is_named(tmp_path):
+    root, ref = changed(tmp_path)  # the finding is from w2
+    proposal_entry(root, "w1", "gym-a", "thursday-added")  # an older proposal, same ref
+
+    def refused(**kwargs):
+        try:
+            reg.review(root, ["Gym A"], "wren", "drafted", outcome="proposed", **kwargs)
+        except reg.RegistryError as exc:
+            return str(exc)
+        raise AssertionError("review accepted %r" % kwargs)
+
+    assert "no proposal gym-a/thursday-added in run w2" in refused(
+        run="w2", proposal="thursday-added")
+    assert "run w1 is before the finding's run w2" in refused(
+        refs=[ref], proposal="thursday-added", proposal_run="w1")
+    assert "no run '../w2' under runs/" in refused(refs=[ref], proposal="thursday-added",
+                                                   proposal_run="../w2")
+    assert held(root, "Gym A", "w2")[ref]["status"] == "pending"
+
+    # Held in w2 and carried into w3: the link stays on w2's proposal until it is relinked.
+    proposal_entry(root, "w2", "gym-a", "thursday-added")
+    reg.review(root, ["Gym A"], "wren", "drafted", outcome="proposed", run="w2",
+               proposal="thursday-added")
+    proposal_entry(root, "w3", "gym-a", "thursday-added")
+    receipt(root, "runs/w3/publication/applied.json", "gym-a/thursday-added", "prod", 640)
+    [finding] = [f for f in reg.open_findings(root) if f["ref"] == ref]
+    assert finding["proposal"]["run"] == "w2"
+    assert finding["proposal_state"]["same_ref_other_runs"] == ["runs/w3/publication/applied.json"]
+    done = reg.review(root, ["Gym A"], "dot", "carried into w3", outcome="proposed", refs=[ref],
+                      proposal="thursday-added", proposal_run="w3")
+    assert done[0]["proposal"] == {"ref": "gym-a/thursday-added", "run": "w3",
+                                   "file": "runs/w3/gyms/gym-a/proposals.json"}
+    assert [f for f in reg.open_findings(root) if f["ref"] == ref] == []
+
+
+def test_findings_from_several_runs_need_the_proposal_run_named(tmp_path):
+    root, first = changed(tmp_path)
+    rgp(root, "w3", "src", WEEK2 + ["Thu, December 17, 6 PM to 7 PM"])
+    second = reg.ingest(root, "w3", "src", "test")["findings"][0]
+    proposal_entry(root, "w3", "gym-a", "thursdays")
+    try:
+        reg.review(root, ["Gym A"], "wren", "both", outcome="proposed", refs=[first, second],
+                   proposal="thursdays")
+        raise AssertionError("review accepted findings from two runs without --proposal-run")
+    except reg.RegistryError as exc:
+        assert "come from runs w2, w3" in str(exc)
+    done = reg.review(root, ["Gym A"], "wren", "both", outcome="proposed", refs=[first, second],
+                      proposal="thursdays", proposal_run="w3")
+    assert sorted(row["ref"] for row in done) == sorted([first, second])
+
+
 def test_a_withdrawn_proposal_is_settled_by_disposing_the_finding_again(tmp_path):
     root, ref = changed(tmp_path)
     proposal_entry(root, "w2", "gym-a", "thursday-added")
@@ -391,7 +485,7 @@ def test_the_findings_command_shows_the_proposal_a_finding_waits_on(tmp_path):
 
     proposal_entry(root, "w2", "gym-a", "thursday-added")
     code, out, _ = cli(*data, *review, "--proposal", "thursday-added")
-    assert code == 0 and "%s  Gym A: proposed -> gym-a/thursday-added" % ref in out
+    assert code == 0 and "%s  Gym A: proposed -> gym-a/thursday-added (run w2)" % ref in out
     code, out, _ = cli(*data, "findings", "--gym", "Gym A")
     assert code == 0
     assert ("  proposal: gym-a/thursday-added in runs/w2/gyms/gym-a/proposals.json, "
@@ -440,7 +534,7 @@ def test_incomplete_coverage_never_advances_even_when_the_comparison_is_unchange
 
     rgp(root, "w2", "src", [], read=1)  # one of three months
     out = reg.ingest(root, "w2", "src", "test")
-    assert not out["eligible"] and "coverage incomplete" in out["blocked"]
+    assert not out["eligible"] and "read 1 of 3 requested months" in out["blocked"]
     assert reg.close(root, "w2")[0]["src"]["advanced"] is None
     assert entry(root)["baseline"] == before
 
@@ -479,9 +573,8 @@ def test_a_page_only_read_moves_the_page_baseline_and_keeps_the_calendar(tmp_pat
     rgp_page_only(root, "w2", "src")
     out = reg.ingest(root, "w2", "src", "test")
     assert out["baseline"]["slot"] == "page_baseline" and out["calendar_observed"] is False
-    news = held(root, "Gym A", "w2")[out["findings"][0]]  # text the calendar read lacked
-    assert news["summary"].startswith("Calendar not shown this run, and the offering page has")
-    assert news["evidence"] == [calendar["capture"], out["capture"]]
+    assert out["verdict"]["status"] == "new-baseline"
+    assert out["findings"] == []  # the first page read sets the page baseline; nothing to compare
     results, _, gaps = reg.close(root, "w2")
     assert results["src"]["advanced"] == "page_baseline"
     record = entry(root)
@@ -510,6 +603,93 @@ def test_a_page_only_read_moves_the_page_baseline_and_keeps_the_calendar(tmp_pat
     record = entry(root)
     assert record["calendar_gap"] is None and record["baseline"]["run"] == "w4"
     assert record["page_baseline"]["run"] == "w3"
+
+
+def test_a_live_page_only_capture_sets_the_page_baseline(tmp_path):
+    """The shape tools/rgp.py writes when no calendar panel rendered: a web-page block."""
+    root = registry(tmp_path, source())
+    calendar = first_run(root)
+    folder = reg.new_attempt_folder(root, "w2", "src")
+    (folder / "src.rgp.json").write_text(json.dumps(
+        {"id": "src", "url": RGP, "captured_at": "2026-11-17T10:00:00+00:00", "months": [],
+         "series": [], "notes": [], "coverage": coverage.page(len(OFFERING.splitlines()))}))
+    (folder / "src.rgp.txt").write_text(OFFERING)
+    out = reg.ingest(root, "w2", "src", "test")
+    assert (out["outcome"], out["evidence"], out["eligible"]) == ("read", "page-only", True)
+    assert out["findings"] == []
+    assert reg.close(root, "w2")[0]["src"]["advanced"] == "page_baseline"
+    assert entry(root)["baseline"] == calendar and entry(root)["calendar_gap"]["since_run"] == "w2"
+
+
+def test_a_legacy_calendar_compares_by_date_and_lists_its_slots_to_reconcile(tmp_path):
+    root = registry(tmp_path, source())
+    rgp_legacy(root, "w1", "src", ["Thu, November 26, 6 PM to 7 PM",
+                                   "Thu, December 3, 6 PM to 7 PM",
+                                   "Thu, December 10, 6 PM to 7 PM"])
+    reg.ingest(root, "w1", "src", "test")
+    reg.close(root, "w1")
+    assert entry(root)["baseline"]["slot_coverage"] == "dates-only"
+    assert [q["source_id"] for q in reg.recapture_queue(reg.load(root))] == ["src"]
+    assert reg.read_json(reg.run_dir(root, "w1") / "close.json")["recapture"][0]["source_id"] == "src"
+
+    # Read in full: two more slots on 26 November, 10 December gone, 17 December new.
+    rgp(root, "w2", "src", ["Thu, November 26, 4 PM to 5 PM", "Thu, November 26, 6 PM to 7 PM",
+                            "Thu, November 26, 8 PM to 9 PM", "Thu, December 3, 6 PM to 7 PM",
+                            "Thu, December 17, 6 PM to 7 PM"])
+    out = reg.ingest(root, "w2", "src", "test")
+    verdict = out["verdict"]
+    assert verdict["status"] == "changed"
+    assert [(e["date"], e["start"]) for e in verdict["changes"]["added"]] == [("2026-12-17", "18:00")]
+    assert [(e["date"], e["start"]) for e in verdict["changes"]["removed"]] == [
+        ("2026-12-10", "18:00")]
+    assert [(e["date"], e["start"]) for e in verdict["slots_to_reconcile"]] == [
+        ("2026-11-26", "16:00"), ("2026-11-26", "20:00")]
+    found = {f["kind"]: f for f in (held(root, "Gym A", "w2")[r] for r in out["findings"])}
+    assert found["source_change"]["summary"] == (
+        "Calendar changed: 1 session(s) added: 2026-12-17 18:00-19:00; "
+        "1 no longer listed: 2026-12-10 18:00-19:00.")
+    assert found["source_first_read"]["summary"].startswith(
+        "Time slots read in full for the first time: 2 session(s) on 1 date(s) from 2026-11-26")
+    reg.close(root, "w2")
+    assert "slot_coverage" not in entry(root)["baseline"]
+    assert reg.recapture_queue(reg.load(root)) == []
+
+
+def test_extra_slots_alone_leave_a_legacy_calendar_unchanged(tmp_path):
+    root = registry(tmp_path, source())
+    rgp_legacy(root, "w1", "src", ["Thu, November 26, 6 PM to 7 PM"])
+    reg.ingest(root, "w1", "src", "test")
+    reg.close(root, "w1")
+    full = ["Thu, November 26, 6 PM to 7 PM", "Thu, November 26, 8 PM to 9 PM"]
+
+    rgp(root, "w2", "src", full, read=2)  # partial: the slots are provisional, nothing moves
+    out = reg.ingest(root, "w2", "src", "test")
+    assert out["verdict"]["status"] == "incomplete" and out["verdict"]["provisional"]
+    [finding] = [held(root, "Gym A", "w2")[r] for r in out["findings"]]
+    assert finding["provisional"] and finding["summary"].startswith("Partial capture (")
+    assert reg.close(root, "w2")[0]["src"]["advanced"] is None
+
+    rgp(root, "w3", "src", full)
+    out = reg.ingest(root, "w3", "src", "test")
+    assert out["verdict"]["status"] == "unchanged"
+    assert [held(root, "Gym A", "w3")[r]["kind"] for r in out["findings"]] == ["source_first_read"]
+    assert reg.close(root, "w3")[0]["src"]["advanced"] == "baseline"
+
+
+def test_clicked_days_with_no_times_need_declared_coverage_to_be_a_baseline(tmp_path):
+    root = registry(tmp_path, source())
+    rgp_legacy(root, "w1", "src", [],
+               clicks=["Sorry, but there are no available times for Thu, November 26"])
+    out = reg.ingest(root, "w1", "src", "test")
+    assert out["evidence"] == "clicked-no-times" and not out["eligible"]
+    assert "proves neither an empty calendar nor a complete read" in out["blocked"]
+    results, _, gaps = reg.close(root, "w1")
+    assert results["src"]["advanced"] is None and entry(root)["baseline"] is None
+    assert [gap["source_id"] for gap in gaps] == ["src"]
+
+    record = {"outcome": "read", "evidence": "clicked-no-times",
+              "coverage": {"complete": True, "recovered": False}}
+    assert reg.eligible(record, "rockgympro")  # declared, complete coverage is enough
 
 
 def test_a_calendar_seen_for_the_first_time_after_page_reads_is_a_first_read(tmp_path):
@@ -613,8 +793,25 @@ def test_recovery_keeps_only_captures_that_prove_what_they_read(tmp_path):
              last_copy=old + "shell.norm.txt", last_checked="2026-11-12"),
         dict(source("ig", url="https://www.instagram.com/gymhandle/", kind="instagram"),
              last_copy=old + "ig-gymhandle.md"),
-        source("notice", url="https://gym.test/b", kind="web page"))
+        source("notice", url="https://gym.test/b", kind="web page"),
+        dict(source("legacy", url="https://app.rockgympro.com/b/?bo=legacy"),
+             last_copy=old + "rgpS-legacy-1.rgp.json"),
+        source("notimes", url="https://app.rockgympro.com/b/?bo=notimes"))
     evidence.mkdir(parents=True)
+    for name, url, series, clicks in (
+            ("rgpS-legacy-1", "bo=legacy", ["Thu, November 26, 6 PM to 7 PM",
+                                            "Thu, December 3, 6 PM to 7 PM"], None),
+            ("notimes", "bo=notimes", [],
+             ["Sorry, but there are no available times for Thu, November 26"])):
+        months = [{"title": title, "available": []} for title in MONTHS]
+        if clicks:
+            months[0].update(available=["26"], clicks=[{"days": clicks}])
+        (evidence / (name + ".rgp.json")).write_text(json.dumps(
+            {"id": name, "url": "https://app.rockgympro.com/b/?" + url,
+             "captured_at": "2026-11-12T14:00:00+00:00", "months": months,
+             "series": [{"date_selected": "Date Selected: Thu, November 26", "days": series}]
+             if series else []}))
+        (evidence / (name + ".rgp.txt")).write_text(GRID)
     (evidence / "cal.rgp.json").write_text(json.dumps(
         {"id": "cal", "url": "https://app.rockgympro.com/b/?bo=cal",
          "captured_at": "2026-11-12T14:00:00+00:00",
@@ -667,6 +864,17 @@ def test_recovery_keeps_only_captures_that_prove_what_they_read(tmp_path):
             "evidence": [old + "notice.meta.json"]} in report["findings"]
     assert by_id["camp"]["system"] == "redpoint" and by_id["camp"]["gyms"] == ["Gym A"]
     assert by_id["camp"]["baseline"]["outcome"] == "read"
+    assert by_id["legacy"]["baseline"]["slot_coverage"] == "dates-only"
+    assert report["recapture"] == [{"capture": old + "rgpS-legacy-1.rgp.json",
+                                    "capture_id": "rgpS-legacy-1", "id": "legacy",
+                                    "gyms": ["Gym A"], "sessions": 2}]
+    assert "slot_coverage" not in by_id["cal"]["baseline"]  # an empty grid has no slots
+    assert by_id["notimes"]["baseline"] is None
+    assert "proves neither" in by_id["notimes"]["calendar_gap"]["reason"]
+    assert sum(c["count"] for c in report["captures"]) == 9  # every capture file is counted
+    assert report["accounted"] == {"files": 9, "accounted": 9}
+    assert "legacy <- %srgpS-legacy-1.rgp.json (2 sessions; capture id rgpS-legacy-1)" % old \
+        in rec.summary(report)
     for record in proposed:
         assert not {"last_copy", "fingerprint", "last_checked"} & set(record)
     assert reg.load(root)[0]["last_copy"] == old + "cal.rgp.json"  # nothing written
