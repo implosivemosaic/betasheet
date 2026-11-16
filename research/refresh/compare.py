@@ -107,6 +107,12 @@ def _incomplete(baseline, current, reason, notes=()):
 def compare_source(baseline, current):
     """The one function the registry calls. Never writes; returns a verdict."""
     if baseline is None:
+        # No baseline yet. A capture that cannot be a baseline does not create one, so a
+        # failed first attempt leaves the source unbaselined rather than "new".
+        if not _eligible(current):
+            return _incomplete(baseline, current, "capture-not-verified",
+                               ["first capture is not baseline-eligible"] +
+                               list(current.get("notes") or []))
         return _verdict(current, NEW, fingerprint_basis=None)
 
     if not _eligible(baseline):

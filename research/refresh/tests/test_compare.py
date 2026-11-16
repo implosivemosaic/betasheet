@@ -234,6 +234,12 @@ def test_an_incomplete_baseline_is_not_compared_against():
     assert compare.compare_source(before, after)["status"] == "incomplete"
 
 
+def test_a_failed_first_capture_does_not_create_a_baseline():
+    verdict = compare.compare_source(None, social([], outcome="failed", complete=False))
+    assert verdict["status"] == "incomplete"
+    assert verdict["coverage"]["met"] is False
+
+
 def test_no_baseline_sets_one_without_claiming_a_change():
     verdict = compare.compare_source(None, calendar([entry("2026-11-20")]))
     assert verdict["status"] == "new-baseline"
