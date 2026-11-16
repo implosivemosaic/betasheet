@@ -66,7 +66,10 @@ November fields `last_copy`, `fingerprint`, `last_checked` and `coverage_note` a
   calendar nor a complete read.
 - `anchor` (social baselines) is the newest post a later capture must read back to.
 - `ineligible` keeps a November pointer that failed validation, for history. It is never
-  compared and is cleared when a real calendar or page baseline replaces it.
+  compared and is cleared when a real **calendar** baseline replaces it. A page-only read
+  leaves it in place: the source still has no calendar, so that record is still the only
+  explanation of why it has no baseline. History is kept for longer than it is needed, and
+  is never lost.
 - `aliases` holds only verified alternative URLs. Similar URLs are never merged.
 
 ## A finding
@@ -138,6 +141,12 @@ whatever the weekly runs have moved since. A dry run (`--out DIR`) still runs, a
 the registry untouched. Existing `ineligible` records are carried through a rerun: they are
 the only record of what the November run failed to read, and a recovered registry no longer
 has the pointer to rebuild them from.
+
+After baselines advance, a dry run is a **view of the November data**, not a preview of what
+applying would do: it rebuilds every baseline from the November captures, so a source a
+weekly run has since advanced comes back rewound. Nothing can apply that — only `--apply`
+writes, and it refuses — but nobody should read its `--out` registry as current state. Its
+single use is to preview the migration before it is applied.
 
 ## The rules
 

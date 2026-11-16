@@ -184,7 +184,7 @@ def recover(data, run, register_discovered=False):
         source.setdefault("aliases", [])
         # A record the earlier run marked as an unusable capture is history: it is the
         # only explanation of why a source has no baseline. Rerunning recovery over an
-        # already-recovered checkout has no `last_capture` field left to rediscover that
+        # already-recovered checkout has no `last_copy` field left to rediscover that
         # reason from, so the value carries forward rather than being reset to nothing.
         source["ineligible"] = source.get("ineligible")
         source["last_attempt"] = None
