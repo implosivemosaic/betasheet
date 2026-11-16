@@ -5,7 +5,8 @@ Two kinds of state carry from one run to the next, and they never stand in for e
 - **Baselines**, in `betasheet-data/betasheet/sources.json`: for each source, the last capture
   that read it in full. The next capture is compared with it.
 - **Findings**, in each gym's `runs/<run>/gyms/<gym>/decisions.json`: every change, first read
-  and notice a comparison turned up, pending until that gym resolves it.
+  and notice a comparison turned up, unresolved until that gym settles it (a `proposed` finding
+  stays unresolved until its proposal is published).
 
 A baseline moves as soon as a capture qualifies; it never waits for anyone's review. That is
 safe because the change it moves past was saved as a finding first. A finding stays pending
@@ -66,6 +67,10 @@ collector's own records:
  "dispositions": []}
 ```
 
+A gym's `proposed` disposition adds `"status": "proposed"` and
+`"proposal": {"ref": "boulderz-climbing-toronto/winter-youth-camp", "file": "runs/2026-11-19/gyms/boulderz-climbing-toronto/proposals.json"}`
+to the record, and the same link to its entry in `dispositions`.
+
 Kinds: `source_change` (page text, calendar sessions or posts changed; `provisional` when a
 capture fell short of its coverage but still showed something new), `source_first_read` (a
 source's first accepted read, to reconcile with the catalogue) and `source_notice` (the source
@@ -84,7 +89,7 @@ runs/<run>/sources/<id>/   the source's capture for this run, whichever gym need
   verdict.json             the current attempt's outcome, the baseline it was compared with,
                            compare_source(...) unedited, and the refs of the findings it saved
 runs/<run>/gyms/<gym>/     the collector's write-up, as now, plus the registry's findings
-runs/<run>/close.json      what moved, the calendar gaps, and every pending finding from every run
+runs/<run>/close.json      what moved, the calendar gaps, and every unresolved finding from every run
 ```
 
 A shared source is captured once per run: capturing it again while an eligible capture
@@ -97,7 +102,7 @@ refresh.py capture  <id> --run R --session S --by NAME [--force]
 refresh.py ingest   <id> --run R --by NAME        compare a capture already saved in the folder
 refresh.py findings [--gym G] [--source ID] [--all]
 refresh.py review   (--gym G ... | --all-gyms) (--run R [--source ID ...] | --finding REF ...)
-                    --outcome proposed|no-change|held --by NAME --note TEXT [--ref PROPOSAL]
+                    --outcome no-change|held|proposed [--proposal GYM/REF] --by NAME --note TEXT
 refresh.py status   --run R [--gym G]
 refresh.py close    --run R [--dry-run]
 refresh.py register <url> --gym G --type T
@@ -117,11 +122,21 @@ again before anything else, so a finding a collector's edit dropped is restored.
 
 Otherwise every baseline stands and `close` says why. `last_attempt` is recorded either way.
 
-**Resolving.** Each gym disposes of its own record: `proposed` and `no-change` resolve it,
-`held` keeps it pending with the note. A review is bound to a capture: naming a run's sources
-touches only findings from each source's current capture there, so a recapture needs its own
-review, and findings from earlier captures or runs are named by ref. `--all-gyms` touches only
-records no gym has disposed of, so it never overrides one gym's own entry.
+**Resolving.** Each gym disposes of its own record. `no-change` resolves it and `held` keeps it
+pending with the note. `proposed` must name the proposal that carries the work as
+`<gym-folder>/<ref>` (the bare ref when one gym is named), and that proposal must exist in a
+run's proposal files: the gym's own `proposals.json`, or a coordinator's file of prefixed refs.
+The finding then keeps that link and stays unresolved until a production receipt records the
+proposal published: a row in an `applied.json` with that ref, `target: prod` and `status: ok`,
+as `research/apply.sh prod` writes it. `findings` shows each link and whether its proposal is
+awaiting publication. A held proposal leaves its finding open; a withdrawn or declined one is
+settled by disposing the finding again by ref. The gyms of a shared source may all point at
+one proposal.
+
+A review is bound to a capture: naming a run's sources touches only pending findings from each
+source's current capture there, so a recapture needs its own review, and findings from earlier
+captures or runs are named by ref. `--all-gyms` touches only records no gym has disposed of, so
+neither kind of review overrides a gym's own entry or a proposed link.
 
 ## Writes
 

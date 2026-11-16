@@ -4,12 +4,15 @@ Each case writes a small registry and real capture files, then runs the function
 commands use: ingest (extract + compare + save findings), review, close. Fixtures are
 synthetic, shaped like the capture tools' output.
 """
+import contextlib
+import io
 import json
 import subprocess
 import sys
 
 import coverage
 import recover as rec
+import refresh
 import registry as reg
 
 RGP = "https://app.rockgympro.com/b/?bo=abc"
@@ -116,6 +119,45 @@ def held(root, gym, run=None):
     """The registry findings in a gym's decisions.json, by ref."""
     return {record["ref"]: record for _, record in reg.all_findings(root)
             if record["gym"] == gym and (run is None or record["run"] == run)}
+
+
+def proposal_entry(root, run, folder, ref, path=None):
+    """A proposal as a collector writes it in gyms/<gym>/proposals.json (bare ref), or as the
+    coordinator writes it in another of the run's proposal files (path, prefixed ref)."""
+    target = root / (path or "runs/%s/gyms/%s/proposals.json" % (run, folder))
+    entries = json.loads(target.read_text()) if target.exists() else []
+    entries.append({"ref": ref, "approved": False, "review": "publish", "action": "update",
+                    "id": 104, "gym": "Gym A", "why": "test", "attrs": {}, "evidence": [],
+                    "sessions": None})
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(json.dumps(entries))
+
+
+def receipt(root, path, ref, target):
+    """A row research/apply_record.py appends to a package's applied.json."""
+    file = root / path
+    rows = json.loads(file.read_text()) if file.exists() else []
+    rows.append({"id": 104, "ref": ref, "sessions": 3, "status": "ok", "title": "Thursday",
+                 "target": target})
+    file.parent.mkdir(parents=True, exist_ok=True)
+    file.write_text(json.dumps(rows))
+
+
+def changed(tmp_path, gyms=("Gym A",)):
+    """A source cited by `gyms` whose week-2 capture added a Thursday: (root, finding ref)."""
+    root = registry(tmp_path, source(gyms=gyms))
+    first_run(root)
+    rgp(root, "w2", "src", WEEK2)
+    ref = reg.ingest(root, "w2", "src", "test")["findings"][0]
+    reg.close(root, "w2")
+    return root, ref
+
+
+def cli(*args):
+    out, err = io.StringIO(), io.StringIO()
+    with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+        code = refresh.main(list(args))
+    return code, out.getvalue(), err.getvalue()
 
 
 # ------------------------------------------------------------------------------- identity
@@ -243,14 +285,119 @@ def test_a_review_is_bound_to_the_capture_it_saw(tmp_path):
     second = reg.ingest(root, "w2", "src", "test")["findings"][0]
     assert first != second
 
+    proposal_entry(root, "w2", "gym-a", "both-thursdays")
     done = reg.review(root, ["Gym A"], "wren", "added both Thursdays", outcome="proposed",
-                      run="w2")
+                      run="w2", proposal="both-thursdays")
     assert [row["ref"] for row in done] == [second]
     assert held(root, "Gym A")[first]["status"] == "pending"
     assert (root / held(root, "Gym A")[first]["capture"]).exists()  # never moved
     reg.review(root, ["Gym A"], "wren", "covered by the same proposal", outcome="proposed",
-               refs=[first])
-    assert [f for f in reg.open_findings(root) if f["run"] == "w2"] == []
+               refs=[first], proposal="both-thursdays")
+    assert {f["ref"]: f["status"] for f in reg.open_findings(root) if f["run"] == "w2"} == \
+        {first: "proposed", second: "proposed"}
+
+
+# ------------------------------------------- a proposed finding waits on its proposal
+
+def test_proposed_needs_a_proposal_that_exists(tmp_path):
+    root, ref = changed(tmp_path, gyms=("Gym A", "Gym B"))
+
+    def refused(gyms=("Gym A",), **kwargs):
+        try:
+            reg.review(root, list(gyms), "wren", "drafted", run="w2", **kwargs)
+        except reg.RegistryError as exc:
+            return str(exc)
+        raise AssertionError("review accepted %r" % kwargs)
+
+    assert "needs --proposal" in refused(outcome="proposed")
+    assert "no proposal gym-a/thursday-added" in refused(outcome="proposed",
+                                                         proposal="thursday-added")
+    proposal_entry(root, "w2", "gym-a", "thursday-added")
+    assert "no proposal gym-b/thursday-added" in refused(outcome="proposed",
+                                                         proposal="gym-b/thursday-added")
+    assert "<gym-folder>/<ref>" in refused(gyms=("Gym A", "Gym B"), outcome="proposed",
+                                           proposal="thursday-added")
+    assert "<gym-folder>/<ref>" in refused(outcome="proposed", proposal="../gym-a/x")
+    assert "--outcome proposed only" in refused(outcome="no-change",
+                                                proposal="gym-a/thursday-added")
+    assert all(held(root, gym, "w2")[ref]["status"] == "pending" for gym in ("Gym A", "Gym B"))
+
+    # The newest run's copy wins, and a coordinator's prefixed proposal file counts.
+    proposal_entry(root, "w3", "gym-a", "thursday-added")
+    assert reg.find_proposal(root, "gym-a/thursday-added") == {
+        "ref": "gym-a/thursday-added", "file": "runs/w3/gyms/gym-a/proposals.json"}
+    proposal_entry(root, "w2", None, "gym-b/coach-swap",
+                   path="runs/w2/consolidated/additional-proposals.json")
+    assert reg.find_proposal(root, "gym-b/coach-swap") == {
+        "ref": "gym-b/coach-swap", "file": "runs/w2/consolidated/additional-proposals.json"}
+
+
+def test_a_proposed_finding_stays_open_and_linked_until_a_receipt_shows_it_published(tmp_path):
+    root, ref = changed(tmp_path, gyms=("Gym A", "Gym B"))
+    proposal_entry(root, "w2", "gym-a", "thursday-added")
+    link = {"ref": "gym-a/thursday-added", "file": "runs/w2/gyms/gym-a/proposals.json"}
+    done = reg.review(root, ["Gym A"], "wren", "drafted the new Thursday", outcome="proposed",
+                      run="w2", proposal="thursday-added")
+    assert done == [{"gym": "Gym A", "ref": ref, "status": "proposed", "proposal": link}]
+    reg.review(root, ["Gym B"], "sage", "same Thursday, proposed under Gym A",
+               outcome="proposed", run="w2", proposal="gym-a/thursday-added")
+
+    reg.review(root, [], "linden", "nothing else", outcome="no-change", run="w2", all_gyms=True)
+    reg.review(root, ["Gym A"], "linden", "nothing here", outcome="no-change", run="w2")
+    found = {f["gym"]: f for f in reg.open_findings(root) if f["ref"] == ref}
+    assert set(found) == {"Gym A", "Gym B"}  # neither blanket review touched a proposed record
+    assert found["Gym A"]["status"] == "proposed" and found["Gym A"]["proposal"] == link
+    assert found["Gym A"]["dispositions"][-1]["proposal"] == link
+    assert found["Gym B"]["proposal"] == link
+    assert found["Gym A"]["proposal_state"] == {"state": "awaiting publication"}
+    reg.close(root, "w2")
+    close = reg.read_json(reg.run_dir(root, "w2") / "close.json")
+    assert {(f["gym"], f["proposal"]["ref"]) for f in close["pending_findings"]
+            if f["ref"] == ref} == {("Gym A", link["ref"]), ("Gym B", link["ref"])}
+
+    receipt(root, "runs/w2/validation/applied.json", link["ref"], target="dev")
+    assert len([f for f in reg.open_findings(root) if f["ref"] == ref]) == 2
+    receipt(root, "runs/w2/publication/applied.json", link["ref"], target="prod")
+    assert [f for f in reg.open_findings(root) if f["ref"] == ref] == []
+    done = {f["gym"]: f for f in reg.open_findings(root, include_resolved=True)
+            if f["ref"] == ref}
+    assert done["Gym A"]["status"] == "resolved"
+    assert done["Gym A"]["proposal_state"] == {"state": "published", "listing_id": 104,
+                                               "receipt": "runs/w2/publication/applied.json"}
+
+
+def test_a_withdrawn_proposal_is_settled_by_disposing_the_finding_again(tmp_path):
+    root, ref = changed(tmp_path)
+    proposal_entry(root, "w2", "gym-a", "thursday-added")
+    reg.review(root, ["Gym A"], "wren", "drafted", outcome="proposed", run="w2",
+               proposal="thursday-added")
+    reg.review(root, ["Gym A"], "dot", "withdrawn: the gym cancelled the Thursday",
+               outcome="no-change", refs=[ref])
+    record = held(root, "Gym A", "w2")[ref]
+    assert record["status"] == "resolved" and "proposal" not in record
+    assert [d["outcome"] for d in record["dispositions"]] == ["proposed", "no-change"]
+    assert record["dispositions"][0]["proposal"]["ref"] == "gym-a/thursday-added"
+
+
+def test_the_findings_command_shows_the_proposal_a_finding_waits_on(tmp_path):
+    root, ref = changed(tmp_path)
+    data = ("--data", str(root))
+    review = ("review", "--gym", "Gym A", "--run", "w2", "--outcome", "proposed",
+              "--by", "wren", "--note", "drafted")
+    code, _, err = cli(*data, *review)
+    assert code == 1 and "needs --proposal" in err
+    code, _, err = cli(*data, *review, "--proposal", "thursday-added")
+    assert code == 1 and "no proposal gym-a/thursday-added" in err
+
+    proposal_entry(root, "w2", "gym-a", "thursday-added")
+    code, out, _ = cli(*data, *review, "--proposal", "thursday-added")
+    assert code == 0 and "%s  Gym A: proposed -> gym-a/thursday-added" % ref in out
+    code, out, _ = cli(*data, "findings", "--gym", "Gym A")
+    assert code == 0
+    assert ("  proposal: gym-a/thursday-added in runs/w2/gyms/gym-a/proposals.json, "
+            "awaiting publication") in out
+    assert out.strip().endswith("%d finding(s) unresolved"
+                                % len(reg.open_findings(root, gym="Gym A")))
 
 
 def test_close_saves_a_finding_again_if_an_edit_dropped_it(tmp_path):

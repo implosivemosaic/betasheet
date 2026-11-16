@@ -47,8 +47,12 @@ DECORATION = re.compile(r"^(date|month|utm_[a-z]+|fbclid|gclid|igsh|igshid|__cft
 
 # Findings live beside the collectors' own records in each gym's decisions.json.
 FINDER = "refresh registry"
-PENDING, RESOLVED = "pending", "resolved"
-DISPOSITIONS = {"proposed": RESOLVED, "no-change": RESOLVED, "held": PENDING}
+PENDING, PROPOSED, RESOLVED = "pending", "proposed", "resolved"
+UNRESOLVED = (PENDING, PROPOSED)
+# A `proposed` finding stays unresolved until a production receipt shows its proposal published.
+DISPOSITIONS = {"proposed": PROPOSED, "no-change": RESOLVED, "held": PENDING}
+# A proposal's stable identifier, as publication receipts record it: <gym-folder>/<ref>.
+PROPOSAL_REF = re.compile(r"^([a-z0-9][a-z0-9-]*)/([^/\s]+)$")
 
 
 class RegistryError(Exception):
@@ -589,27 +593,75 @@ def shown_now(data, finding, latest):
     return "no longer shown" if not any(hits) else "partly shown (%d of %d)" % (sum(hits), len(hits))
 
 
-def open_findings(data, gym=None, source_id=None, include_resolved=False):
-    """Pending findings from every run, oldest first, each with where it is shown now."""
+def find_proposal(data, ref):
+    """Where proposal `<gym-folder>/<ref>` is recorded, as {ref, file}: the newest run that
+    holds it, looking first in the gym's own `gyms/<gym>/proposals.json` (bare refs), then in
+    that run's other proposal files (prefixed refs). None when no run has it."""
+    match = PROPOSAL_REF.match(ref or "")
+    if not match:
+        raise RegistryError("name the proposal as <gym-folder>/<ref>, not %r" % ref)
+    folder, bare = match.groups()
     data = pathlib.Path(data)
-    latest, out = {}, []
+    for run in sorted((p for p in (data / "runs").glob("*") if p.is_dir()), reverse=True):
+        own = run / "gyms" / folder / "proposals.json"
+        for path in [own] + sorted(p for p in run.rglob("*proposals.json") if p != own):
+            entries = read_json(path, []) if path.exists() else []
+            for entry in entries if isinstance(entries, list) else []:
+                if isinstance(entry, dict) and (entry.get("ref") == ref or
+                                                (path == own and entry.get("ref") == bare)):
+                    return {"ref": ref, "file": relative(data, path)}
+    return None
+
+
+def publication_receipts(data):
+    """Production receipts by proposal ref. `research/apply_record.py` appends every applied
+    proposal to its package's `applied.json` as {ref, id, status, target}."""
+    out = {}
+    for path in sorted(pathlib.Path(data).glob("runs/**/applied.json")):
+        rows = read_json(path, [])
+        for row in rows if isinstance(rows, list) else []:
+            if isinstance(row, dict) and row.get("target") == "prod" and row.get("status") == "ok":
+                out[row.get("ref")] = {"listing_id": row.get("id"), "receipt": relative(data, path)}
+    return out
+
+
+def open_findings(data, gym=None, source_id=None, include_resolved=False):
+    """Unresolved findings from every run, oldest first, each with where it is shown now. A
+    `proposed` finding carries its proposal and that proposal's state; it resolves when a
+    production receipt records the proposal published."""
+    data = pathlib.Path(data)
+    latest, receipts, out = {}, None, []
     for path, record in all_findings(data):
-        if not include_resolved and record.get("status") != PENDING:
-            continue
         if (gym and record.get("gym") != gym) or (source_id and record.get("source_id") != source_id):
+            continue
+        status, state = record.get("status"), None
+        if status == PROPOSED:
+            if receipts is None:
+                receipts = publication_receipts(data)
+            receipt = receipts.get((record.get("proposal") or {}).get("ref"))
+            state = dict(receipt, state="published") if receipt else {"state": "awaiting publication"}
+            status = RESOLVED if receipt else PROPOSED
+        if not include_resolved and status not in UNRESOLVED:
             continue
         sid = record.get("source_id")
         if sid not in latest:
             latest[sid] = latest_capture(data, sid)
-        out.append(dict(record, file=relative(data, path),
-                        shown_now=shown_now(data, record, latest[sid])))
+        item = dict(record, status=status, file=relative(data, path),
+                    shown_now=shown_now(data, record, latest[sid]))
+        if state:
+            item["proposal_state"] = state
+        out.append(item)
     return out
 
 
 def review(data, gyms, by, note, outcome="no-change", run=None, source_ids=None, refs=None,
-           all_gyms=False, ref=None):
-    """Record gyms' dispositions of pending findings. `proposed` and `no-change` resolve a
-    finding; `held` keeps it pending with the note. Each gym's record is its own.
+           all_gyms=False, proposal=None):
+    """Record gyms' dispositions of their findings. Each gym's record is its own.
+
+    `no-change` resolves a finding and `held` keeps it pending with the note. `proposed` names
+    the proposal that carries the work, `<gym-folder>/<ref>` (the bare ref when one gym is
+    named), which must exist in a run's proposals; the finding keeps that link and stays
+    unresolved until a production receipt records the proposal published.
 
     A disposition is bound to a capture: naming sources touches only findings recorded from
     each source's current capture in `run`, so a recapture needs its own review. Findings
@@ -620,6 +672,21 @@ def review(data, gyms, by, note, outcome="no-change", run=None, source_ids=None,
     if not gyms and not all_gyms:
         raise RegistryError("name the gym(s) the disposition is for, or --all-gyms")
     data = pathlib.Path(data)
+    link = None
+    if outcome == "proposed":
+        if not proposal:
+            raise RegistryError("--outcome proposed needs --proposal: the proposal that carries "
+                                "the work, as <gym-folder>/<ref>")
+        if "/" not in proposal:
+            if all_gyms or len(gyms) != 1:
+                raise RegistryError("name the proposal as <gym-folder>/<ref> when the "
+                                    "disposition covers several gyms")
+            proposal = "%s/%s" % (slug(gyms[0]), proposal)
+        link = find_proposal(data, proposal)
+        if link is None:
+            raise RegistryError("no proposal %s in any run's proposals" % proposal)
+    elif proposal:
+        raise RegistryError("--proposal goes with --outcome proposed only")
     findings = all_findings(data)
     if refs:
         targets = [(path, record) for path, record in findings if record["ref"] in refs]
@@ -655,12 +722,16 @@ def review(data, gyms, by, note, outcome="no-change", run=None, source_ids=None,
                     continue
                 if record.get("status") != PENDING and refs is None:
                     continue
-                record.setdefault("dispositions", []).append(
-                    {"at": now(), "by": by, "outcome": outcome, "note": note, "ref": ref,
-                     "capture_sha256": record.get("capture_sha256")})
+                disposition = {"at": now(), "by": by, "outcome": outcome, "note": note,
+                               "capture_sha256": record.get("capture_sha256")}
+                if link:
+                    disposition["proposal"] = record["proposal"] = link
+                else:
+                    record.pop("proposal", None)
+                record.setdefault("dispositions", []).append(disposition)
                 record["status"] = DISPOSITIONS[outcome]
                 done.append({"gym": record.get("gym"), "ref": record["ref"],
-                             "status": record["status"]})
+                             "status": record["status"], "proposal": link})
             write_json(path, records)
     return done
 
@@ -809,8 +880,9 @@ def close(data, run, dry_run=False):
             results[sid] = {"advanced": row["slot"], "reason": row["reason"],
                             "verdict": verdict.get("status"), "findings": saved.get(sid, [])}
         gaps = calendar_gaps(sources)
-    pending = [{k: f.get(k) for k in ("ref", "gym", "run", "kind", "summary", "capture",
-                                       "shown_now", "file")} for f in open_findings(data)]
+    pending = [{k: f.get(k) for k in ("ref", "gym", "run", "kind", "status", "summary", "capture",
+                                       "shown_now", "proposal", "proposal_state", "file")}
+               for f in open_findings(data)]
     if not dry_run:
         write_json(run_dir(data, run) / "close.json",
                    {"closed_at": now(), "sources": results, "calendar_gaps": gaps,

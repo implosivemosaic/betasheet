@@ -5,7 +5,7 @@
     refresh.py ingest   <id> --run R --by NAME
     refresh.py findings [--gym G] [--source ID] [--all]
     refresh.py review   (--gym G ... | --all-gyms) (--run R [--source ID ...] | --finding REF ...)
-                        --outcome proposed|no-change|held --by NAME --note TEXT [--ref ID]
+                        --outcome no-change|held|proposed [--proposal GYM/REF] --by NAME --note TEXT
     refresh.py status   --run R [--gym G]
     refresh.py close    --run R [--dry-run]
     refresh.py register <url> --gym G [--gym G2] --type T [--id ID]
@@ -60,6 +60,12 @@ def show_finding(finding):
         finding.get("kind"), ", %s" % finding["shown_now"] if finding.get("shown_now") else ""))
     print("  %s" % finding.get("summary"))
     print("  evidence: %s" % ", ".join(finding.get("evidence") or []))
+    if finding.get("proposal"):
+        state = finding.get("proposal_state") or {}
+        print("  proposal: %s in %s, %s" % (
+            finding["proposal"]["ref"], finding["proposal"]["file"],
+            "published as #%s (%s)" % (state.get("listing_id"), state.get("receipt"))
+            if state.get("state") == "published" else state.get("state", "linked")))
 
 
 def main(argv=None):
@@ -94,7 +100,8 @@ def main(argv=None):
     p.add_argument("--outcome", required=True, choices=sorted(reg.DISPOSITIONS))
     p.add_argument("--by", required=True)
     p.add_argument("--note", required=True)
-    p.add_argument("--ref", help="the proposal or decision record that carries the work")
+    p.add_argument("--proposal", help="with --outcome proposed: the proposal that carries the "
+                   "work, <gym-folder>/<ref>, or its bare ref when one --gym is named")
 
     p = sub.add_parser("status")
     p.add_argument("--run", required=True)
@@ -134,13 +141,14 @@ def main(argv=None):
                                       include_resolved=args.all)
             for finding in found:
                 show_finding(finding)
-            print("%d finding(s)%s" % (len(found), "" if args.all else " pending"))
+            print("%d finding(s)%s" % (len(found), "" if args.all else " unresolved"))
         elif args.command == "review":
             done = reg.review(data, args.gym, args.by, args.note, outcome=args.outcome,
                               run=args.run, source_ids=args.source, refs=args.finding,
-                              all_gyms=args.all_gyms, ref=args.ref)
+                              all_gyms=args.all_gyms, proposal=args.proposal)
             for row in done:
-                print("%s  %s: %s" % (row["ref"], row["gym"], row["status"]))
+                print("%s  %s: %s%s" % (row["ref"], row["gym"], row["status"],
+                                        " -> %s" % row["proposal"]["ref"] if row["proposal"] else ""))
             print("%d disposition(s) recorded" % len(done))
         elif args.command == "status":
             rows = reg.plan(data, args.run)
@@ -160,13 +168,13 @@ def main(argv=None):
                 print("not captured in %s: %s" % (args.run, ", ".join(missing) or "none"))
                 gaps = [g["source_id"] for g in reg.calendar_gaps(sources) if args.gym in g["gyms"]]
                 print("calendar gaps: %s" % (", ".join(gaps) or "none"))
-                print("pending findings: %d" % len(reg.open_findings(data, gym=args.gym)))
+                print("unresolved findings: %d" % len(reg.open_findings(data, gym=args.gym)))
         elif args.command == "close":
             results, pending, gaps = reg.close(data, args.run, dry_run=args.dry_run)
             for sid, row in results.items():
                 print("%-48s %-14s %s" % (sid, row["advanced"] or "kept", row["reason"]))
             moved = sum(bool(row["advanced"]) for row in results.values())
-            print("%s%d of %d sources moved a baseline; %d calendar gap(s); %d pending finding(s)"
+            print("%s%d of %d sources moved a baseline; %d calendar gap(s); %d unresolved finding(s)"
                   % ("dry run: " if args.dry_run else "", moved, len(results), len(gaps),
                      len(pending)))
         elif args.command == "register":
