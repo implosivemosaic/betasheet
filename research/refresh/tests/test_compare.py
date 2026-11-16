@@ -210,6 +210,13 @@ def test_a_post_missing_from_the_feed_is_not_seen_not_deleted():
     assert verdict["status"] == "unchanged"
 
 
+def test_a_feed_that_stops_before_the_baseline_post_is_incomplete():
+    verdict = compare.compare_source(social([post("A"), post("B")]),
+                                     social([post("C")]))
+    assert verdict["status"] == "incomplete"
+    assert verdict["coverage"]["reason"] == "anchor-not-reached"
+
+
 def test_two_empty_social_captures_are_incomplete():
     verdict = compare.compare_source(social([], outcome="failed"),
                                      social([], outcome="failed"))

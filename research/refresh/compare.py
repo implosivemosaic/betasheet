@@ -223,7 +223,7 @@ def _compare_page(baseline, current):
 
 # -------------------------------------------------------------------------------- social
 
-def _compare_social(baseline, current):
+def _compare_social(baseline, current, anchor=None):
     before = {p["id"]: p for p in baseline.get("posts") or [] if p.get("id")}
     after = {p["id"]: p for p in current.get("posts") or [] if p.get("id")}
     unidentified = len([p for p in current.get("posts") or [] if not p.get("id")])
@@ -231,6 +231,21 @@ def _compare_social(baseline, current):
     if not before and not after:
         return _incomplete(baseline, current, "no-identifiable-posts",
                            ["neither capture read a post with a stable id"])
+
+    # A feed walk is not an enumeration. Unless this capture reached a post the baseline
+    # already knew, it cannot know what it missed above that point, so it proves nothing
+    # about additions and must not move the baseline.
+    declared = current.get("coverage_social") or {}
+    anchor = anchor or declared.get("anchor_id")
+    if anchor is None:
+        newest = (baseline.get("posts") or [None])[0]
+        anchor = (newest or {}).get("id")
+    if anchor and anchor not in after and not declared.get("anchor_reached"):
+        verdict = _incomplete(baseline, current, "anchor-not-reached",
+                              ["capture did not reach baseline post %s" % anchor])
+        verdict["changes"]["added_posts"] = _public_posts(
+            [after[i] for i in after.keys() - before.keys()])
+        return verdict
 
     added = [after[i] for i in after.keys() - before.keys()]
     not_seen = [before[i] for i in before.keys() - after.keys()]
