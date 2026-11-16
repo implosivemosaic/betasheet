@@ -133,6 +133,67 @@ def _window_months(titles):
     return out
 
 
+def month_key(title):
+    """'November 2026' -> (2026, 11); None when the title is not a month."""
+    parts = _text(title).split()
+    if len(parts) < 2:
+        return None
+    number = _month_number(parts[0])
+    if not number:
+        return None
+    try:
+        return int(parts[1]), number
+    except ValueError:
+        return None
+
+
+def next_month(key):
+    year, month = key
+    return (year + 1, 1) if month == 12 else (year, month + 1)
+
+
+_MONTH_NAMES = ("January February March April May June July August September October "
+                "November December").split()
+
+
+def sequence_problems(titles, months_requested):
+    """Why this run of panels is not the requested window, as a list of strings.
+
+    The window is the `months_requested` months starting at the panel the widget opened
+    on, so a repeat, a hole or a short run each means a month the capture claims to cover
+    was never read. Counting panels answers a different question and hides exactly the
+    failure this checks for.
+    """
+    problems, keys, unreadable = [], [], []
+    for title in titles:
+        key = month_key(title)
+        (keys if key else unreadable).append(key or title)
+    if unreadable:
+        problems.append("month title unreadable: %s" % ", ".join(
+            str(t) for t in unreadable))
+    if not keys:
+        return problems + ["no month was read"]
+
+    seen = {}
+    for index, key in enumerate(keys):
+        if key in seen:
+            problems.append("%s %d appears twice (panels %d and %d)" % (
+                _MONTH_NAMES[key[1] - 1], key[0], seen[key] + 1, index + 1))
+        else:
+            seen[key] = index
+    expected = keys[0]
+    for index in range(1, len(keys)):
+        expected = next_month(expected)
+        if keys[index] != expected:
+            problems.append("expected %s %d after panel %d, read %s %d" % (
+                _MONTH_NAMES[expected[1] - 1], expected[0], index,
+                _MONTH_NAMES[keys[index][1] - 1], keys[index][0]))
+            expected = keys[index]
+    if months_requested is not None and len(keys) < months_requested:
+        problems.append("read %d of %d requested months" % (len(keys), months_requested))
+    return problems
+
+
 def _resolve_year(month, explicit, window):
     """Year for a month, from the capture's own month titles.
 
@@ -147,7 +208,7 @@ def _resolve_year(month, explicit, window):
     return None, "ambiguous"
 
 
-def _session_entries(days, window, cohort=None):
+def _session_entries(days, window=None, cohort=None):
     """Classify `days[]` lines into dated entries, and keep the rest as errors."""
     entries, errors = [], []
     for raw in days:
@@ -168,7 +229,7 @@ def _session_entries(days, window, cohort=None):
         if not month:
             errors.append({"reason": "unparsed", "line": line})
             continue
-        year, source = _resolve_year(month, match.group(3), window)
+        year, source = _resolve_year(month, match.group(3), window or [])
         day = int(match.group(2))
         try:
             when = date(year, month, day) if year else None
@@ -214,17 +275,35 @@ def _dedupe(entries):
 
 
 def _coverage(contract, requested, read, window, inspected, errors,
-              challenge=None, recovered=False):
+              challenge=None, recovered=False, problems=(), days=None,
+              months_observed=()):
     first = last = None
     if window:
         ordered = sorted(window)
         first = f"{ordered[0][0]:04d}-{ordered[0][1]:02d}"
         last = f"{ordered[-1][0]:04d}-{ordered[-1][1]:02d}"
-    complete = bool(read) and (requested is None or read >= requested)
-    return {"contract": contract, "months_requested": requested, "months_read": read,
-            "window": {"first": first, "last": last},
-            "inspected": inspected, "challenge_detected": challenge,
-            "complete": complete, "errors": errors, "recovered": recovered}
+    problems = list(problems)
+    complete = bool(read) and (requested is None or read >= requested) and not problems
+    block = {"contract": contract, "months_requested": requested, "months_read": read,
+             "months_observed": [t for t in months_observed if t],
+             "window": {"first": first, "last": last},
+             "inspected": inspected, "challenge_detected": challenge,
+             "complete": complete, "problems": problems, "errors": errors,
+             "recovered": recovered}
+    if days is not None:
+        block["days"] = days
+    return block
+
+
+# ------------------------------------------------------------------- per-date accounting
+
+def _selected_month_day(text):
+    """(month, day) from 'Date Selected: Sun, November 15'; (None, None) otherwise."""
+    match = re.search(r",\s*([A-Za-z]{3,9})\s+(\d{1,2})\s*$", _text(text or "").strip())
+    if not match:
+        return None, None
+    number = _month_number(match.group(1))
+    return (number, int(match.group(2))) if number else (None, None)
 
 
 # --------------------------------------------------------------------------- Rock Gym Pro
@@ -287,6 +366,108 @@ def _offering_content(text):
     return kept
 
 
+def _derive_month_title(cells):
+    """The month a grid is showing, from the majority of its own day cells.
+
+    PrimeVue's datepicker header is absent in some builds, so a capture may carry cells
+    with no title. Each cell's label states its own date, so the panel's month is a fact
+    the evidence already holds. The spillover flag is not consulted: this build marks the
+    shown month's own days as "other" when a different month was selected.
+    """
+    counts = {}
+    for cell in cells:
+        if not isinstance(cell, dict):
+            continue
+        label = _text(cell.get("label")).strip()
+        match = re.match(r"^([A-Za-z]{3,9})\s+(\d{1,2}),\s*(\d{4})", label)
+        if not match:
+            continue
+        number = _month_number(match.group(1))
+        if not number:
+            continue
+        key = (int(match.group(3)), number)
+        counts[key] = counts.get(key, 0) + 1
+    if not counts:
+        return None, None
+    ordered = sorted(counts.items(), key=lambda item: -item[1])
+    if len(ordered) > 1 and ordered[0][1] == ordered[1][1]:
+        return None, None
+    (year, month), _ = ordered[0]
+    return "%s %d" % (_MONTH_NAMES[month - 1], year), "cells"
+
+
+def _dedupe_errors(errors):
+    """One row per observation. A click is stored twice — in `series` and in `clicks` —
+    and counting both made a single unanswered date look like two parse failures."""
+    seen, out = set(), []
+    for error in errors:
+        key = (error.get("reason"), error.get("line"), error.get("date_selected"))
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(error)
+    return out
+
+
+def _gympro_observations(months, data, window):
+    """One row per highlighted date: the session it showed, or why it showed nothing.
+
+    `clicks` is the single source of truth, because it is the only structure that records
+    the date that was asked about. `series` is a deduplicated second view of the same
+    details: reading both doubled the error rows, and reading only `series` lost the link
+    between a date and its answer, so a date that answered nothing could not be found at
+    all. Captures written before `clicks` existed still fall back to `series`.
+
+    Every highlighted date ends in exactly one place: a session, a "no available times"
+    answer, or the unread list. Nothing is left implicit, so the counts reconcile.
+    """
+    entries, errors, unread = [], [], []
+    tally = {"highlighted": 0, "clicked": 0, "read": 0, "no_available_times": 0}
+    clicks = [click for month in months for click in (month.get("clicks") or [])]
+    highlighted = sum(len(month.get("available") or []) for month in months)
+
+    if not clicks and not highlighted:
+        series_days = [line for series in data.get("series") or []
+                       for line in series.get("days") or []]
+        found, problems = _session_entries(series_days, window)
+        tally["clicked"] = tally["highlighted"] = len(series_days)
+        tally["read"] = len(found)
+        return found, problems, [], tally
+
+    for click in clicks:
+        lines = click.get("days") or []
+        selected = click.get("date_selected")
+        found, problems = _session_entries(lines, window)
+        tally["clicked"] += 1
+        if found:
+            entries.extend(found)
+            tally["read"] += 1
+            continue
+        answered = [p for p in problems if p.get("reason") != "unparsed"]
+        if answered:
+            tally["no_available_times"] += 1
+            for problem in answered:
+                problem["date_selected"] = selected
+                errors.append(problem)
+            continue
+        # Surveyed but unanswered: an empty detail, or nothing but portal chrome. A hole
+        # in the evidence, never an absence of sessions.
+        month, day = _selected_month_day(selected)
+        unread.append({"date_selected": selected, "month": month, "day": day,
+                       "reason": "no session detail was read",
+                       "evidence": [str(line)[:120] for line in lines]})
+
+    # A date the grid offered and no click answered. It cannot be read as empty: the only
+    # thing known about it is that it was never resolved.
+    for _ in range(max(0, highlighted - tally["clicked"])):
+        unread.append({"date_selected": None, "month": None, "day": None,
+                       "reason": "highlighted but never answered",
+                       "evidence": []})
+
+    tally["highlighted"] = max(highlighted, tally["clicked"])
+    return entries, errors, unread, tally
+
+
 def extract_rockgympro(path, rendered_text=None):
     """Read a `*.rgp.json` capture. `rendered_text` is the sibling `.rgp.txt` when saved."""
     data = json.load(open(path))
@@ -295,16 +476,12 @@ def extract_rockgympro(path, rendered_text=None):
     window = _window_months(titles)
     declared = data.get("coverage") if isinstance(data.get("coverage"), dict) else {}
 
-    days = [line for series in data.get("series") or []
-            for line in series.get("days") or []]
-    for month in months:
-        for click in month.get("clicks") or []:
-            days.extend(click.get("days") or [])
-    entries, errors = _session_entries(days, window)
+    entries, errors, unread, tally = _gympro_observations(months, data, window)
     entries = _dedupe(entries)
+    errors = _dedupe_errors(errors)
 
     available = [day for month in months for day in month.get("available") or []]
-    clicks = sum(len(month.get("clicks") or []) for month in months)
+    clicks = tally["clicked"]
     inspected = declared.get("inspected") or {}
     cells = sum(len(month.get("cells") or []) for month in months)
     declared_cells = sum(int(m.get("cells_parsed") or 0)
@@ -338,15 +515,32 @@ def extract_rockgympro(path, rendered_text=None):
                  if grid_seen else ["month titles without evidence the grid was read"])
 
     requested = declared.get("months_requested")
-    if requested is not None and len(months) < requested and outcome == READ:
+    # Problems are derived here from the capture's own structures, not copied from its
+    # declarations: one wording, one place, and nothing stated twice. A page-only capture
+    # has no window to be incomplete about, so it has no calendar problems at all.
+    problems = []
+    if months:
+        problems += [p for p in sequence_problems(titles, requested)
+                     if p not in problems]
+    unpainted = sum(int(m.get("unpainted") or 0) for m in months if isinstance(m, dict))
+    if unpainted:
+        problems.append("%d day cell(s) were never painted; their availability is "
+                        "unknown, not empty" % unpainted)
+    if unread:
+        problems.append("%d highlighted date(s) returned no session detail"
+                        % len(unread))
+    problems = list(dict.fromkeys(problems))
+    if problems and outcome in (READ, READ_EMPTY):
         outcome = PARTIAL
-        notes.append("read %d of %d requested months" % (len(months), requested))
+        notes += problems
     notes += [str(n) for n in data.get("notes") or []]
 
     calendar_observed = bool(months)
     coverage_block = _coverage("calendar-3-months", requested, len(months), window,
                                inspected, [e["reason"] for e in errors],
-                               recovered=not declared)
+                               recovered=not declared, problems=problems,
+                               days=dict(tally, unread=len(unread)),
+                               months_observed=titles)
     if not calendar_observed:
         coverage_block = _coverage("web-page", None, 1 if page["readable"] else 0, [],
                                    {"lines": page["lines"]}, [],
@@ -362,6 +556,7 @@ def extract_rockgympro(path, rendered_text=None):
         "window": {"months": [f"{y:04d}-{m:02d}" for y, m in window],
                    "read": len(months)},
         "entries": entries, "errors": errors, "cells": None, "notes": notes,
+        "unread": unread, "days": dict(tally, unread=len(unread)),
         "path": os.path.basename(path),
     }
 
@@ -381,13 +576,20 @@ def extract_redpoint(path, rendered_text=None):
     declared = data.get("coverage") if isinstance(data.get("coverage"), dict) else {}
 
     cells, titles, states = [], [], []
+    resolved = []
     for month in months:
         if not isinstance(month, dict) or "cells" not in month:
+            resolved.append(dict(month))
             continue
         cells.extend(month.get("cells") or [])
-        if month.get("title"):
-            titles.append(month["title"])
+        title = month.get("title")
+        if not title:
+            title, _ = _derive_month_title(month.get("cells") or [])
+            month = dict(month, title=title)
+        titles.append(title)
         states.extend(month.get("available") or [])
+        resolved.append(month)
+    months = resolved
     window = _window_months(titles)
 
     entries, errors = [], []
@@ -454,14 +656,16 @@ def extract_redpoint(path, rendered_text=None):
 
     requested = declared.get("months_requested")
     read = len([m for m in months if isinstance(m, dict) and "cells" in m])
-    if requested is not None and read < requested and outcome == READ:
+    problems = sequence_problems(titles, requested) if calendar_observed else []
+    if problems and outcome in (READ, READ_EMPTY):
         outcome = PARTIAL
-        notes.append("read %d of %d requested months" % (read, requested))
+        notes += problems
     notes += [str(n) for n in data.get("notes") or []]
 
     coverage_block = _coverage("calendar-3-months", requested, read, window,
                                declared.get("inspected") or {}, [],
-                               recovered=not declared)
+                               recovered=not declared, problems=problems,
+                               months_observed=titles)
     if not calendar_observed:
         coverage_block = _coverage("web-page", None, 1 if page["readable"] else 0, [],
                                    {"lines": page["lines"]}, [],

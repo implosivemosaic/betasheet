@@ -5,6 +5,7 @@ wrong: a calendar that never rendered, a plan-inactive page, a soft 404 inside f
 chrome, and prose that merely says "not found".
 """
 import json
+import pathlib
 
 import extract
 
@@ -117,9 +118,9 @@ def test_short_read_is_partial_not_read(tmp_path):
 
 
 def test_series_and_clicks_yield_the_same_entry(tmp_path):
+    # A pre-`clicks` capture keeps its details only in `series`.
     via_series = extract.extract(rgp(
-        tmp_path, name="a",
-        months=[month("November 2026", available=["13"])],
+        tmp_path, name="a", months=[month("November 2026")],
         series=[{"days": ["Thu, November 13, 6:30 PM to 7:30 PM"]}]))
     via_clicks = extract.extract(rgp(
         tmp_path, name="b",
@@ -129,8 +130,19 @@ def test_series_and_clicks_yield_the_same_entry(tmp_path):
     assert via_series["entries"][0]["date"] == "2026-11-13"
 
 
+def test_a_highlighted_date_with_no_click_is_unread_not_empty(tmp_path):
+    # The grid offered the 13th and nothing asked about it: the capture knows only that
+    # the date was never resolved, so it is a gap rather than an absence of sessions.
+    record = extract.extract(rgp(tmp_path, months=[month("November 2026", available=["13"])],
+                                 txt=GRID))
+    assert record["outcome"] == extract.PARTIAL
+    assert record["entries"] == []
+    assert record["days"]["unread"] == 1
+    assert record["coverage"]["complete"] is False
+
+
 def test_year_comes_from_the_month_title(tmp_path):
-    path = rgp(tmp_path, months=[month("January 2027", available=["7"])],
+    path = rgp(tmp_path, months=[month("January 2027")],
                series=[{"days": ["Day #1: Thu, Jan 7, 4:30 PM to 6:30 PM"]}])
     entry = extract.extract(path)["entries"][0]
     assert (entry["date"], entry["start"], entry["end"]) == ("2027-01-07", "16:30", "18:30")
@@ -436,3 +448,188 @@ def test_a_profile_snippet_becomes_content_but_engagement_text_does_not(tmp_path
     hashes = {p["id"]: p["text_sha"] for p in record["posts"]}
     assert hashes["AAA"] is not None
     assert hashes["BBB"] is None
+
+
+# ------------------------------------------------------- F6: the month sequence is coverage
+
+def rgp_panels(tmp_path, panels, name="cap", txt=GRID):
+    data = {"id": name, "url": "https://app.rockgympro.com/b/?bo=x",
+            "captured_at": "2026-11-17T10:00:00+00:00", "months": panels, "series": []}
+    path = tmp_path / (name + ".rgp.json")
+    path.write_text(json.dumps(data))
+    (tmp_path / (name + ".rgp.txt")).write_text(txt)
+    return str(path)
+
+
+def panel(title, days=(), clicks=()):
+    return {"title": title, "cells_parsed": 35,
+            "headers": ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+            "available": list(days), "clicks": [dict(c) for c in clicks]}
+
+
+def session(selected, line):
+    return {"date_selected": selected, "days": [line]}
+
+
+def test_a_skipped_month_is_a_stated_gap_not_a_complete_read(tmp_path):
+    # November, then January, then February: three panels, three months claimed, and
+    # December never read. This is the live capture's exact shape.
+    record = extract.extract(rgp_panels(tmp_path, [
+        panel("November 2026", ["21"], [session("Date Selected: Sat, November 21",
+                                                "Sat, November 21, 9 AM to 11 AM")]),
+        panel("January 2027", ["9"], [session("Date Selected: Sat, January 9",
+                                              "Sat, January 9, 9 AM to 11 AM")]),
+        panel("February 2027", ["6"], [session("Date Selected: Sat, February 6",
+                                               "Sat, February 6, 9 AM to 11 AM")]),
+    ]))
+    assert record["outcome"] == extract.PARTIAL
+    assert record["coverage"]["complete"] is False
+    assert record["coverage"]["months_observed"] == ["November 2026", "January 2027",
+                                                     "February 2027"]
+    assert any("December 2026" in problem for problem in record["coverage"]["problems"])
+    # The sessions that were read are still reported: a gap is not a reason to lose them.
+    assert len(record["entries"]) == 3
+
+
+def test_a_duplicated_month_is_not_complete(tmp_path):
+    record = extract.extract(rgp_panels(tmp_path, [
+        panel("November 2026", ["13"], [session("Date Selected: Thu, November 13",
+                                                "Thu, November 13, 6 PM to 7 PM")]),
+        panel("November 2026", ["13"], [session("Date Selected: Thu, November 13",
+                                                "Thu, November 13, 6 PM to 7 PM")]),
+        panel("January 2027"),
+    ]))
+    assert record["outcome"] == extract.PARTIAL
+    assert record["coverage"]["complete"] is False
+    assert any("appears twice" in problem for problem in record["coverage"]["problems"])
+
+
+def test_a_contiguous_window_is_complete(tmp_path):
+    record = extract.extract(rgp_panels(tmp_path, [
+        panel("November 2026", ["13"], [session("Date Selected: Thu, November 13",
+                                                "Thu, November 13, 6 PM to 7 PM")]),
+        panel("December 2026", ["4"], [session("Date Selected: Fri, December 4",
+                                               "Fri, December 4, 6 PM to 7 PM")]),
+        panel("January 2027"),
+    ]))
+    assert record["outcome"] == extract.READ
+    assert record["coverage"]["complete"] is True
+
+
+# ------------------------------------------- F7: every highlighted date is accounted for
+
+def test_a_footer_only_response_is_an_unread_date_not_an_empty_one(tmp_path):
+    record = extract.extract(rgp_panels(tmp_path, [
+        panel("November 2026", ["15", "16"], [
+            session("Date Selected: Sun, November 15", "Powered by Rock Gym Pro"),
+            session("Date Selected: Mon, November 16",
+                    "Mon, November 16, 3 PM to 4:30 PM"),
+        ]),
+    ]))
+    assert record["outcome"] == extract.PARTIAL
+    assert record["days"] == {"highlighted": 2, "clicked": 2, "read": 1,
+                              "no_available_times": 0, "unread": 1}
+    assert [e["date"] for e in record["entries"]] == ["2026-11-16"]
+    assert record["unread"][0]["day"] == 15
+    assert record["unread"][0]["month"] == 11
+    assert record["coverage"]["complete"] is False
+
+
+def test_one_click_recorded_twice_is_one_observation(tmp_path):
+    # The same detail appears in `clicks` and in the deduplicated `series`: two views of
+    # one answer, which used to read as two parse errors.
+    answer = session("Date Selected: Sun, November 15", "Powered by Rock Gym Pro")
+    record = extract.extract(rgp_panels(tmp_path, [
+        panel("November 2026", ["15"], [answer]),
+    ]))
+    data = json.load(open(str(tmp_path / "cap.rgp.json")))
+    data["series"] = [{"days": ["Powered by Rock Gym Pro"]}]
+    (tmp_path / "cap.rgp.json").write_text(json.dumps(data))
+    again = extract.extract(str(tmp_path / "cap.rgp.json"))
+    assert record["unread"] == again["unread"]
+    assert len(again["unread"]) == 1
+    assert again["errors"] == []
+
+
+def test_no_available_times_is_an_answer_not_an_unread_date(tmp_path):
+    record = extract.extract(rgp_panels(tmp_path, [
+        panel("November 2026", ["15"], [
+            session("Date Selected: Sun, November 15",
+                    "Sorry, but there are no available times for Sun, November 15")]),
+    ]))
+    assert record["days"]["no_available_times"] == 1
+    assert record["days"]["unread"] == 0
+    assert record["outcome"] == extract.READ
+    assert record["coverage"]["complete"] is True
+
+
+# --------------------------------------------- F6: a Redpoint title derived from its cells
+
+def test_a_redpoint_month_title_is_recovered_from_its_cells(tmp_path):
+    import copy
+    path = rphq(tmp_path, months=[{"cells": [
+        {"label": "November 3, 2026, Full/Closed"}, {"label": "November 4, 2026, Available"},
+        {"label": "November 5, 2026, Full/Closed"}], "available": [
+            "November 4, 2026, Available"]}])
+    record = extract.extract(path)
+    assert record["coverage"]["months_observed"] == ["November 2026"]
+    assert [e["date"] for e in record["entries"]] == ["2026-11-04"]
+
+
+# ------------------------------------- a page-only capture declares page coverage, not a gap
+
+def test_a_live_style_page_only_capture_is_read_not_partial(tmp_path):
+    # The live tool writes what it actually knows: an offering description with no
+    # calendar markup. There is no month sequence to be incomplete about.
+    path = rgp(tmp_path, name="live", txt="\t\nBoulderz Etobicoke\n"
+               "80 The East Mall Unit 9 Etobicoke, ON M8Z 5X1\n"
+               "(416) 255-6676\nhttps://boulderzclimbing.com/\n\n"
+               " Save time!  Log In or Create Profile\nLead Course - Day 2\n\n"
+               "Email us if you are interested and we will schedule a date.\n\n"
+               "Powered by Rock Gym Pro\n")
+    data = json.load(open(path))
+    data["coverage"] = {"contract": "web-page", "months_requested": 1, "months_read": 1,
+                        "window": {"first": None, "last": None},
+                        "inspected": {"lines": 11}, "challenge_detected": None,
+                        "notice": None, "complete": True, "problems": [], "errors": []}
+    pathlib.Path(path).write_text(json.dumps(data))
+    record = extract.extract(path)
+    assert record["outcome"] == extract.READ
+    assert record["evidence"] == "page-only"
+    assert record["calendar_observed"] is False
+    assert record["coverage"]["complete"] is True
+    assert record["coverage"]["problems"] == []
+
+
+def test_a_stale_calendar_coverage_block_cannot_break_a_page_only_read(tmp_path):
+    # Captures written before the fix declared three requested months and no panels.
+    # That is a statement about a window that never existed; the page is still readable.
+    path = rgp(tmp_path, name="stale", txt="\t\nJunction Climbing Centre\n"
+               "1030 Elias Street, Unit 2 London, ON N5W3P6\n519-438-1717\n\n"
+               " Save time!  Log In or Create Profile\nLemurs 3 (born 2017-2020)\n\n"
+               "This is the advanced level development program for kids.\n\n"
+               "Powered by Rock Gym Pro\n")
+    data = json.load(open(path))
+    data["coverage"] = {"contract": "calendar-3-months", "months_requested": 3,
+                        "months_read": 0, "complete": False,
+                        "problems": ["no month was read"], "errors": []}
+    pathlib.Path(path).write_text(json.dumps(data))
+    record = extract.extract(path)
+    assert record["outcome"] == extract.READ
+    assert record["evidence"] == "page-only"
+    assert record["coverage"]["complete"] is True
+
+
+def test_a_live_style_partial_calendar_keeps_its_additions(tmp_path):
+    # The live Rock Gym Pro capture: one highlighted date answered nothing. The read
+    # sessions are still observations, so the record is partial and the comparison keeps
+    # them as provisional additions.
+    record = extract.extract(rgp_panels(tmp_path, [
+        panel("November 2026", ["15", "16"], [
+            session("Date Selected: Sun, November 15", "Powered by Rock Gym Pro"),
+            session("Date Selected: Mon, November 16", "Mon, November 16, 3 PM to 4:30 PM"),
+        ]),
+    ]))
+    assert record["outcome"] == extract.PARTIAL
+    assert [e["date"] for e in record["entries"]] == ["2026-11-16"]
+    assert record["coverage"]["complete"] is False

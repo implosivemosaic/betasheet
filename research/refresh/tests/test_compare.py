@@ -216,6 +216,28 @@ def test_a_calendar_capture_against_a_page_only_baseline_is_a_page_comparison():
     assert verdict["coverage"]["met"] is False
 
 
+def test_an_unread_date_never_produces_a_removal():
+    # The capture clicked 15 November and got a footer where the session list should be.
+    # That is a hole in the evidence, not a cancellation, so the baseline session stays.
+    before = calendar([entry("2026-11-20", "10:00", "11:30"),
+                       entry("2026-11-22", "10:00", "11:30")])
+    after = calendar([entry("2026-11-22", "10:00", "11:30")])
+    after["unread"] = [{"date_selected": "Date Selected: Fri, November 20",
+                        "month": 11, "day": 20, "reason": "no session detail was read"}]
+    verdict = compare.compare_source(before, after)
+    assert verdict["changes"]["removed"] == []
+    assert {"what": "2026-11-20", "reason": "unread-this-capture"} in verdict["suppressed"]
+
+
+def test_a_skipped_month_capture_cannot_be_compared():
+    # Three panels, one of them missing: the capture is partial, so the baseline stands.
+    before = calendar([entry("2026-12-05", "09:00", "10:00")])
+    after = calendar([entry("2026-12-05", "09:00", "10:00")], complete=False)
+    verdict = compare.compare_source(before, after)
+    assert verdict["status"] == "incomplete"
+    assert verdict["coverage"]["reason"] == "coverage-incomplete"
+
+
 def test_incomplete_declared_coverage_cannot_advance_a_baseline():
     # The shrinking-baseline case: a follow-up read fewer posts of the same feed and
     # called itself `read`. Outcome alone would let it look unchanged.
@@ -306,3 +328,49 @@ def test_posts_without_ids_are_reported_not_compared():
     verdict = compare.compare_source(social([post("A")]),
                                      social([post("A"), {"id": None, "text_sha": "x"}]))
     assert any("no stable id" in note for note in verdict["notes"])
+
+
+# ------------------------------------------------- provisional findings from a short read
+
+def test_an_incomplete_capture_still_reports_the_dates_it_read():
+    # December was never read, but the two months that were read are evidence. The
+    # additions are kept for a reviewer; nothing is removed and no baseline moves.
+    before = calendar([entry("2026-11-20", "10:00", "11:30"),
+                       entry("2026-11-22", "10:00", "11:30")])
+    after = calendar([entry("2026-11-20", "10:00", "11:30"),
+                      entry("2026-11-22", "10:00", "11:30"),
+                      entry("2026-11-25", "10:00", "11:30")], complete=False)
+    verdict = compare.compare_source(before, after)
+    assert verdict["status"] == "incomplete"
+    assert verdict["coverage"]["met"] is False
+    assert verdict["fingerprint"] is None
+    assert [a["date"] for a in verdict["changes"]["added"]] == ["2026-11-25"]
+    assert verdict["provisional"] is True
+
+
+def test_an_incomplete_capture_never_reports_a_removal():
+    before = calendar([entry("2026-11-20", "10:00", "11:30"),
+                       entry("2026-11-22", "10:00", "11:30")])
+    after = calendar([entry("2026-11-22", "10:00", "11:30")], complete=False)
+    verdict = compare.compare_source(before, after)
+    assert verdict["changes"]["removed"] == []
+    assert verdict["changes"]["moved"] == []
+    assert verdict["provisional"] is False
+
+
+def test_a_feed_that_stopped_short_still_reports_the_posts_above_it():
+    before = social([post("A"), post("B")])
+    after = social([post("C"), post("A")], complete=False)
+    verdict = compare.compare_source(before, after)
+    assert verdict["status"] == "incomplete"
+    assert [p["id"] for p in verdict["changes"]["added_posts"]] == ["C"]
+    assert verdict["changes"]["not_seen"] == []
+    assert verdict["provisional"] is True
+
+
+def test_an_edited_post_is_provisional_too():
+    before = social([post("A", sha="old"), post("B")], anchor="B", reached=True)
+    after = social([post("A", sha="new")], complete=False)
+    verdict = compare.compare_source(before, after)
+    assert [p["id"] for p in verdict["changes"]["edited_posts"]] == ["A"]
+    assert verdict["provisional"] is True

@@ -104,6 +104,43 @@ def _incomplete(baseline, current, reason, notes=()):
     return verdict
 
 
+def _provisional(baseline, current, reason, notes=()):
+    """An ineligible capture still says what it saw.
+
+    Two different questions hide behind "incomplete". *May this capture move the
+    baseline?* No. *Did it show anything the catalogue might need?* Often yes: dates in
+    the months it did read, posts above a feed it stopped short of. Throwing those away
+    loses a real observation, so they are returned as `provisional` and the registry
+    saves them as findings that a later eligible capture must confirm.
+
+    Only positive observations travel. A removal needs the whole window, and a move needs
+    an unambiguous pairing, so neither is ever claimed from a partial read.
+    """
+    verdict = _incomplete(baseline, current, reason, notes)
+    if not baseline:
+        return verdict
+    try:
+        kind = current.get("type")
+        if kind in ("rockgympro", "redpoint"):
+            seen = _compare_calendar(baseline, current)
+        elif kind == "page":
+            seen = _compare_page(baseline, current)
+        else:
+            seen = _compare_social(baseline, current)
+    except Exception as exc:  # a provisional reading must never mask the real verdict
+        verdict["notes"].append("provisional reading failed: %s" % exc)
+        return verdict
+    for field in ("added", "added_posts", "edited_posts"):
+        verdict["changes"][field] = seen["changes"].get(field) or []
+    verdict["provisional"] = any(verdict["changes"][field]
+                                 for field in ("added", "added_posts", "edited_posts"))
+    if verdict["provisional"]:
+        verdict["notes"].append(
+            "provisional: observed additions from an incomplete capture; "
+            "nothing is removed and no baseline moves")
+    return verdict
+
+
 def compare_source(baseline, current):
     """The one function the registry calls. Never writes; returns a verdict."""
     if baseline is None:
@@ -122,12 +159,12 @@ def compare_source(baseline, current):
                                "complete" if (baseline.get("coverage") or {}).get("complete")
                                else "incomplete")])
     if current.get("outcome") not in ex.BASELINE_OUTCOMES:
-        return _incomplete(baseline, current, "capture-not-verified",
-                           current.get("notes") or [])
+        return _provisional(baseline, current, "capture-not-verified",
+                            current.get("notes") or [])
     if not _eligible(current):
-        return _incomplete(baseline, current, "coverage-incomplete",
-                           list(current.get("notes") or []) +
-                           ["declared coverage was not met, so nothing may be concluded"])
+        return _provisional(baseline, current, "coverage-incomplete",
+                            list(current.get("notes") or []) +
+                            ["declared coverage was not met, so nothing may be concluded"])
 
     kind = current.get("type")
     if kind in ("rockgympro", "redpoint"):
@@ -188,12 +225,22 @@ def _compare_calendar(baseline, current):
     base_map = {_identity(e): e for e in base_future}
     curr_map = {_identity(e): e for e in curr_future}
 
+    # A date the capture clicked but could not read is a hole in the evidence, not an
+    # absence of sessions. Without this, a footer where the session list should be reads
+    # as "the session was cancelled".
+    unread = {(u.get("month"), u.get("day")) for u in current.get("unread") or []
+              if u.get("day") is not None}
+
     added, removed, suppressed = [], [], []
     for key in curr_map.keys() - base_map.keys():
         added.append(curr_map[key])
     for key in base_map.keys() - curr_map.keys():
         entry = base_map[key]
-        if _month_of(entry["date"]) not in window:
+        month_day = (int(entry["date"][5:7]), int(entry["date"][8:10]))
+        if month_day in unread:
+            suppressed.append({"what": entry["date"], "reason": "unread-this-capture",
+                               "entry": entry})
+        elif _month_of(entry["date"]) not in window:
             suppressed.append({"what": entry["date"], "reason": "outside-window",
                                "entry": entry})
         else:
@@ -307,11 +354,8 @@ def _compare_social(baseline, current, anchor=None):
         newest = (baseline.get("posts") or [None])[0]
         anchor = (newest or {}).get("id")
     if anchor and anchor not in after and not declared.get("anchor_reached"):
-        verdict = _incomplete(baseline, current, "anchor-not-reached",
-                              ["capture did not reach baseline post %s" % anchor])
-        verdict["changes"]["added_posts"] = _public_posts(
-            [after[i] for i in after.keys() - before.keys()])
-        return verdict
+        return _provisional(baseline, current, "anchor-not-reached",
+                            ["capture did not reach baseline post %s" % anchor])
 
     added = [after[i] for i in after.keys() - before.keys()]
     not_seen = [before[i] for i in before.keys() - after.keys()]

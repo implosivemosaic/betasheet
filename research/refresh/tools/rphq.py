@@ -8,10 +8,20 @@ Reads the PrimeVue datepicker's day cells (their aria-label carries the state:
 available date, stores the course detail each click reveals, then advances a month.
 Read-only: it never books.
 
-Coverage is recorded per month — requested, read, and the number of day cells parsed —
-so an empty calendar can be told from a page that never rendered. When the portal refuses
-for a reason of its own ("This plan is inactive") the rendered text carries it, and the
-capture keeps that text for the reviewer.
+Two facts make the difference between a capture and a guess:
+
+* **Which month the grid is showing** is read from the cells themselves. The datepicker's
+  header element differs between PrimeVue builds and is often absent, but each day cell
+  states its own date, so the month is the majority of its cells.
+* **Clicking a day can move the grid.** A date belonging to the following month is drawn
+  as spillover in this month's grid; clicking it switches the datepicker to that month.
+  The next "Next Month" then advances from *there*, which silently skips a month. So the
+  panel is restored after clicking, and the capture waits for the month it expects rather
+  than for whatever renders.
+
+Coverage is recorded per month — requested, read, and the day cells parsed — and the
+sequence is checked, so a skipped or duplicated month is a stated problem rather than a
+plausible-looking 3/3.
 """
 import collections
 import datetime
@@ -28,6 +38,11 @@ months = int(sys.argv[5]) if len(sys.argv) > 5 else 4
 out = pathlib.Path(out_dir)
 out.mkdir(parents=True, exist_ok=True)
 
+LOAD_TIMEOUT = "waiting for load state"
+MONTHS = ("January February March April May June July August September October "
+          "November December").split()
+CELL_LABEL = re.compile(r"^([A-Z][a-z]+)\s+(\d{1,2}),\s*(\d{4})")
+
 
 def ab(*args, timeout=120):
     result = subprocess.run(["agent-browser", "--session", session, *args],
@@ -35,9 +50,6 @@ def ab(*args, timeout=120):
     if result.returncode != 0:
         raise RuntimeError("agent-browser %s failed: %s" % (args[0], result.stderr.strip()[:200]))
     return result.stdout.strip()
-
-
-LOAD_TIMEOUT = "waiting for load state"
 
 
 def js(expr):
@@ -64,7 +76,7 @@ CELLS_JS = """(() => {
     .filter(Boolean).slice(0, 7);
   const titleEl = document.querySelector('.p-datepicker-title, [class*=datepicker-title]');
   return JSON.stringify({
-    title: titleEl ? titleEl.innerText.replace(/\s+/g, ' ').trim() : null,
+    title: titleEl ? titleEl.innerText.replace(/\\s+/g, ' ').trim() : null,
     headers: headers,
     cells: tds.map(td => {
       const sp = td.querySelector('span[role=button]') || td;
@@ -98,6 +110,14 @@ NEXT_JS = """(() => {
   return true;
 })()"""
 
+PREV_JS = """(() => {
+  const b = [...document.querySelectorAll('button')].find(
+    b => (b.getAttribute('aria-label') || '') === 'Previous Month');
+  if (!b) return false;
+  b.click();
+  return true;
+})()"""
+
 
 def wait_cells():
     for _ in range(15):
@@ -108,9 +128,53 @@ def wait_cells():
     return {"cells": [], "headers": []}
 
 
-MONTHS = ("January February March April May June July August September October "
-          "November December").split()
-CELL_LABEL = re.compile(r"^([A-Z][a-z]+)\s+(\d{1,2}),\s*(\d{4})")
+def wait_for_change(previous, tries=10):
+    """Wait until the grid is showing a month other than `previous`."""
+    state = {"cells": [], "headers": []}
+    for _ in range(tries):
+        state = wait_cells()
+        title, _ = title_of(state)
+        if title and title != previous:
+            return state
+        ab("wait", "1000")
+    return state
+
+
+def wait_for_month(expected, tries=10):
+    """Wait until the grid shows `expected`.
+
+    If the widget lands somewhere else, return that grid: the caller records the month
+    it actually read, and the coverage sequence check reports the hole. Guessing that we
+    arrived would defeat the purpose of asking.
+    """
+    state = {"cells": [], "headers": []}
+    for _ in range(tries):
+        state = wait_cells()
+        title, _ = title_of(state)
+        if title == expected:
+            return state
+        ab("wait", "1000")
+    return state
+
+
+def restore_panel(title, tries=3):
+    """Undo any month change caused by clicking a day, so `Next` means what it says."""
+    for _ in range(tries):
+        state = wait_cells()
+        current, _ = title_of(state)
+        if current is None or current == title:
+            return state, None
+        target = coverage.month_key(title)
+        here = coverage.month_key(current)
+        if target and here and target < here:
+            js(PREV_JS)
+        else:
+            js(NEXT_JS)
+        ab("wait", "1500")
+    state = wait_cells()
+    current, _ = title_of(state)
+    moved = None if current == title else "clicking a date moved the grid to %s" % current
+    return state, moved
 
 
 def derive_month_title(cells):
@@ -120,8 +184,8 @@ def derive_month_title(cells):
     from the DOM entirely, but every day cell's aria-label carries its full date, so the
     month the grid is showing is a fact the cells already state: it is the month most of
     its cells belong to. `data-p-other-month` is not consulted — this build marks the
-    shown month's own days as "other" when a different month was selected, so trusting
-    the flag shifts the label a month forward. A tie leaves the title unknown.
+    shown month's own days as "other", so trusting the flag shifts the label a month.
+    A tie leaves the title unknown.
     """
     counts = collections.Counter()
     for cell in cells:
@@ -137,28 +201,18 @@ def derive_month_title(cells):
 
 
 def title_of(state):
-    """The month a grid is showing: its header when there is one, else its own cells."""
     if not state or not state.get("cells"):
         return None, None
     return (state.get("title"), "header") if state.get("title") else \
         derive_month_title(state["cells"])
 
 
-def wait_for_next_month(previous, tries=10):
-    """Wait until the grid has actually advanced.
-
-    Clicking "next month" re-renders asynchronously: the previous month's cells are still
-    in the DOM for a moment, and a capture taken then records the same month twice. The
-    transition is only over when the grid's own title changes.
-    """
-    state = {"cells": [], "headers": []}
-    for _ in range(tries):
-        state = wait_cells()
-        title, _ = title_of(state)
-        if title and title != previous:
-            return state
-        ab("wait", "1000")
-    return state
+def expected_after(title):
+    key = coverage.month_key(title)
+    if not key:
+        return None
+    year, month = coverage.next_key(key)
+    return "%s %d" % (MONTHS[month - 1], year)
 
 
 def state_of(label):
@@ -212,17 +266,29 @@ for _ in range(months):
                     break
         result["available"].append(label)
         result["details"][label] = text
+    # Clicking a spillover date switches the grid to that month; put it back so the
+    # advance below is one panel forward from the panel just read.
+    state, moved = restore_panel(title)
+    if moved:
+        result.setdefault("notes", []).append(moved)
     if not js(NEXT_JS):
         break
     ab("wait", "1500")
-    state = wait_for_next_month(title)
+    wanted = expected_after(title)
+    state = wait_for_month(wanted) if wanted else wait_for_change(title)
 
-result["notes"] = [note] if note else []
+result.setdefault("notes", [])
+if note:
+    result["notes"].append(note)
+# A date drawn as spillover in one panel and again in its own panel is one date.
+result["available"] = list(dict.fromkeys(result["available"]))
 result["coverage"] = coverage.calendar(months, result["months"])
 
 raw = js("document.body.innerText") or ""
 (out / (ident + ".rphq.txt")).write_text(raw)
 (out / (ident + ".rphq.json")).write_text(json.dumps(result, indent=1) + "\n")
-print("%s: %d/%d months, %d available dates: %s" % (
-    ident, result["coverage"]["months_read"], months,
-    len(result["available"]), result["available"][:8]))
+print("%s: %d panels %s, %d available: %s%s" % (
+    ident, result["coverage"]["months_read"], result["coverage"]["months_observed"],
+    len(result["available"]), result["available"][:8],
+    "" if result["coverage"]["complete"] else
+    " | NOT COMPLETE: " + "; ".join(result["coverage"]["problems"])))
