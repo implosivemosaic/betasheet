@@ -66,7 +66,12 @@ comparable content at all.
 - Removal is claimed only inside the months the current capture read. Elapsed entries and
   entries from unread months are listed under `suppressed` with a reason.
 - A time change is one `moved` entry when the pairing is unambiguous; several legitimate
-  slots on one date stay `added`/`removed`, flagged `ambiguous_pairing`.
+  slots on one date stay `added`/`removed`, flagged `ambiguous_pairing`. A session whose
+  time the source never announced (`start: null`) is never paired into a move: an unknown
+  time is not evidence of a change, so the two observations stay visible and flagged.
+- Session ordering is total and null-safe: unknown sorts first, so a fingerprint never
+  compares `null` with `"18:30"` and never depends on the order a capture listed things
+  in.
 - Availability (`available → full`, `waitlist`) is reported in `availability_changes`:
   never a schedule change, never a cancellation.
 - Social identity is the post id — Instagram shortcode, Facebook `pcb` post id or `fbid`

@@ -59,6 +59,23 @@ def _window_months(record):
     return set(record.get("window", {}).get("months") or [])
 
 
+def _order_value(value):
+    """Total order for one stored field, with unknown (`None`) first.
+
+    A session whose time was never announced carries `start=None`. Comparing that with
+    `"18:30"` raises, and it raises while building the fingerprint — after the comparison
+    has already decided there is a change, so a complete read crashed and a partial one
+    lost its observations. Comparing the values themselves is not the point: the
+    fingerprint only has to be stable, so unknown sorts first and equal content hashes
+    equal. The values in the payload stay exactly as captured.
+    """
+    return (value is not None, "" if value is None else str(value))
+
+
+def _identity_order(entry):
+    return tuple(_order_value(value) for value in _identity(entry))
+
+
 def _fingerprint(items, basis):
     payload = json.dumps(items, sort_keys=True, ensure_ascii=False)
     return hashlib.sha256(payload.encode()).hexdigest(), basis
@@ -259,17 +276,24 @@ def _compare_calendar(baseline, current):
 
     for slot, (before, after) in by_slot.items():
         if len(before) == 1 and len(after) == 1:
-            if _identity(before[0]) != _identity(after[0]):
-                moved.append({"date": slot[0], "cohort": slot[1],
-                              "from": {"start": before[0].get("start"),
-                                       "end": before[0].get("end")},
-                              "to": {"start": after[0].get("start"),
-                                     "end": after[0].get("end")},
-                              "line": after[0].get("line")})
-                for entry in (before[0], after[0]):
-                    for bucket in (added, removed):
-                        if entry in bucket:
-                            bucket.remove(entry)
+            if _identity(before[0]) == _identity(after[0]):
+                continue
+            if before[0].get("start") is None or after[0].get("start") is None:
+                # An unknown time is not evidence of a time change. Claiming a move here
+                # would both invent a fact and drop the two observations out of
+                # added/removed, so they stay, flagged, for a reviewer.
+                ambiguous.extend([before[0], after[0]])
+                continue
+            moved.append({"date": slot[0], "cohort": slot[1],
+                          "from": {"start": before[0].get("start"),
+                                   "end": before[0].get("end")},
+                          "to": {"start": after[0].get("start"),
+                                 "end": after[0].get("end")},
+                          "line": after[0].get("line")})
+            for entry in (before[0], after[0]):
+                for bucket in (added, removed):
+                    if entry in bucket:
+                        bucket.remove(entry)
         elif before and after:
             for entry in after:
                 if entry in added:
@@ -281,9 +305,16 @@ def _compare_calendar(baseline, current):
     for entry in ambiguous:
         entry["ambiguous_pairing"] = True
 
+    # One stable order for everything a receipt carries. The keys come from set
+    # differences, whose iteration order is not guaranteed across processes, and a
+    # fingerprint that reorders between runs would look like a content change.
+    added.sort(key=_identity_order)
+    removed.sort(key=_identity_order)
+
     # Availability is separate from schedule: same slot, different booking state.
     availability = []
-    for key in curr_map.keys() & base_map.keys():
+    for key in sorted(curr_map.keys() & base_map.keys(),
+                      key=lambda k: tuple(_order_value(part) for part in k)):
         before, after = base_map[key], curr_map[key]
         if before.get("state") != after.get("state"):
             availability.append({"date": after["date"], "start": after.get("start"),
@@ -291,12 +322,15 @@ def _compare_calendar(baseline, current):
                                  "from": before.get("state"), "to": after.get("state")})
 
     fingerprint, basis = _fingerprint(
-        sorted([list(_identity(e)) for e in curr_future]), "future-sessions")
+        [list(_identity(e)) for e in sorted(curr_future, key=_identity_order)],
+        "future-sessions")
 
     changed = bool(added or removed or moved)
     verdict = _verdict(current, CHANGED if changed else UNCHANGED)
     verdict["outcome"]["baseline"] = baseline.get("outcome")
     verdict["fingerprint"], verdict["fingerprint_basis"] = fingerprint, basis
+    moved.sort(key=lambda m: (_order_value(m["date"]), _order_value(m["cohort"]),
+                              _order_value(m["from"].get("start"))))
     verdict["changes"].update({"added": _public(added), "removed": _public(removed),
                                "moved": moved})
     verdict["availability_changes"] = availability

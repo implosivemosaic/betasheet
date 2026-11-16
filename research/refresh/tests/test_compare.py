@@ -374,3 +374,59 @@ def test_an_edited_post_is_provisional_too():
     verdict = compare.compare_source(before, after)
     assert [p["id"] for p in verdict["changes"]["edited_posts"]] == ["A"]
     assert verdict["provisional"] is True
+
+
+# --------------------------------------- sessions whose time the source never announced
+#
+# A course line can name a date and no time at all, so `start` is None. Sorting that
+# against "18:30" raised inside the fingerprint — after the comparison had already found
+# the change. The complete path crashed; the partial path swallowed the exception and
+# dropped the observation. Both are the same bug seen from two sides.
+
+def test_a_session_with_no_announced_time_does_not_break_a_complete_comparison():
+    before = calendar([entry("2026-11-20", "18:30", "20:00")])
+    after = calendar([entry("2026-11-20", None, None, line="Fri, November 20"),
+                      entry("2026-11-20", "18:30", "20:00")])
+    verdict = compare.compare_source(before, after)
+    assert verdict["status"] == "changed"
+    assert [(a["date"], a["start"]) for a in verdict["changes"]["added"]] == [
+        ("2026-11-20", None)]
+    assert verdict["changes"]["added"][0]["line"] == "Fri, November 20"
+    assert verdict["changes"]["moved"] == []
+    assert verdict["fingerprint"]
+
+
+def test_a_provisional_read_keeps_the_unknown_time_it_observed():
+    before = calendar([entry("2026-11-20", "18:30", "20:00")])
+    after = calendar([entry("2026-11-20", None, None, line="Fri, November 20"),
+                      entry("2026-11-20", "18:30", "20:00")], complete=False)
+    verdict = compare.compare_source(before, after)
+    assert verdict["status"] == "incomplete"
+    assert verdict["coverage"]["met"] is False
+    assert verdict["fingerprint"] is None
+    assert [a["start"] for a in verdict["changes"]["added"]] == [None]
+    assert verdict["changes"]["added"][0]["line"] == "Fri, November 20"
+    assert verdict["provisional"] is True
+    assert [n for n in verdict["notes"] if "provisional reading failed" in n] == []
+
+
+def test_an_unknown_time_is_not_claimed_as_a_move():
+    before = calendar([entry("2026-11-20", "18:30", "20:00")])
+    after = calendar([entry("2026-11-20", None, None, line="Fri, November 20")])
+    verdict = compare.compare_source(before, after)
+    assert verdict["changes"]["moved"] == []
+    assert [a["start"] for a in verdict["changes"]["removed"]] == ["18:30"]
+    assert [a["start"] for a in verdict["changes"]["added"]] == [None]
+    assert verdict["changes"]["added"][0]["ambiguous_pairing"] is True
+    assert verdict["changes"]["removed"][0]["ambiguous_pairing"] is True
+
+
+def test_the_session_fingerprint_does_not_depend_on_capture_order():
+    known = entry("2026-11-20", "18:30", "20:00")
+    unknown = entry("2026-11-20", None, None, line="Fri, November 20")
+    one = calendar([unknown, known])
+    other = calendar([known, unknown])
+    forward = compare.compare_source(one, other)
+    backward = compare.compare_source(other, one)
+    assert forward["status"] == "unchanged" and backward["status"] == "unchanged"
+    assert forward["fingerprint"] == backward["fingerprint"]
