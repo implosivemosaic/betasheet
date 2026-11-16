@@ -77,15 +77,16 @@ def assign_baselines(data, run, source, system, mine, report):
                                                     "status": check["status"]})
         source[slot] = reg.baseline_facts(data, best["record"], best["capture"], run,
                                           check.get("fingerprint"), recovered=True)
-        dates_only = source[slot].get("slot_coverage") == "dates-only"
+        unverified = source[slot].get("slot_coverage")
         report["baselines"].append({"id": source["id"], "system": system, "slot": slot,
                                     "outcome": best["record"]["outcome"],
                                     "evidence": best["record"].get("evidence"),
-                                    "dates_only": dates_only})
-        if dates_only:  # the queue is keyed by the evidence file, then by its source id
+                                    "slot_coverage": unverified})
+        if unverified:  # the queue is keyed by the evidence file, then by its source id
             report["recapture"].append({
                 "capture": best["capture"], "capture_id": stem(best["path"]),
                 "id": source["id"], "gyms": source.get("gyms") or [],
+                "slot_coverage": unverified,
                 "sessions": len(best["record"].get("entries") or [])})
     if system in reg.CALENDAR:
         last = newest(mine) if mine else None
@@ -277,21 +278,25 @@ def summary(report):
     captures = report.get("captures", [])
     lines += ["Capture files read: %d" % sum(c["count"] for c in captures)]
     lines += ["- %s %s: %d" % (c["kind"], c["outcome"], c["count"]) for c in captures]
-    base = count((b["system"], b["slot"], b["outcome"] + (" (dates only)" if b.get("dates_only")
-                                                          else ""))
+    base = count((b["system"], b["slot"], b["outcome"] + (" (%s)" % b["slot_coverage"]
+                                                          if b.get("slot_coverage") else ""))
                  for b in report.get("baselines", []))
     lines += ["", "Baselines recovered: %d" % sum(base.values())]
     lines += ["- %s %s %s: %d" % (system, slot, outcome, n)
               for (system, slot, outcome), n in sorted(base.items())]
     queue = report.get("recapture", [])
     renamed = [q for q in queue if q["capture_id"] != q["id"]]
-    lines += ["", "Recapture queue: %d Rock Gym Pro calendars whose baseline is a legacy capture "
-              "(dates are evidence; one session was kept per date), %d sessions recorded; %d "
-              "recorded under a capture id that is not the source id" % (
-                  len(queue), sum(q["sessions"] for q in queue), len(renamed))]
-    lines += ["- %s <- %s (%d sessions%s)" % (q["id"], q["capture"], q["sessions"],
-                                             "; capture id %s" % q["capture_id"]
-                                             if q["capture_id"] != q["id"] else "")
+    kinds = count(q["slot_coverage"] for q in queue)
+    lines += ["", "Recapture queue: %d Rock Gym Pro calendars whose baseline is a legacy capture: "
+              "%d dates-only (dates are evidence; one session was kept per date; %d sessions "
+              "recorded) and %d availability-unverified (an empty grid read without the paint "
+              "check); %d recorded under a capture id that is not the source id" % (
+                  len(queue), kinds["dates-only"],
+                  sum(q["sessions"] for q in queue if q["slot_coverage"] == "dates-only"),
+                  kinds["availability-unverified"], len(renamed))]
+    lines += ["- %s <- %s (%s, %d sessions%s)" % (q["id"], q["capture"], q["slot_coverage"],
+                                                 q["sessions"], "; capture id %s" % q["capture_id"]
+                                                 if q["capture_id"] != q["id"] else "")
               for q in sorted(queue, key=lambda q: q["id"])]
     lines += ["", "Old pointers kept as ineligible: %d" % len(report.get("ineligible", []))]
     lines += ["- %s: %s" % (i["id"], i["reason"]) for i in report.get("ineligible", [])]

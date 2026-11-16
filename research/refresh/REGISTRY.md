@@ -49,10 +49,15 @@ November fields `last_copy`, `fingerprint`, `last_checked` and `coverage_note` a
 - `baseline.slot_coverage: "dates-only"` marks a Rock Gym Pro calendar read by the November
   tool, which kept one session per highlighted date. Its dates are evidence; its time slots
   are not complete. Such a source is in the recapture queue (`close.json` `recapture`,
-  `status --gym`) until a full read replaces the baseline. Compared with it, a new date is an
-  addition and a session it recorded that is gone is a removal, but a session on a date it saw
-  goes to `slots_to_reconcile`: a `source_first_read` finding to compare with the catalogue,
-  never a schedule change on its own.
+  `status --gym`) until a full read replaces the baseline. A current-tool read is compared
+  with it by date: a date it lacked is an added date (`dates_added`), a date it had that a
+  complete read no longer shows is a missing date (`dates_missing`). Sessions on dates both
+  saw are never added, removed or moved; the newly read ones go to `slots_to_reconcile`, a
+  `source_first_read` finding to compare with the catalogue, never a schedule change.
+- `baseline.slot_coverage: "availability-unverified"` marks a Rock Gym Pro calendar the
+  November tool read as empty, before the check that every day cell had loaded. It is kept
+  as history and queued for recapture; every session a current-tool read finds against it
+  goes to `slots_to_reconcile`, never counted as added.
 - A calendar whose clicked days all answered "no available times" is a baseline only when
   the capture tool declared complete coverage: the answer alone proves neither an empty
   calendar nor a complete read.

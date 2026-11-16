@@ -655,6 +655,63 @@ def test_a_legacy_calendar_compares_by_date_and_lists_its_slots_to_reconcile(tmp
     assert reg.recapture_queue(reg.load(root)) == []
 
 
+def test_a_dates_only_baseline_never_reports_slot_removals_on_dates_still_shown(tmp_path):
+    """Finch D1: the legacy slot is not among three slots read now on the same dates."""
+    root = registry(tmp_path, source())
+    rgp_legacy(root, "w1", "src", ["Thu, November 26, 4 PM to 5 PM",
+                                   "Thu, December 3, 4 PM to 5 PM"])
+    reg.ingest(root, "w1", "src", "test")
+    reg.close(root, "w1")
+    full = ["Thu, %s, %s" % (day, slot) for day in ("November 26", "December 3")
+            for slot in ("10 AM to 11 AM", "1 PM to 2 PM", "6 PM to 7 PM")]
+    rgp(root, "w2", "src", full)
+    out = reg.ingest(root, "w2", "src", "test")
+    verdict = out["verdict"]
+    assert verdict["status"] == "unchanged"
+    assert verdict["changes"]["added"] == [] and verdict["changes"]["removed"] == []
+    assert verdict["changes"]["moved"] == []
+    assert verdict["dates_added"] == [] and verdict["dates_missing"] == []
+    assert len(verdict["slots_to_reconcile"]) == 6
+    assert [held(root, "Gym A", "w2")[r]["kind"] for r in out["findings"]] == ["source_first_read"]
+    assert reg.close(root, "w2")[0]["src"]["advanced"] == "baseline"  # a verified read
+
+
+def test_dates_only_reports_added_and_missing_dates(tmp_path):
+    root = registry(tmp_path, source())
+    rgp_legacy(root, "w1", "src", ["Thu, November 26, 4 PM to 5 PM",
+                                   "Thu, December 3, 4 PM to 5 PM"])
+    reg.ingest(root, "w1", "src", "test")
+    reg.close(root, "w1")
+    rgp(root, "w2", "src", ["Thu, November 26, 10 AM to 11 AM", "Thu, November 26, 6 PM to 7 PM",
+                            "Thu, December 10, 6 PM to 7 PM"])
+    verdict = reg.ingest(root, "w2", "src", "test")["verdict"]
+    assert verdict["status"] == "changed"
+    assert verdict["dates_added"] == ["2026-12-10"] and verdict["dates_missing"] == ["2026-12-03"]
+    assert [(e["date"], e["start"]) for e in verdict["changes"]["removed"]] == [("2026-12-03", "16:00")]
+    assert {e["date"] for e in verdict["slots_to_reconcile"]} == {"2026-11-26"}
+
+
+def test_an_unverified_empty_baseline_reconciles_sessions_instead_of_adding_them(tmp_path):
+    root = registry(tmp_path, source())
+    rgp_legacy(root, "w1", "src", [])  # the November tool read an empty grid
+    reg.ingest(root, "w1", "src", "test")
+    assert reg.close(root, "w1")[0]["src"]["advanced"] == "baseline"
+    assert entry(root)["baseline"]["slot_coverage"] == "availability-unverified"
+    [queued] = reg.recapture_queue(reg.load(root))
+    assert queued["slot_coverage"] == "availability-unverified"
+
+    rgp(root, "w2", "src", WEEK1)
+    out = reg.ingest(root, "w2", "src", "test")
+    verdict = out["verdict"]
+    assert verdict["status"] == "unchanged" and verdict["changes"]["added"] == []
+    assert len(verdict["slots_to_reconcile"]) == 2
+    [finding] = [held(root, "Gym A", "w2")[r] for r in out["findings"]]
+    assert finding["kind"] == "source_first_read"
+    assert "empty calendar was never verified" in finding["summary"]
+    assert reg.close(root, "w2")[0]["src"]["advanced"] == "baseline"
+    assert reg.recapture_queue(reg.load(root)) == []  # a verified read replaced it
+
+
 def test_extra_slots_alone_leave_a_legacy_calendar_unchanged(tmp_path):
     root = registry(tmp_path, source())
     rgp_legacy(root, "w1", "src", ["Thu, November 26, 6 PM to 7 PM"])
@@ -865,15 +922,17 @@ def test_recovery_keeps_only_captures_that_prove_what_they_read(tmp_path):
     assert by_id["camp"]["system"] == "redpoint" and by_id["camp"]["gyms"] == ["Gym A"]
     assert by_id["camp"]["baseline"]["outcome"] == "read"
     assert by_id["legacy"]["baseline"]["slot_coverage"] == "dates-only"
-    assert report["recapture"] == [{"capture": old + "rgpS-legacy-1.rgp.json",
-                                    "capture_id": "rgpS-legacy-1", "id": "legacy",
-                                    "gyms": ["Gym A"], "sessions": 2}]
-    assert "slot_coverage" not in by_id["cal"]["baseline"]  # an empty grid has no slots
+    assert sorted(report["recapture"], key=lambda q: q["id"]) == [
+        {"capture": old + "cal.rgp.json", "capture_id": "cal", "id": "cal", "gyms": ["Gym A"],
+         "slot_coverage": "availability-unverified", "sessions": 0},
+        {"capture": old + "rgpS-legacy-1.rgp.json", "capture_id": "rgpS-legacy-1",
+         "id": "legacy", "gyms": ["Gym A"], "slot_coverage": "dates-only", "sessions": 2}]
+    assert by_id["cal"]["baseline"]["slot_coverage"] == "availability-unverified"
     assert by_id["notimes"]["baseline"] is None
     assert "proves neither" in by_id["notimes"]["calendar_gap"]["reason"]
     assert sum(c["count"] for c in report["captures"]) == 9  # every capture file is counted
     assert report["accounted"] == {"files": 9, "accounted": 9}
-    assert "legacy <- %srgpS-legacy-1.rgp.json (2 sessions; capture id rgpS-legacy-1)" % old \
+    assert "legacy <- %srgpS-legacy-1.rgp.json (dates-only, 2 sessions; capture id rgpS-legacy-1)" % old \
         in rec.summary(report)
     for record in proposed:
         assert not {"last_copy", "fingerprint", "last_checked"} & set(record)

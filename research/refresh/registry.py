@@ -293,6 +293,26 @@ def file_sha(path):
     return hashlib.sha256(pathlib.Path(path).read_bytes()).hexdigest()
 
 
+def legacy_empty(record):
+    """A Rock Gym Pro calendar the November tool read as empty. That tool did not wait for
+    every day cell to paint its availability, so an empty grid may be one that had not
+    finished rendering: the emptiness is an unverified observation."""
+    return (record is not None and record.get("type") == "rockgympro"
+            and record.get("calendar_observed", True)
+            and record.get("outcome") == ex.READ_EMPTY
+            and bool((record.get("coverage") or {}).get("recovered")))
+
+
+# Baselines whose calendar a current-tool read must re-establish before it is compared
+# session by session: `dates-only` kept one session per date, `availability-unverified`
+# read an empty grid without the paint check.
+UNVERIFIED_SLOTS = {
+    "dates-only": "legacy capture kept one session per highlighted date",
+    "availability-unverified": "legacy capture read an empty grid without checking every "
+                               "day cell had loaded its availability",
+}
+
+
 def baseline_facts(data, record, capture, run, fingerprint=None, recovered=False):
     facts = {"capture": capture, "run": run, "captured_at": record.get("captured_at"),
              "outcome": record.get("outcome"), "evidence": record.get("evidence"),
@@ -301,6 +321,9 @@ def baseline_facts(data, record, capture, run, fingerprint=None, recovered=False
     if legacy_slots(record):
         # Recapture with the current tool; until then the calendar compares by date.
         facts["slot_coverage"] = "dates-only"
+    elif legacy_empty(record):
+        # Kept as history; a later read's sessions are reconciled, never claimed as added.
+        facts["slot_coverage"] = "availability-unverified"
     if record.get("type") in SOCIAL:
         # The next capture must read back to this post before it can replace the baseline.
         posts = [post for post in record.get("posts") or [] if post.get("id")]
@@ -521,10 +544,12 @@ def finding_templates(data, source, wrapper, record, verdict):
     slots = verdict.get("slots_to_reconcile") or []
     if slots:
         dates = sorted({entry["date"] for entry in slots})
+        context = ("on dates the previous capture recorded with one session each"
+                   if verdict.get("slots_reason") != "availability-unverified" else
+                   "where the previous capture's empty calendar was never verified")
         summary = ("Time slots read in full for the first time: %d session(s) on %d date(s) from "
-                   "%s to %s, on dates the previous capture recorded with one session each. "
-                   "Compare these times with the catalogue; this is not a schedule change." % (
-                       len(slots), len(dates), dates[0], dates[-1]))
+                   "%s to %s, %s. Compare these times with the catalogue; this is not a "
+                   "schedule change." % (len(slots), len(dates), dates[0], dates[-1], context))
         if status == compare.INCOMPLETE:
             summary = "Partial capture (%s), so no baseline moved. Provisionally: %s" % (
                 (verdict.get("coverage") or {}).get("reason") or "coverage not met", summary)
@@ -822,8 +847,9 @@ def ingest(data, run, sid, by):
     base = source.get(slot)
     before = ex.extract(str(data / base["capture"])) if base else None
     verdict = compare.compare_source(before, record)
-    if (base or {}).get("slot_coverage") == "dates-only" and not legacy_slots(record):
-        verdict = dates_only(verdict, before)
+    unverified = (base or {}).get("slot_coverage")
+    if unverified in UNVERIFIED_SLOTS and not (record.get("coverage") or {}).get("recovered"):
+        verdict = reconcile_unverified(verdict, before, record, unverified)
     out = {"source_id": sid, "gyms": source.get("gyms") or [],
            "capture": relative(data, path), "capture_sha256": file_sha(path),
            "baseline": {"slot": slot, "capture": (base or {}).get("capture"),
@@ -901,34 +927,57 @@ def plan(data, run):
 
 
 def recapture_queue(sources):
-    """Calendar sources whose baseline is dates-only evidence, to recapture in full."""
+    """Calendar sources whose baseline a current-tool read must re-establish."""
     return [{"source_id": source["id"], "gyms": source.get("gyms") or [],
-             "capture": source["baseline"]["capture"], "since_run": source["baseline"]["run"]}
+             "capture": source["baseline"]["capture"], "since_run": source["baseline"]["run"],
+             "slot_coverage": source["baseline"]["slot_coverage"],
+             "why": UNVERIFIED_SLOTS[source["baseline"]["slot_coverage"]]}
             for source in sources
-            if (source.get("baseline") or {}).get("slot_coverage") == "dates-only"]
+            if (source.get("baseline") or {}).get("slot_coverage") in UNVERIFIED_SLOTS]
 
 
-def dates_only(verdict, before):
-    """Read a comparison with a dates-only baseline by date. The baseline's sessions were
-    real, so a session it recorded that is gone is still a removal, and a new date is still
-    an addition. A session on a date the baseline saw may be one it never recorded, so it is
-    listed in `slots_to_reconcile` for the catalogue rather than claimed as added."""
-    seen = {entry.get("date") for entry in before.get("entries") or [] if entry.get("date")}
+def reconcile_unverified(verdict, before, current, coverage):
+    """Read a current-tool comparison against a baseline whose slots were never verified.
+
+    `dates-only`: compare dates. A date the baseline lacked is an added date; a date it had
+    that the current read no longer shows is a missing date (only a complete read reports
+    removals at all). Sessions on dates both saw are never added, removed or moved: the new
+    ones go to `slots_to_reconcile`, and the baseline's single slot disappearing proves
+    nothing. `availability-unverified`: the baseline's emptiness is unproven, so every
+    session read now goes to `slots_to_reconcile` and none is called added."""
     changes = dict(verdict.get("changes") or {})
-    added = changes.get("added") or []
-    slots = [entry for entry in added if entry.get("date") in seen]
-    if not slots:
-        return verdict
-    view = dict(verdict, changes=dict(changes, added=[e for e in added if e not in slots]),
-                slots_to_reconcile=slots,
-                notes=list(verdict.get("notes") or []) + [
-                    "baseline recorded one session per date: %d session(s) on dates it saw "
-                    "are listed to reconcile, not as added" % len(slots)])
-    left = any(view["changes"].get(key) for key in ("added", "removed", "moved"))
+    added = list(changes.get("added") or [])
+    removed = list(changes.get("removed") or [])
+    moved = list(changes.get("moved") or [])
+    seen = {e.get("date") for e in before.get("entries") or [] if e.get("date")}
+    now_dates = {e.get("date") for e in current.get("entries") or [] if e.get("date")}
+
+    if coverage == "availability-unverified":
+        slots, added, removed, moved_slots = added, [], [], []
+        note = ("baseline's empty calendar is unverified: %d session(s) read now are listed "
+                "to reconcile, not as added" % len(slots))
+    else:
+        slots = [e for e in added if e.get("date") in seen]
+        added = [e for e in added if e.get("date") not in seen]
+        dropped = [e for e in removed if e.get("date") in now_dates]
+        removed = [e for e in removed if e.get("date") not in now_dates]
+        moved_slots = [dict(m.get("to") or {}, date=m.get("date"), cohort=m.get("cohort"),
+                            line=m.get("line")) for m in moved]
+        note = ("baseline recorded one session per date: compared by date; %d session(s) on "
+                "dates it saw are listed to reconcile, %d of its slot(s) on dates still shown "
+                "are not called removed" % (len(slots) + len(moved_slots), len(dropped)))
+    slots = slots + moved_slots
+    dates_added = sorted({e.get("date") for e in added})
+    dates_missing = sorted({e.get("date") for e in removed})
+    view = dict(verdict, changes=dict(changes, added=added, removed=removed, moved=[]),
+                slots_to_reconcile=slots, slots_reason=coverage,
+                dates_added=dates_added, dates_missing=dates_missing,
+                notes=list(verdict.get("notes") or []) + [note])
+    left = added or removed
     if view.get("status") == compare.CHANGED and not left:
         view["status"] = compare.UNCHANGED
     if view.get("status") == compare.INCOMPLETE:
-        view["provisional"] = True
+        view["provisional"] = bool(added or slots)
     return view
 
 
